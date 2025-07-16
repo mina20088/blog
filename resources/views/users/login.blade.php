@@ -11,6 +11,7 @@
         </figure>
 
         <section class="flex flex-col gap-5 xs:px-8">
+
             <x-rate-limiter-error/>
 
             <div class="flex flex-col gap-4">
