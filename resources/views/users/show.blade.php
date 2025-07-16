@@ -2,22 +2,44 @@
 
 @section('title', $user->username)
 
+@section('content')
+    <section class="flex xs:flex-col lg:flex-row xs:px-3 xs:py-3 h-auto overflow-hidden">
+        <aside class="lg:basis-1/3 xs:basis-full lg:sticky lg:left-0">
+            <section class="flex flex-col xs:rounded-2xl bg-gray-50 xs:my-6 divide-y divide-gray-700">
+                <header class="flex xs:gap-4 xs:py-3 xs:px-6">
+                    <img src="{{ Vite::asset('resources/images/Aron.png') }}" class="xs:h-[100px] xs:w-[100px] rounded-2xl">
+                    <div class="flex flex-col justify-center">
+                        <h3 class="font-bold text-xl">minaremonshaker</h3>
+                        <p>Web Developer</p>
+                    </div>
+                </header>
+                <article class="grid grid-flow-col text-sm xs:py-3 xs:px-6">
+                    <p>Laravel developer specializing in building modern web applications with Laravel and Vite. Experienced in database management, RESTful API development, and UI optimization. Passionate about clean code,</p>
+                </article>
+                <section class="grid xs:py-6 xs:gap-2 xs:px-6">
+                    <div class="grid grid-cols-2 justify-around ">
+                            <span class="flex items-center gap-2">
+                                <x-svgs.pin class="w-8"/> Location
+                            </span>
+                        <p class="text-end">Egypt ,Cairo</p>
+                    </div>
+                    <div class="grid grid-cols-2 justify-around">
+                            <span class="flex items-center gap-2">
+                                <x-svgs.time class="w-7"/> Member Since
+                            </span>
+                        <p class="text-end">3 weeks ago</p>
+                    </div>
+                </section>
+                <section class="flex justify-center xs:py-3 xs:px-6">
+                    <x-buttons.link-button-gradiant-blue class="xs:w-full xl:w-1/2 xs:px-12" href="#" content="Edit Profile" :rounded_lg="true"/>
+                </section>
+            </section>
 
-<div class="xs:relative">
-    <div class="xs:absolute xs:w-full xs:max-h-[34rem] xs:top-24 sm:top-28 md:top-28">
-        <div class="xs:relative">
-            <img class="sm:max-h-80" src="{{  Vite::asset('resources/images/placeholder.jpg')}}" width="100%" alt="placeholder">
-            <a class="xs:absolute xs:w-5 xs:h-5 xs:top-3 xs:right-3"><x-svgs.upload class="text-white "/></a>
-            <img src="{{ Vite::asset('resources/images/Aron.png') }}" class="xs:absolute xs:w-52 xs:h-52 xs:rounded-full xs:-bottom-12 xs:right-1/2 translate-x-1/2 xs:z-10" alt="aron">
-        </div>
 
-        <div class="xs:relative xs:h-64 xs:bg-gray-300 xs:z-0 xs:py-20">
-            <div class="grid xs:justify-center gap-5">
-                <h1 class="xs:text-center xs:font-bold xs:text-white xs:text-3xl" >Mina Remon Shaker</h1>
-                <p class="xs:text-center xs:font-normal">Web Developer</p>
-                <a href="#" class="bg-blue-500 xs:inline  xs:px-3 xs:py-3 xs:text-center xs:text-white rounded-lg">Edit Profile</a>
-            </div>
-        </div>
-    </div>
-</div>
+        </aside>
+    </section>
+@endsection
+
+
+
 
