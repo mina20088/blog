@@ -22,10 +22,7 @@
     </x-header.header>
 @show
 
-<main class="flex-1">
      @yield('content')
-</main>
-
 
 <x-footer>
 

@@ -4,12 +4,13 @@
 @section('title', 'users')
 
 @section('content')
-    <section class="relative grid gap-10 mt-24 xs:px-3">
-        <h1 class="text-4xl font-bold">users</h1>
+    <main class="flex-1">
+        <section class="relative grid gap-10 mt-24 xs:px-3">
+            <h1 class="text-4xl font-bold">users</h1>
 
-        <div class="relative overflow-x-auto">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <div class="relative overflow-x-auto">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                     <tr>
                         @foreach ($columns as $column)
                             <th scope="col" class="px-6 py-3">
@@ -20,8 +21,8 @@
                             Action
                         </th>
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     @if (count($users) !== 0)
                         @foreach ($users as $user)
                             <tr class="odd:bg-white  even:bg-gray-50 border-gray-200">
@@ -52,9 +53,9 @@
                                 <td class="px-6 py-4">
                                     <div class="flex gap-2">
                                         <a href="{{ route('user.show', ['username' => $user->username]) }}"
-                                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline">show</a>
+                                           class="font-medium text-blue-600 dark:text-blue-500 hover:underline">show</a>
                                         <a href="{{ route('user.edit', ['username' => $user->username]) }}"
-                                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                           class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                                     </div>
 
                                 </td>
@@ -63,9 +64,10 @@
 
                     @endif
 
-                </tbody>
-            </table>
-        </div>
+                    </tbody>
+                </table>
+            </div>
 
-    </section>
+        </section>
+    </main>
 @endsection

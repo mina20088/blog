@@ -6,9 +6,12 @@
 
 
 @section('content')
-    <section class="grid gap-10 mt-24">
+    <main class="flex-1">
+        <section class="grid gap-10 mt-24">
 
-    </section>
+        </section>
+    </main>
+
 @endsection
 
 
