@@ -1,13 +1,12 @@
 @use('Illuminate\Support')
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('title', 'users')
 
 @section('content')
-    <main class="flex-1">
+
         <section class="relative grid gap-10 mt-24 xs:px-3">
             <h1 class="text-4xl font-bold">users</h1>
-
             <div class="relative overflow-x-auto">
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50">
@@ -67,7 +66,5 @@
                     </tbody>
                 </table>
             </div>
-
         </section>
-    </main>
 @endsection
