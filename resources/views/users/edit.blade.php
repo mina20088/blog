@@ -1,11 +1,10 @@
 @use('Illuminate\Support\Str')
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('title' , $title)
 
 
 @section('content')
-    <main class="flex-1">
         <div class="grid xs:grid-col-1 xs:h-fit xs:items-center lg:grid-rows-1 lg:grid-cols-2 xs:py-28">
             <div>
                 <x-svgs.edit/>
@@ -57,6 +56,5 @@
             </div>
 
         </div>
-    </main>
 
 @endsection
