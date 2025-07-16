@@ -10,13 +10,12 @@
            <img src="{{ Vite::asset('resources/images/signup.png') }}" alt="signup" class="w-full lg:aspect-video xl:aspect-auto">
         </figure>
 
-        <section class="flex xs:flex-col justify-center xs:mt-3 xs:px-3 xl:pr-16">
+        <section class="flex gap-6 xs:flex-col justify-center xs:mt-3 xs:px-3 xl:pr-16">
 
             <x-rate-limiter-error />
 
             <div  class="flex flex-col gap-4">
                 <h1 class="xs:text-2xl xs:leading-4 xs:font-bold">Welcome!</h1>
-
                 <p>Please fill out the form below to create your account.</p>
             </div>
 
