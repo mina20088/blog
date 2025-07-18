@@ -4,7 +4,6 @@
 @section('title', 'users')
 
 @section('content')
-
         <section class="relative grid gap-10 mt-24 xs:px-3">
             <h1 class="text-4xl font-bold">users</h1>
             <div class="relative overflow-x-auto">
