@@ -28,8 +28,8 @@
     </section>
     <section class="flex flex-row items-center justify-start xs:py-3">
         <x-buttons.link-button-gradiant-blue class="text-nowrap xs:w-full" href="#" content="Edit Profile" :rounded_lg="true"/>
-        <a href="#" class="xs:w-14 sm:w-[3.3rem] md:w-[4.5rem]">
-            <x-svgs.github class="w-fit h-fit"/>
-        </a>
+        <x-buttons.link-button class="xs:w-24 sm:w-[5.4rem] md:w-24 lg:w-[6.5rem] xxl:w-24" link="#">
+            <x-svgs.github class=""/>
+        </x-buttons.link-button>
     </section>
 </section>
