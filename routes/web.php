@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostsController;
@@ -26,16 +27,13 @@ Route::controller(LoginController::class)->middleware(RateLimiterMiddleWare::cla
 });
 
 
-Route::prefix('users')->name('user.')->middleware([RateLimiterMiddleWare::class. ':update.user'])->controller(UserController::class)->group(function(){
-    Route::get('/', 'index')->name('index');
-    Route::get('/edit/{username}', 'edit')->name('edit');
-    Route::get('/show/{username}', 'show')->name('show');
-    Route::put('/edit/{username}', 'update')->name('update');
-});
+Route::get('/dashboard', Dashboard::class)->name('dashboard');
 
-Route::prefix('posts')->name('post.')->controller(PostsController::class)->group(function(){
-    Route::get('/', 'index')->name('index');
-});
+
+
+
+
+
 
 
 

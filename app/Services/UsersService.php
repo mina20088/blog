@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Helpers\Logger;
+use App\Models\User;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -265,8 +266,10 @@ class UsersService
         $columns = array_combine($usersTableColumns, $usersTableColumns);
 
         return Arr::except($columns,$except);
-        
+
     }
+
+
 
 
 

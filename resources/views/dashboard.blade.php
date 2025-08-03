@@ -1,11 +1,8 @@
 @extends('layouts.dashboard')
 
-@section('title', $user->username)
+@section('title', 'dashboard')
+
 
 @section('content')
 
 @endsection
-
-
-
-

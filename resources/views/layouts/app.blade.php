@@ -10,7 +10,7 @@
 @section('header')
 
     <x-header.header class="xs:px-3 xl:px-16">
-        <x-header.header_logo/>
+        <x-header.header_logo class="text-white"/>
         <x-header.header_navigation/>
         <x-header.header_login_register_buttons_desktop/>
         <x-header.header_mobile_login_register_buttons_hamburger>

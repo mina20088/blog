@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegistrationRequest;
+use App\Models\User;
 use App\Services\UsersService;
 
 
@@ -20,21 +21,23 @@ class RegistrationController extends Controller
     }
     public function store(RegistrationRequest $request){
 
-       $request->validated();
+       $validated =  $request->validated();
 
-       $fields = [
-           'name' => $request->firstName . ' ' . $request->lastName,
-           'email' => $request->email,
-           'username' => $request->username,
-           'password' => \Hash::make($request->password),
-       ];
+       $createNewUser = User::create([
+           'first_name' => $validated['firstName'],
+           'last_name' => $validated['lastName'],
+           'email' => $validated['email'],
+           'username' => $validated['username'],
+           'password' => $validated['password'],
+       ]);
 
-       $created = $this->usersService->createWithoutDuplicate($fields);
-
-       if($created == 0 || !$created){
-           return redirect()->back()->with('failed', 'There was an error creating the user.');
+       if($createNewUser){
+           return redirect()->route('register')->with('success', 'Registration was successful!');
        }
 
-       return redirect()->back()->with('success', 'you have successfully registered',);
+       return redirect()->back()->with('failure', 'User could not be created');
+
+
+
     }
 }

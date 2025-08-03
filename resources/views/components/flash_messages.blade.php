@@ -4,7 +4,7 @@
     </section>
 @endif
 
-@if(session()->has('failed'))
+@if(session()->has('failure'))
     <section class="mt-10">
         <x-alert type="danger" :message="session('failed')"/>
     </section>
