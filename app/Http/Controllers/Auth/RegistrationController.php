@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\RegistrationRequest;
 use App\Models\User;
 use App\Services\UsersService;
@@ -17,8 +18,9 @@ class RegistrationController extends Controller
     }
     public function create()
     {
-        return view('users.register');
+        return view('auth.register');
     }
+
     public function store(RegistrationRequest $request){
 
        $validated =  $request->validated();

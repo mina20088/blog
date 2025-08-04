@@ -1,11 +1,10 @@
 <?php
 
-use App\Http\Controllers\Dashboard;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegistrationController;
+use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\PostsController;
-use App\Http\Controllers\RegistrationController;
-use App\Http\Controllers\UserController;
 use App\Http\Middleware\RateLimiterMiddleWare;
 
 
@@ -27,7 +26,12 @@ Route::controller(LoginController::class)->middleware(RateLimiterMiddleWare::cla
 });
 
 
-Route::get('/dashboard', Dashboard::class)->name('dashboard');
+
+Route::prefix('dashboard')->name('dashboard.')->group(function(){
+    Route::get('/', DashboardController::class)->name('dashboard');
+    Route::get('/users', [UserController::class, 'index'])->name('users');
+});
+
 
 
 

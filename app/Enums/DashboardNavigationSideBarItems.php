@@ -4,7 +4,7 @@ namespace App\Enums;
 
 enum DashboardNavigationSideBarItems: string
 {
-    case Dashboard = 'Dashboard';
+    case Dashboard = 'DashboardController';
     case Posts = 'Posts';
     case Users = 'Users';
     case SignOut = 'Sign out';

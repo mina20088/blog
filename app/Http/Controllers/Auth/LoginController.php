@@ -1,13 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequest;
 use App\Traits\HandleRateLimiting;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -15,7 +12,7 @@ class LoginController extends Controller
 
     public function create()
     {
-        return view('users.login' ,['title' => "login"]);
+        return view('auth.login' ,['title' => "login"]);
     }
 
 

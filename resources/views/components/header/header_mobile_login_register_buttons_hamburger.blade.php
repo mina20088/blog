@@ -1,4 +1,4 @@
-<!-- Mobile Auth Dropdown & Hamburger -->
+<!-- Mobile auth Dropdown & Hamburger -->
 <div
     class="
       md:hidden h-full grid grid-flow-col items-center
