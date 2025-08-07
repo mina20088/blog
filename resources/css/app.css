@@ -1,8 +1,5 @@
 @import "animate.css";
 @import "tailwind.css";
-@import 'datatables.net-dt/css/dataTables.dataTables.css';
-@import url('datatables.net-searchbuilder-dt');
-@import "";
 @layer base{
     html, body {
         font-size: 16px;

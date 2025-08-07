@@ -259,9 +259,9 @@ class UsersService
         return Db::table("auth")->latest($column)->first();
     }
 
-    public function listUsersTableColumns(string ...$except)
+    public function listUsersTableColumns(string ...$except): array
     {
-        $usersTableColumns = DB::getSchemaBuilder()->getColumnListing('auth');
+        $usersTableColumns = DB::getSchemaBuilder()->getColumnListing('users');
 
         $columns = array_combine($usersTableColumns, $usersTableColumns);
 

@@ -2,8 +2,7 @@ import './bootstrap';
 import Alpine from 'alpinejs'
 import 'flowbite'
 import {Drawer} from 'flowbite'
-import DataTable from 'datatables.net-dt';
-import 'datatables.net-searchbuilder-dt';
+
 
 
 const sidebar = document.getElementById('logo-sidebar')
@@ -35,18 +34,6 @@ sidebar.addEventListener('click', (event) => {
     }
 });
 
-let usersTable = new DataTable('#users-table' ,{
-    layout: {
-        top1: {
-            searchBuilder: {
-                logic: 'OR'
-            }
-        }
-    },
-    searching: true,
-})
-
-usersTable()
 
 
 

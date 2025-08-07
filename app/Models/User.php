@@ -1,16 +1,22 @@
 <?php
 
 namespace App\Models;
-
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 
+
+/**
+ * @method static search(array|string $search)
+ * @method static sort(array|string $sort)
+ */
 class User extends Model
 {
-
-    use SoftDeletes , HasFactory;
+    use SoftDeletes , HasFactory ;
 
     protected $fillable = [
         'first_name',
@@ -19,6 +25,7 @@ class User extends Model
         'username',
         'password',
     ];
+
 
     protected $attributes = [
         'locked' => false
@@ -32,4 +39,31 @@ class User extends Model
         'password' => 'hashed',
         'locked' => 'boolean',
     ];
+
+    public function scopeSearch(Builder $query, string $value = ''): void
+    {
+        @$query->when($value, function ($query) use ($value) {
+            $query
+                ->where('first_name', 'like', '%' . $value . '%')
+                ->orWhere('last_name', 'like', '%' . $value . '%')
+                ->orWhere('username', 'like', '%' . $value . '%')
+                ->orWhere('email', 'like', '%' . $value . '%');
+        });
+    }
+
+    protected function scopeSort(Builder $query, string $value): void{
+        $query->orderBy($value);
+    }
+
+    public static function listUsersTableColumns(string ...$except): array
+    {
+        $usersTableColumns = DB::getSchemaBuilder()->getColumnListing('users');
+
+        $columns = array_combine($usersTableColumns, $usersTableColumns);
+
+        return Arr::except($columns,$except);
+
+    }
+
+
 }
