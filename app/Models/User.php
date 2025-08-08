@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 /**
  * @method static search(array|string $search)
  * @method static sort(array|string $sort)
+ * @method static filterdSearch(array|string|null $searchQuery, array|string|null $searchByQuery)
  */
 class User extends Model
 {
@@ -48,6 +49,15 @@ class User extends Model
                 ->orWhere('last_name', 'like', '%' . $value . '%')
                 ->orWhere('username', 'like', '%' . $value . '%')
                 ->orWhere('email', 'like', '%' . $value . '%');
+        });
+    }
+
+    public function scopeFilterdSearch(Builder $query, string $searchParameter = '', array $filterdColumns = []): void
+    {
+        $query->when($searchParameter && $filterdColumns , function ($query) use ($searchParameter, $filterdColumns) {
+                foreach ($filterdColumns as $column) {
+                    $query->orWhere($column , 'like', '%' . $searchParameter . '%');
+                }
         });
     }
 

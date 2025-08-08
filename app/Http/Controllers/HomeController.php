@@ -10,15 +10,13 @@ use Illuminate\Support\Facades\URL;
 class HomeController extends Controller
 {
     public function home(Request $request){
-        $searchQuery = $request->query('search');
-        $searchByQuery = $request->query('searchBy');
-        dump($request->query());
+        $searchQuery = $request->query('search') ?? '';
 
-        $users = User::when($searchQuery && $searchByQuery, static function ($query) use ($searchQuery, $searchByQuery) {
-            foreach ($searchByQuery as $searchBy) {
-                $query->where($searchBy , 'LIKE', "%{$searchQuery}%");
-            }
-        })->get();
+        $searchByQuery = $request->query('searchBy') ?? [];
+
+        $users = User::filterdSearch($searchQuery, $searchByQuery)
+            ->sort('first_name')
+            ->get();
 
         return view("home" , ['users' => $users]);
     }
