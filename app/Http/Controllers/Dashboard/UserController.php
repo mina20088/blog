@@ -24,7 +24,6 @@ class UserController extends Controller
             return redirect()->route('dashboard.users', ['users' => $users]);
         }
         return view('dashboard.users.index', ['users' =>  $users, 'columns' => $columns]);
-
     }
 
 
