@@ -10,9 +10,12 @@ use Illuminate\Support\Facades\URL;
 class HomeController extends Controller
 {
     public function home(Request $request){
+
         $searchQuery = $request->query('search') ?? '';
 
         $searchByQuery = $request->query('searchBy') ?? [];
+
+
 
         $users = User::filterdSearch($searchQuery, $searchByQuery)
             ->sort('first_name')

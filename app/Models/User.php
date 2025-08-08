@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\HigherOrderWhenProxy;
+use LaravelIdea\Helper\App\Models\_IH_User_QB;
 
 
 /**
- * @method static search(array|string $search)
- * @method static sort(array|string $sort)
- * @method static filterdSearch(array|string|null $searchQuery, array|string|null $searchByQuery)
+ * @method static filterdSearch(array|string $searchParameter, array|string $searchByParameter)
  */
 class User extends Model
 {
@@ -41,9 +41,9 @@ class User extends Model
         'locked' => 'boolean',
     ];
 
-    public function scopeSearch(Builder $query, string $value = ''): void
+    public function scopeSearch(Builder $query, string $value = ''): _IH_User_QB|Builder|HigherOrderWhenProxy
     {
-        @$query->when($value, function ($query) use ($value) {
+        return $query->when($value, function ($query) use ($value) {
             $query
                 ->where('first_name', 'like', '%' . $value . '%')
                 ->orWhere('last_name', 'like', '%' . $value . '%')
@@ -52,17 +52,17 @@ class User extends Model
         });
     }
 
-    public function scopeFilterdSearch(Builder $query, string $searchParameter = '', array $filterdColumns = []): void
+    protected function scopeFilterdSearch(Builder $query, string $searchParameter = '', array $filterdColumns = []): _IH_User_QB|Builder|HigherOrderWhenProxy
     {
-        $query->when($searchParameter && $filterdColumns , function ($query) use ($searchParameter, $filterdColumns) {
+       return $query->when($searchParameter && $filterdColumns , function ($query) use ($searchParameter, $filterdColumns) {
                 foreach ($filterdColumns as $column) {
                     $query->orWhere($column , 'like', '%' . $searchParameter . '%');
                 }
         });
     }
 
-    protected function scopeSort(Builder $query, string $value): void{
-        $query->orderBy($value);
+    protected function scopeSort(Builder $query, string $value): _IH_User_QB|Builder {
+        return $query->orderBy($value);
     }
 
     public static function listUsersTableColumns(string ...$except): array

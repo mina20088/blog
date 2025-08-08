@@ -14,31 +14,27 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
+
         $columns = User::listUsersTableColumns('password', 'email_verified_at', 'remember_token', 'deleted_at');
 
-        $users = User::search($request->query('search') ?? "")
-            ->sort($request->query('sortBy','id'))
-            ->get();
+        $searchParameter = $request->query('search', '');
+        $searchByParameter = $request->query('searchBy', []);
+        $sortByParameter = $request->query('sortBy', 'id');
 
-        if(request()->query('search') === null && $request->query('sortBy') === 'id') {
-            return redirect()->route('dashboard.users', ['users' => $users]);
+        // Always build the base query with filtered search
+        $usersQuery = User::filterdSearch($searchParameter, $searchByParameter);
+
+        // Apply sorting only if sortBy parameter is set and not "-1"
+        if ($sortByParameter !== '-1') {
+            $usersQuery = $usersQuery->sort($sortByParameter);
         }
-        return view('dashboard.users.index', ['users' =>  $users, 'columns' => $columns]);
+
+        return view('dashboard.users.index', [
+            'users' => $usersQuery->get(),
+            'columns' => $columns,
+        ]);
     }
 
-
-    public function filter(Request $request)
-    {
-        $search = $request->query('search') ?? '';
-
-        $sort = $request->query('sortBy') !== "-1" ? $request->query('sortBy') ?? 'id' : 'id';
-
-        dump($sort);
-
-        $users = User::search($search)->sort($sort)->get();
-
-        return view('dashboard.users.index', ['users' => $users]);
-    }
 
 
 }
