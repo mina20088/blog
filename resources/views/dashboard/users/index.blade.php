@@ -8,13 +8,11 @@
         <h1 class="font-bold text-2xl">Users</h1>
     </div>
 
-
-
-    <div class="relative overflow-x-auto">
-        <form class="flex flex-col xs:gap-3" method="GET" action="{{ route('dashboard.users') }}">
+    <div class="border bg-gray-200 xs:py-3 xs:px-3 lg:py-5 lg:px-5 rounded-lg">
+        <form class="flex flex-col xs:gap-3 m-0" method="GET" action="{{ route('dashboard.users') }}">
             <div class="flex xs:flex-col md:flex-row justify-between xs:gap-3">
                 <input type="text" id="large-input"
-                       class="block  p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
+                       class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
                        name="search" value="{{ request()->query('search') ?? '' }}" placeholder="search...">
                 <select
                     class="g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 "
@@ -25,18 +23,16 @@
                     @endforeach
                 </select>
             </div>
-            <div class="flex   xs:justify-start  md:justify-center">
-                <fieldset>
-                    <legend class="sr-only">Search By</legend>
+            <div class="flex xs:justify-start  md:justify-center">
 
-                    <div class="flex xs:flex-col xs:justify-start md:flex-row  items-start mb-4 gap-2">
+                    <div class="flex xs:flex-col xs:justify-start md:flex-row md:flex-wrap  items-start mb-4 gap-2">
 
                         @php
                             $checked = $selectedSearchBy = request()->query('searchBy', []);
                         @endphp
                         @foreach($columns as $column)
 
-                            <div class="flex   items-center">
+                            <div class="flex items-center">
                                 <input
                                     id="{{ $column }}" type="checkbox"
                                     value="{{ $column }}"
@@ -46,18 +42,22 @@
                                 <label for="checkbox-1"
                                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ $column }}</label>
                             </div>
-                        @endforeach
 
+                        @endforeach
                     </div>
-                </fieldset>
             </div>
-            <div class="my-3">
+            <div class="">
                 <button type="submit"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                     Apply
                 </button>
             </div>
         </form>
+    </div>
+
+
+    <div class="relative overflow-x-auto mt-4">
+
         <table id="users-table" class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-xl">
             <thead class="text-xs text-gray-700 bg-gray-50 ">
                 <tr>

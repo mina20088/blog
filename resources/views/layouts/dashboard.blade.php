@@ -19,7 +19,7 @@
             <div class="flex items-center justify-start rtl:justify-end">
 
                 <!-- sidebar button -->
-                <button id="sidebar-toggle-btn" name="sidebar-toggle" data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-expanded="true">
+                <button id="sidebar-toggle-btn" name="sidebar-toggle" data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400" aria-expanded="true">
                     <span class="sr-only">Open sidebar</span>
                     <x-svgs.menu-hamburger class="w-6 h-6 text-black"/>
                 </button>
@@ -68,14 +68,9 @@
 </nav>
 
 <!--Sidebar -->
-<aside  id="logo-sidebar" class="fixed top-0 left-0 z-40 xs:w-full md:w-[500px] h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
+<aside  id="logo-sidebar" class="fixed top-0 left-0 z-40 xs:w-full md:w-60 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 lg:translate-x-0" aria-label="Sidebar">
     <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
         <ul class="space-y-2 font-medium">
-            @if(request()->routeIs('profile'))
-                <li>
-                    <x-dashboard.cards.user-info-card/>
-                </li>
-            @endif
             <li >
                 <a id="dashboard" href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
@@ -115,7 +110,7 @@
 </aside>
 
 <!--main-->
-<main class="p-4 md:ml-[500px]">
+<main class="p-4 lg:ml-60">
     <div class="p-4  mt-14">
         @yield('content')
     </div>
