@@ -4,8 +4,9 @@
 
 
 @section('content')
-    <div class="sm:my-9">
+    <div class="flex justify-between items-center my-4 sm:my-9 ">
         <h1 class="font-bold text-2xl">Users</h1>
+        <button class="border border-1 xs:px-4 xs:py-4 rounded-lg">Filters/Search</button>
     </div>
 
     <div class="border bg-gray-200 xs:py-3 xs:px-3 lg:py-5 lg:px-5 rounded-lg">
