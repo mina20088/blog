@@ -1,5 +1,7 @@
 import './bootstrap';
 import Alpine from 'alpinejs'
+import persist from '@alpinejs/persist'
+
 import 'flowbite'
 import {Drawer} from 'flowbite'
 
@@ -38,4 +40,7 @@ sidebar.addEventListener('click', (event) => {
 
 
 window.Alpine = Alpine
+Alpine.plugin(persist)
 Alpine.start();
+
+

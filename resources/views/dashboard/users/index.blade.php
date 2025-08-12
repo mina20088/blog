@@ -4,7 +4,7 @@
 
 
 @section('content')
-    <div x-data="{show:false}">
+    <div x-data="{ show: $persist(false) }">
         <div class="flex justify-between items-center my-4 sm:my-9 ">
             <h1 class="font-bold text-2xl">Users</h1>
             <button x-on:click.prevent="show =! show" class="flex gap-1 border border-1 xs:px-4 xs:py-4 rounded-lg items-center">
