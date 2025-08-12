@@ -7,17 +7,21 @@
     <div x-data="{show:false}">
         <div class="flex justify-between items-center my-4 sm:my-9 ">
             <h1 class="font-bold text-2xl">Users</h1>
-            <button x-on:click="show =! show" class="flex gap-1 border border-1 xs:px-4 xs:py-4 rounded-lg items-center">
+            <button x-on:click.prevent="show =! show" class="flex gap-1 border border-1 xs:px-4 xs:py-4 rounded-lg items-center">
                 <span><x-svgs.filter class="w-4"/></span>
                 <span>Filters/Search</span>
             </button>
         </div>
 
-        <div  class="border bg-gray-200 xs:py-3 xs:px-3 lg:py-5 lg:px-5 rounded-lg"
-              x-transition:enter="slideInDown"
-              x-transition:enter-start=""
-              x-transition:enter-end=""
-              :class="show ? '' : 'hidden' "
+        <div
+               class="border bg-gray-200 xs:py-3 xs:px-3 lg:py-5 lg:px-5 rounded-lg"
+               x-show="show"
+               x-transition:enter="transition ease-out duration-500"
+               x-transition:enter-start="opacity-20 -translate-y-20"
+               x-transition:enter-end="opacity-100 translate-y-0"
+               x-transition:leave="transition ease-in duration-300"
+               x-transition:leave-start="opacity-100 translate-y-0"
+               x-transition:leave-end="opacity-20 -translate-y-20"
         >
             <form class="flex flex-col xs:gap-3 m-0" method="GET" action="{{ route('dashboard.users') }}">
                 <div class="flex xs:flex-col md:flex-row justify-between xs:gap-3">

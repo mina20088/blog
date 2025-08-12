@@ -7,17 +7,20 @@
 
 }
 
-@keyframes slideInDown {
-    from {
-        transform: translate3d(0, -100%, 0);
-        visibility: visible;
-    }
-    to {
-        transform: translate3d(0, 0, 0);
-    }
+.slide {
+    will-change: transform, opacity;
+    transition: transform 300ms ease, opacity 300ms ease; /* transition drives the effect[3] */
+}
+
+/* Visible state */
+.slide-in {
+    transform: translateY(0);    /* at rest */
+    opacity: 1;
 }
 
 
-.slideInDown {
-    animation: slideInDown 0.6s ease both;
+/* slideOutDown state */
+.slide-out {
+    transform: translateY(100%); /* moves down out of view */
+    opacity: 0;                  /* optional fade */
 }
