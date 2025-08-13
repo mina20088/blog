@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SearchFilterRequest;
 use App\Mail\UnsubscribeMail;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -9,24 +10,22 @@ use Illuminate\Support\Facades\URL;
 
 class HomeController extends Controller
 {
-    public function home(Request $request){
+    public function home(){
 
-        $searchQuery = $request->query('search') ?? '';
+/*        $searchQuery = $request->query('search') ?? '';
 
-        $searchByQuery = $request->query('searchBy') ?? [];
+        $searchByQuery = $request->query('searchBy') ?? [];*/
 
 
-
-        $users = User::filterdSearch($searchQuery, $searchByQuery)
+/*        $users = User::filterdSearch($searchQuery, $searchByQuery)
             ->sort('first_name')
-            ->get();
+            ->get();*/
 
-        return view("home" , ['users' => $users]);
+
+        return view("home");
     }
 
     public function about(){
-
-
         return view("about");
     }
 

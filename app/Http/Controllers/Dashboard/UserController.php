@@ -3,35 +3,31 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SearchFilterRequest;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
+use Psr\Http\Message\ServerRequestInterface;
 use function PHPUnit\Framework\isEmpty;
 use function PHPUnit\Framework\isNull;
 
 class UserController extends Controller
 {
-    public function index(Request $request)
+    public function index(SearchFilterRequest $request)
     {
+        Cache::put('columns',User::listUsersTableColumns('password', 'email_verified_at', 'remember_token', 'deleted_at'));
 
-        $columns = User::listUsersTableColumns('password', 'email_verified_at', 'remember_token', 'deleted_at');
+        $valid = collect($request->validated());
 
-        $searchParameter = $request->query('search', '');
-        $searchByParameter = $request->query('searchBy', []);
-        $sortByParameter = $request->query('sortBy', 'id');
-
-        // Always build the base query with filtered search
-        $usersQuery = User::filterdSearch($searchParameter, $searchByParameter);
-
-        // Apply sorting only if sortBy parameter is set and not "-1"
-        if ($sortByParameter !== '-1') {
-            $usersQuery = $usersQuery->sort($sortByParameter);
-        }
+        $users = User::filterdSearch($valid->get('search') , $valid->get('searchBy'))
+            ->sort($valid->get('sortBy'))->get();
 
         return view('dashboard.users.index', [
-            'users' => $usersQuery->get(),
-            'columns' => $columns,
+            'users' => $users,
+            'columns' => Cache::get('columns'),
         ]);
     }
 

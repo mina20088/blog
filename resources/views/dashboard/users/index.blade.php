@@ -27,23 +27,25 @@
                 <div class="flex xs:flex-col md:flex-row justify-between xs:gap-3">
                     <input type="text" id="large-input"
                            class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
-                           name="search" value="{{ request()->query('search') ?? '' }}" placeholder="search...">
+                           name="search" {{--value="{{ request()->query('search') ?? '' }}"--}}  value="{{old('search')}}" placeholder="search...">
+
                     <select
                         class="g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 "
                         name="sortBy">
-                        <option value="-1" @selected(request('sortBy') === "-1")>Sort By</option>
+                        <option value="-1" {{--@selected(request('sortBy') === "-1")--}}>Sort By</option>
                         @foreach($columns as $column)
-                            <option value="{{ $column }}" @selected(request('sortBy') === $column)>{{ $column }}</option>
+                            <option value="{{ $column }}" {{--@selected(request('sortBy') === $column)--}}>{{ $column }}</option>
                         @endforeach
                     </select>
                 </div>
+                <x-single-error field-name="search"/>
                 <div class="flex xs:justify-start  md:justify-center">
 
                     <div class="flex xs:flex-col xs:justify-start md:flex-row md:flex-wrap  items-start mb-4 gap-2">
 
-                        @php
+{{--                        @php
                             $checked = $selectedSearchBy = request()->query('searchBy', []);
-                        @endphp
+                        @endphp--}}
                         @foreach($columns as $column)
 
                             <div class="flex items-center">
@@ -51,7 +53,7 @@
                                     id="{{ $column }}" type="checkbox"
                                     value="{{ $column }}"
                                     name="searchBy[]"
-                                    @checked(in_array($column, $selectedSearchBy, true))
+                                  {{--  @checked(in_array($column, $selectedSearchBy, true))--}}
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500">
                                 <label for="checkbox-1"
                                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ $column }}</label>
@@ -67,9 +69,9 @@
                     </button>
                 </div>
             </form>
+            @dump($errors)
         </div>
     </div>
-
 
 
     <div class="relative overflow-x-auto mt-4">

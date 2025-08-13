@@ -28,7 +28,7 @@ Route::controller(LoginController::class)->middleware(RateLimiterMiddleWare::cla
 
 
 Route::prefix('dashboard')->name('dashboard.')->group(function(){
-    Route::get('/', DashboardController::class)->name('dashboard');
+    Route::get('/', [DashboardController::class ,'index'])->name('dashboard');
     Route::get('/users', [UserController::class, 'index'])->name('users');
 });
 
