@@ -27,16 +27,16 @@
                 <form action="/register" method="post">
                     @csrf
                     <div class="grid xs:grid-cols-1 md:grid-cols-2 md:gap-2">
-                        <div class="grid gap-2">
-                            <label for="first_name" class="block text-sm font-medium text-gray-900">
+                        <div class="mt-4">
+                            <label for="first_name" class="block text-sm font-medium text-gray-900 mb-1">
                                 first name
                             </label>
                             <input type="text" name="firstName" placeholder="first name" value="{{ old('firstName') }}" id="first_name"
                                 class="block w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm font-medium rounded-lg focus:ring-blue-500 focus:border-blue-500" />
                             <x-single-error field-name="firstName" />
                         </div>
-                        <div class="grid gap-2">
-                            <label for="last_name" class="block text-sm font-medium text-gray-900">
+                        <div class="mt-4">
+                            <label for="last_name" class="block text-sm font-medium text-gray-900 mb-1">
                                 last name
                             </label>
                             <input type="text" name="lastName" placeholder="last name" value="{{ old('lastName') }}" id="last_name"
@@ -46,16 +46,16 @@
                     </div>
 
                     <div class="grid xs:grid-cols-1 md:grid-cols-2 md:gap-2">
-                        <div class="grid gap-2">
-                            <label for="username" class="block text-sm font-medium text-gray-900">
+                        <div class="mt-4">
+                            <label for="username" class="block text-sm font-medium text-gray-900 mb-1">
                                 username
                             </label>
                             <input type="text" name="username" placeholder="username" value="{{ old('username') }}" id="username"
                                 class="block w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm font-medium rounded-lg focus:ring-blue-500 focus:border-blue-500" />
                             <x-single-error field-name="username" />
                         </div>
-                        <div class="grid gap-2">
-                            <label for="email" class="block text-sm font-medium text-gray-900">
+                        <div class="mt-4">
+                            <label for="email" class="block text-sm font-medium text-gray-900 mb-1">
                                 email
                             </label>
                             <input type="text" name="email" placeholder="email" value="{{ old('email') }}" id="email"
