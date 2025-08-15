@@ -17,10 +17,12 @@ class LoginController extends Controller
 
 
 
-    public function store(AuthRequest $request)
+    public function store(AuthRequest $request): void
     {
 
         $validated =  $request->validated();
+
+        dump($validated);
 
     }
 
