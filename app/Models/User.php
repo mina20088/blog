@@ -17,6 +17,7 @@ use function PHPUnit\Framework\isNull;
 
 /**
  * @method static filterdSearch(array|string $searchParameter = null , array $searchByParameter = null ):_IH_User_QB|Builder|HigherOrderWhenProxy
+ * @method static sort(mixed $get)
  */
 class User extends Model
 {
@@ -43,6 +44,7 @@ class User extends Model
         'password' => 'hashed',
         'locked' => 'boolean',
     ];
+
 
     public function scopeSearch(Builder $query, string $value = ''): _IH_User_QB|Builder|HigherOrderWhenProxy
     {

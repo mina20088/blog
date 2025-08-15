@@ -25,24 +25,20 @@ class SearchFilterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'search' => '',
-            'searchBy' => 'array',
+            'search' => 'required',
+            'searchBy' => 'required_with:search',
             'sortBy' => 'sometimes',
         ];
     }
 
-    public function after(): array
+    public function messages(): array
     {
-            return [
-                function(Validator $validator){
-                    if ($this->input('search') !== null  && empty($this->input('searchBy')))
-                    {
-                        $validator->errors()->add('search', 'please choose a filter for searching');
-                    }
-                },
-            ];
-
+        return [
+            'search.required' => 'Please enter a search term',
+            'searchBy.required_with' => 'Please select a search option'
+        ];
     }
+
 
 }
 

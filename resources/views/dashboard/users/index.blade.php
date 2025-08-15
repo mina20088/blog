@@ -7,45 +7,46 @@
     <div x-data="{ show: $persist(false) }">
         <div class="flex justify-between items-center my-4 sm:my-9 ">
             <h1 class="font-bold text-2xl">Users</h1>
-            <button x-on:click.prevent="show =! show" class="flex gap-1 border border-1 xs:px-4 xs:py-4 rounded-lg items-center">
+            <button x-on:click.prevent="show =! show"
+                    class="flex gap-1 border border-1 xs:px-4 xs:py-4 rounded-lg items-center">
                 <span><x-svgs.filter class="w-4"/></span>
                 <span>Filters/Search</span>
             </button>
         </div>
 
         <div
-               class="border bg-gray-200 xs:py-3 xs:px-3 lg:py-5 lg:px-5 rounded-lg"
-               x-show="show"
-               x-transition:enter="transition ease-out duration-500"
-               x-transition:enter-start="opacity-20 -translate-y-20"
-               x-transition:enter-end="opacity-100 translate-y-0"
-               x-transition:leave="transition ease-in duration-300"
-               x-transition:leave-start="opacity-100 translate-y-0"
-               x-transition:leave-end="opacity-20 -translate-y-20"
+            class="border bg-gray-200 xs:py-3 xs:px-3 lg:py-5 lg:px-5 rounded-lg"
+            x-show="show"
+            x-transition:enter="transition ease-out duration-500"
+            x-transition:enter-start="opacity-20 -translate-y-20"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-300"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-20 -translate-y-20"
         >
-            <form class="flex flex-col xs:gap-3 m-0" method="GET" action="{{ route('dashboard.users') }}">
+            <form class="flex flex-col xs:gap-3 m-0" method="post" action="{{ route('dashboard.users.search') }}">
+                @csrf
                 <div class="flex xs:flex-col md:flex-row justify-between xs:gap-3">
                     <input type="text" id="large-input"
                            class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
-                           name="search" {{--value="{{ request()->query('search') ?? '' }}"--}}  value="{{old('search')}}" placeholder="search...">
+                           name="search"
+                           value="{{old('search')}}"
+                           placeholder="search...">
 
                     <select
                         class="g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 "
                         name="sortBy">
-                        <option value="-1" {{--@selected(request('sortBy') === "-1")--}}>Sort By</option>
+                        <option value="-1">Sort By</option>
                         @foreach($columns as $column)
-                            <option value="{{ $column }}" {{--@selected(request('sortBy') === $column)--}}>{{ $column }}</option>
+                            <option
+                                value="{{ $column }}"  @selected(old('sortBy', '-1') === $column )>{{ $column }}</option>
                         @endforeach
                     </select>
                 </div>
                 <x-single-error field-name="search"/>
-                <div class="flex xs:justify-start  md:justify-center">
+                <div class="flex flex-col xs:items-start  md:items-center">
 
                     <div class="flex xs:flex-col xs:justify-start md:flex-row md:flex-wrap  items-start mb-4 gap-2">
-
-{{--                        @php
-                            $checked = $selectedSearchBy = request()->query('searchBy', []);
-                        @endphp--}}
                         @foreach($columns as $column)
 
                             <div class="flex items-center">
@@ -53,14 +54,14 @@
                                     id="{{ $column }}" type="checkbox"
                                     value="{{ $column }}"
                                     name="searchBy[]"
-                                  {{--  @checked(in_array($column, $selectedSearchBy, true))--}}
+                                    @checked(in_array($column,old('searchBy', []),true))
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500">
                                 <label for="checkbox-1"
                                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ $column }}</label>
                             </div>
-
                         @endforeach
                     </div>
+                    <x-single-error field-name="searchBy"/>
                 </div>
                 <div class="">
                     <button type="submit"
@@ -74,56 +75,56 @@
     </div>
 
 
-    <div class="relative overflow-x-auto mt-4">
+      <div class="relative overflow-x-auto mt-4">
 
-        <table id="users-table" class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-xl">
-            <thead class="text-xs text-gray-700 bg-gray-50 ">
-                <tr>
-                    <th scope="col" class="px-6 py-3">
-                        #
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Full Name
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Email
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Username
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Active
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Actions
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($users as $user)
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{  $user->id }}
-                        </th>
-                        <td class="px-6 py-4">
-                            {{ $user->first_name . " " . $user->last_name}}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $user->email  }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $user->username  }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{  $user->locked  ? 'locked' : "unlocked" }}
-                        </td>
-                        <td class="px-6 py-4">
+          <table id="users-table" class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-xl">
+              <thead class="text-xs text-gray-700 bg-gray-50 ">
+                  <tr>
+                      <th scope="col" class="px-6 py-3">
+                          <a href="{{ route('dashboard.users', ['sortBy' => 'id']) }}">#</a>
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                          <a href="{{ route('dashboard.users', ['sortBy' => 'first_name']) }}">Full Name </a>
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                          <a href="{{ route('dashboard.users' , ['sortBy' => 'email'])  }}">Email</a>
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                          <a href="{{ route('dashboard.users' , ['sortBy' => 'username'])  }}">Username</a>
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                          <a href="{{route('dashboard.users' , ['sortBy' ,'locked'])}}">Active</a>
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                          Actions
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+                  @foreach($users as $user)
+                      <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+                          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                              {{  $user->id }}
+                          </th>
+                          <td class="px-6 py-4">
+                              {{ $user->first_name . " " . $user->last_name}}
+                          </td>
+                          <td class="px-6 py-4">
+                              {{ $user->email  }}
+                          </td>
+                          <td class="px-6 py-4">
+                              {{ $user->username  }}
+                          </td>
+                          <td class="px-6 py-4">
+                              {{  $user->locked  ? 'locked' : "unlocked" }}
+                          </td>
+                          <td class="px-6 py-4">
 
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+                          </td>
+                      </tr>
+                  @endforeach
+              </tbody>
+          </table>
+      </div>
 
 @endsection

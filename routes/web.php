@@ -30,6 +30,7 @@ Route::controller(LoginController::class)->middleware(RateLimiterMiddleWare::cla
 Route::prefix('dashboard')->name('dashboard.')->group(function(){
     Route::get('/', [DashboardController::class ,'index'])->name('dashboard');
     Route::get('/users', [UserController::class, 'index'])->name('users');
+    Route::post('/users/search' ,[UserController::class, 'search'])->name('users.search');
 });
 
 
