@@ -21,7 +21,6 @@ class LoginController extends Controller
     {
 
         $validated =  $request->validated();
-
         dump($validated);
 
     }

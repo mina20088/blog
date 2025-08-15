@@ -68,14 +68,14 @@
 
                     <div class="flex justify-between gap-3 mb-4">
                         <div class="flex flex-row items-center gap-x-1">
-                            <input type="hidden"
+{{--                            <input type="hidden"
                                    name="remember"
-                                   value="0"/>
+                                   value="0"/>--}}
                             <input id="remember"
                                    type="checkbox"
                                    name="remember"
                                    value="1"
-                                   @checked(old('remember') === 1 || old('remember') === 0)
+                                   @checked(old('remember' , 0) !== 0)
                                    class="w-4 h-4 text-blue-600 bg-gray-100
                                           border-gray-300 rounded-sm focus:ring-2
                                           focus:ring-blue-500 dark:focus:ring-blue-600
