@@ -31,6 +31,7 @@ Route::prefix('dashboard')->name('dashboard.')->group(function(){
     Route::get('/', [DashboardController::class ,'index'])->name('dashboard');
     Route::get('/users', [UserController::class, 'index'])->name('users');
     Route::post('/users/search' ,[UserController::class, 'search'])->name('users.search');
+    Route::get('/users/reset-filters', [UserController::class, 'resetFilters'])->name('users.reset-filters');
 });
 
 

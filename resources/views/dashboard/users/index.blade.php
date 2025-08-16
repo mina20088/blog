@@ -1,5 +1,5 @@
+@use(App\Helpers\ViewHelpers);
 @extends('layouts.dashboard')
-
 @section('title', 'users')
 
 
@@ -39,7 +39,7 @@
                         <option value="-1">Sort By</option>
                         @foreach($columns as $column)
                             <option
-                                value="{{ $column }}"  @selected(old('sortBy', '-1') === $column )>{{ $column }}</option>
+                                value="{{ $column }}" @selected(old('sortBy', '-1') === $column )>{{ $column }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -68,63 +68,102 @@
                             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                         Apply
                     </button>
+                    @if(\Illuminate\Support\Facades\Session::has('results'))
+                        <a href="{{ route('dashboard.users.reset-filters') }}"
+                           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                            Reset
+                        </a>
+
+                    @endif
+
+
                 </div>
             </form>
-            @dump($errors)
         </div>
     </div>
 
 
-      <div class="relative overflow-x-auto mt-4">
+    <div class="relative overflow-x-auto mt-4">
 
-          <table id="users-table" class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-xl">
-              <thead class="text-xs text-gray-700 bg-gray-50 ">
-                  <tr>
-                      <th scope="col" class="px-6 py-3">
-                          <a href="{{ route('dashboard.users', ['sortBy' => 'id']) }}">#</a>
-                      </th>
-                      <th scope="col" class="px-6 py-3">
-                          <a href="{{ route('dashboard.users', ['sortBy' => 'first_name']) }}">Full Name </a>
-                      </th>
-                      <th scope="col" class="px-6 py-3">
-                          <a href="{{ route('dashboard.users' , ['sortBy' => 'email'])  }}">Email</a>
-                      </th>
-                      <th scope="col" class="px-6 py-3">
-                          <a href="{{ route('dashboard.users' , ['sortBy' => 'username'])  }}">Username</a>
-                      </th>
-                      <th scope="col" class="px-6 py-3">
-                          <a href="{{route('dashboard.users' , ['sortBy' ,'locked'])}}">Active</a>
-                      </th>
-                      <th scope="col" class="px-6 py-3">
-                          Actions
-                      </th>
-                  </tr>
-              </thead>
-              <tbody>
-                  @foreach($users as $user)
-                      <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                              {{  $user->id }}
-                          </th>
-                          <td class="px-6 py-4">
-                              {{ $user->first_name . " " . $user->last_name}}
-                          </td>
-                          <td class="px-6 py-4">
-                              {{ $user->email  }}
-                          </td>
-                          <td class="px-6 py-4">
-                              {{ $user->username  }}
-                          </td>
-                          <td class="px-6 py-4">
-                              {{  $user->locked  ? 'locked' : "unlocked" }}
-                          </td>
-                          <td class="px-6 py-4">
+        <table id="users-table"
+               class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-xl">
+            <thead class="text-xs text-gray-700 bg-gray-50 ">
+            <tr>
+                <th scope="col" class="px-6 py-3">
 
-                          </td>
-                      </tr>
-                  @endforeach
-              </tbody>
-          </table>
-      </div>
+                    <div class="flex items-center gap-2">
+
+                        <a href="{{ route('dashboard.users', ['sortBy' => 'id' , 'dir' => ViewHelpers::sortTogglers(request())]) }}">
+                            <span>#</span>
+                        </a>
+                        <x-svgs.sort class="w-3" upper-color="#acb0b7"/>
+                    </div>
+
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    <div class="flex items-center gap-2">
+                        <a href="{{ route('dashboard.users', ['sortBy' => 'first_name', 'dir' => ViewHelpers::sortTogglers(request())]) }}">
+                            <span>Full Name</span>
+                        </a>
+                        <x-svgs.sort class="w-3" upper-color="#acb0b7"/>
+                    </div>
+
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    <div class="flex items-center gap-2">
+                        <a href="{{ route('dashboard.users' , ['sortBy' => 'email' , 'dir' => ViewHelpers::sortTogglers(request())])  }}">
+                            <span>Email</span>
+                        </a>
+                        <x-svgs.sort class="w-3" upper-color="#acb0b7"/>
+                    </div>
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    <div class="flex items-center gap-2">
+                        <a href="{{ route('dashboard.users' , ['sortBy' => 'username', 'dir' => ViewHelpers::sortTogglers(request())])  }}">
+                            <span>Username</span>
+                        </a>
+                        <x-svgs.sort class="w-3" upper-color="#acb0b7"/>
+                    </div>
+
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    <div class="flex items-center gap-2">
+                        <a href="{{route('dashboard.users' , ['sortBy' ,'locked', 'dir'=> ViewHelpers::sortTogglers(request())])}}">
+                            <span>Active</span>
+                        </a>
+                        <x-svgs.sort class="w-3" upper-color="#acb0b7"/>
+                    </div>
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Actions
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($users as $user)
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        {{  $user->id }}
+                    </th>
+                    <td class="px-6 py-4">
+                        {{ $user->first_name . " " . $user->last_name}}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ $user->email  }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ $user->username  }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{  $user->locked  ? 'locked' : "unlocked" }}
+                    </td>
+                    <td class="px-6 py-4">
+
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    </div>
 
 @endsection

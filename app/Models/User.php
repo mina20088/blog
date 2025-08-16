@@ -73,13 +73,13 @@ class User extends Model
 
     }
 
-    protected function scopeSort(Builder $query, string $sortColumn = null): _IH_User_QB|Builder
+    protected function scopeSort(Builder $query, string $sortColumn = null, string $dir = 'asc'): _IH_User_QB|Builder
     {
         $column = $sortColumn ?? 'id';
         if($column === '-1'){
-            return $query->orderBy('id');
+            return $query->orderBy('id', $dir);
         }
-        return $query->orderBy($column);
+        return $query->orderBy($column, $dir);
     }
 
     public static function listUsersTableColumns(string ...$except): array

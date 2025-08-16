@@ -47,14 +47,14 @@ class Logger
      * @return array          The assembled context array for logging.
      */
 
-    private static function buildContext($data, array $context = []): array
+    private static function buildContext(mixed $data, array $context = []): array
     {
         return [
             'data' => $data ,
-            'method' => request() != null ?  request()->method() : null ,
-            'path' =>  request() != null ?  request()->path() : null,
-            'controller' => request()->route() != null ?  request()->route()->getControllerClass(): null,
-            'action' => request()->route() != null? request()->route()->getActionName() : null,
+            'method' => request() !== null ?  request()->method() : null ,
+            'path' =>  request() !== null ?  request()->path() : null,
+            'controller' => request()->route() !== null ?  request()->route()->getControllerClass(): null,
+            'action' => request()->route() !== null? request()->route()->getActionName() : null,
             'context' => $context ?? []
         ];
     }
