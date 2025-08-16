@@ -1,10 +1,11 @@
 @use(App\Helpers\ViewHelpers);
+@use(Illuminate\Support\Facades\Session)
 @extends('layouts.dashboard')
 @section('title', 'users')
 
 
 @section('content')
-    <div x-data="{ show: $persist(false) }">
+    <div x-data="{ show:$persist(false) , resetShow:$persist({{ViewHelpers::sessionHasValue('results')}}) }">
         <div class="flex justify-between items-center my-4 sm:my-9 ">
             <h1 class="font-bold text-2xl">Users</h1>
             <button x-on:click.prevent="show =! show"
@@ -68,13 +69,12 @@
                             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                         Apply
                     </button>
-                    @if(\Illuminate\Support\Facades\Session::has('results'))
-                        <a href="{{ route('dashboard.users.reset-filters') }}"
-                           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                            Reset
-                        </a>
 
-                    @endif
+                    <a x-show="resetShow" href="{{ route('dashboard.users.reset-filters') }}"
+                       class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                        Reset
+                    </a>
+
 
 
                 </div>

@@ -24,7 +24,7 @@ class UserController extends Controller
         if (\Session::has('results')) {
             $users = \Session::get('results');
         } else {
-            $users = User::sort($request->get('sortBy'), $request->input('dir') ?? 'asc')->get();
+            $users = User::sort($request->input('sortBy'), $request->input('dir') ?? 'asc')->get();
         }
 
         return view('dashboard.users.index', [
@@ -43,7 +43,7 @@ class UserController extends Controller
 
         \Session::put('results', $users);
 
-        return redirect()->route('dashboard.users');
+        return redirect()->route('dashboard.users')->withInput();
     }
 
     public function resetFilters(): \Illuminate\Http\RedirectResponse

@@ -14,4 +14,9 @@ class ViewHelpers
         return $request->input($item) === 'asc' ? 'desc' : 'asc';
     }
 
+    public static function sessionHasValue(string $key): bool
+    {
+        return \Session::has($key);
+    }
+
 }
