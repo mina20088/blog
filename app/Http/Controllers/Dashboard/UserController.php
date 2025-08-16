@@ -52,5 +52,9 @@ class UserController extends Controller
         return redirect()->route('dashboard.users');
     }
 
+    public function create(){
+        return view('dashboard.users.create');
+    }
+
 
 }

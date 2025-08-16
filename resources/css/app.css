@@ -7,6 +7,14 @@
 
 }
 
+@layer utilities {
+  @keyframes flash {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0; }
+  }
+  .animate-flash { animation: flash 700ms both; }
+}
+
 .slide {
     will-change: transform, opacity;
     transition: transform 300ms ease, opacity 300ms ease; /* transition drives the effect[3] */
@@ -24,3 +32,4 @@
     transform: translateY(100%); /* moves down out of view */
     opacity: 0;                  /* optional fade */
 }
+

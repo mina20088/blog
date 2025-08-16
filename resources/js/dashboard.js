@@ -42,4 +42,8 @@ window.Alpine = Alpine
 Alpine.plugin(persist)
 Alpine.start();
 
+function resetFilters(data) {
+    data.resetShow = false
+}
+
 

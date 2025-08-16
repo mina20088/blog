@@ -5,14 +5,18 @@
 
 
 @section('content')
-    <div x-data="{ show:$persist(false) , resetShow:$persist({{ViewHelpers::sessionHasValue('results')}}) }">
-        <div class="flex justify-between items-center my-4 sm:my-9 ">
+    <div x-data="{show:$persist(false)}">
+        <div class="flex xs:flex-col sm:flex-row sm:justify-between sm:items-center my-4 sm:my-9 xs:gap-3 ">
             <h1 class="font-bold text-2xl">Users</h1>
-            <button x-on:click.prevent="show =! show"
-                    class="flex gap-1 border border-1 xs:px-4 xs:py-4 rounded-lg items-center">
-                <span><x-svgs.filter class="w-4"/></span>
-                <span>Filters/Search</span>
-            </button>
+            <div class="flex gap-3 xs:justify-between sm:items-center">
+                <button x-on:click.prevent="show =! show"
+                        class="flex gap-1 border border-1 xs:px-4 xs:py-4 rounded-lg items-center ">
+                    <span><x-svgs.filter class="w-4"/></span>
+                    <span>Filters/Search</span>
+                </button>
+                <a href="{{ route('dashboard.users.create') }}" class="bg-blue-600 text-white xs:px-4 xs:py-4 basis-28 rounded-lg text-center ">Create</a>
+            </div>
+
         </div>
 
         <div
@@ -70,17 +74,19 @@
                         Apply
                     </button>
 
-                    <a x-show="resetShow" href="{{ route('dashboard.users.reset-filters') }}"
-                       class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                        Reset
-                    </a>
-
-
-
+                    @if(Session::has('results'))
+                        <a
+                            href="{{ route('dashboard.users.reset-filters') }}"
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                            Reset
+                        </a>
+                    @endif
                 </div>
             </form>
         </div>
     </div>
+
+
 
 
     <div class="relative overflow-x-auto mt-4">
@@ -98,7 +104,6 @@
                         </a>
                         <x-svgs.sort class="w-3" upper-color="#acb0b7"/>
                     </div>
-
                 </th>
                 <th scope="col" class="px-6 py-3">
                     <div class="flex items-center gap-2">
