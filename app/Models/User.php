@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -44,6 +45,11 @@ class User extends Model
         'password' => 'hashed',
         'locked' => 'boolean',
     ];
+
+    public function profile() :BelongsTo
+    {
+        return $this->belongsTo(Profile::class);
+    }
 
 
     public function scopeSearch(Builder $query, string $value = ''): _IH_User_QB|Builder|HigherOrderWhenProxy

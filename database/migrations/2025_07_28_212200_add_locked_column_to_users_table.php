@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('auth', function (Blueprint $table) {
+        Schema::table('users', static function (Blueprint $table) {
              $table->boolean('locked')->default(false)->after('password');
         });
     }
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('auth', function (Blueprint $table) {
+        Schema::table('users', static function (Blueprint $table) {
             $table->dropColumn('locked');
         });
     }
