@@ -111,10 +111,7 @@
 
 <!--main-->
 <main class="p-4 lg:ml-60">
-    <div class="p-4  mt-14">
-        @yield('content')
-    </div>
-
+    @yield('content')
 </main>
 
 </body>
