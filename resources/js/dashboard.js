@@ -3,7 +3,9 @@ import Alpine from 'alpinejs'
 import persist from '@alpinejs/persist'
 import 'flowbite'
 import {Drawer} from 'flowbite'
-
+window.addEventListener("DOMContentLoaded", () => {
+    document.body.style.visibility = "visible";
+});
 
 
 const sidebar = document.getElementById('logo-sidebar')

@@ -3,6 +3,7 @@
 @layer base{
     html, body {
         font-size: 16px;
+        visibility: hidden;
     }
 
 }
