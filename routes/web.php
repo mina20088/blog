@@ -33,6 +33,7 @@ Route::prefix('dashboard')->name('dashboard.')->group(function(){
     Route::post('/users/search' ,[UserController::class, 'search'])->name('users.search');
     Route::get('/users/reset-filters', [UserController::class, 'resetFilters'])->name('users.reset-filters');
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+    Route::post('/users', [UserController::class, 'store'])->name('users.store');
 });
 
 

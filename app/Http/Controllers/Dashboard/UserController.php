@@ -7,6 +7,7 @@ use App\Http\Requests\SearchFilterRequest;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
@@ -54,6 +55,10 @@ class UserController extends Controller
 
     public function create(){
         return view('dashboard.users.create');
+    }
+
+    public function store(Request $request):RedirectResponse{
+
     }
 
 
