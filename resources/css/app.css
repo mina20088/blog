@@ -34,3 +34,21 @@
     opacity: 0;                  /* optional fade */
 }
 
+
+.back-in-down-enter {
+    transform: translateY(-1200px) scale(0.7);
+    opacity: 0.7;
+}
+
+.back-in-down-enter-active {
+    transition: all 1s ease;
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+.back-in-down-leave-active {
+    transition: all 0.3s ease;
+    transform: translateY(-1200px) scale(0.7);
+    opacity: 0;
+}
+
