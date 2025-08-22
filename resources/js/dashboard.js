@@ -3,9 +3,8 @@ import Alpine from 'alpinejs'
 import persist from '@alpinejs/persist'
 import 'flowbite'
 import {Drawer} from 'flowbite'
-window.addEventListener("DOMContentLoaded", () => {
-    document.body.style.visibility = "visible";
-});
+import {CountryCityMap ,CountryCityUtils} from './countryCityMap'
+
 
 
 const sidebar = document.getElementById('logo-sidebar')
@@ -38,7 +37,12 @@ sidebar.addEventListener('click', (event) => {
 });
 
 
+window.addEventListener("DOMContentLoaded", () => {
+    document.body.style.visibility = "visible";
+});
 
+window.CountryCityMap = CountryCityMap
+window.CountryCityUtils = CountryCityUtils
 
 window.Alpine = Alpine
 Alpine.plugin(persist)
