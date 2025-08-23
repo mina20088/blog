@@ -21,6 +21,7 @@ class UserController extends Controller
     public function index(request $request)
     {
         $columns = User::listUsersTableColumns('password', 'email_verified_at', 'remember_token', 'deleted_at');
+        ds($columns)->cacheOff();
 
         if (\Session::has('results')) {
             $users = \Session::get('results');
@@ -58,7 +59,8 @@ class UserController extends Controller
     }
 
     public function store(Request $request):RedirectResponse{
-
+        ds($request);
+        return redirect()->back();
     }
 
 
