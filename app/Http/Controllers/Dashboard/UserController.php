@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SearchFilterRequest;
+use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
@@ -12,7 +13,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 use Psr\Http\Message\ServerRequestInterface;
+use Psy\Util\Str;
 use function PHPUnit\Framework\isEmpty;
 use function PHPUnit\Framework\isNull;
 
@@ -58,8 +61,11 @@ class UserController extends Controller
         return view('dashboard.users.create');
     }
 
-    public function store(Request $request):RedirectResponse{
-        ds($request);
+    public function store(StoreUserRequest $request):RedirectResponse{
+        $validated = $request->validated();
+        $profileImage = $request->file('profile_image');
+        $uploaded = Storage::put(\Illuminate\Support\Str::uuid().'.'.$profileImage->getExtension(), $profileImage );
+
         return redirect()->back();
     }
 

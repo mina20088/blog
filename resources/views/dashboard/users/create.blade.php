@@ -26,15 +26,19 @@
 
         {{-- Main Form Content --}}
         <div class="xl:px-20">
-            <form class="flex flex-col gap-3" method="post" action="{{ route('dashboard.users.store') }}" >
+            <form class="flex flex-col gap-3" method="post" action="{{ route('dashboard.users.store') }}" enctype="multipart/form-data" >
+                {{-- CSRF Token and Error Display --}}
                 @csrf()
+                @ds($errors)
+
                 <div class="flex bg-gray-100 rounded-lg xs:mb-3  xs:flex-col xs:gap-2 md:gap-4
                             xs:py-3 xs:px-3 lg:py-10 lg:px-10">
                     <div class="flex xs:flex-col sm:flex-row gap-3 items-center w-full">
                         {{-- Profile Picture Upload --}}
                         <img src="{{ Vite::asset('resources/images/Aron.png') }}"
+                             width="300"
+                             height="300"
                              class="rounded-lg h-auto"
-                             width="150"
                              alt="Profile Preview"/>
 
                         <div class="w-full flex flex-col items-start gap-2">
@@ -50,8 +54,7 @@
                                         dark:bg-gray-700 dark:border-gray-600 focus:outline-none"
                                    id="profile_image"
                                    name="profile_image"
-                                   type="file"
-                                   accept="image/*">
+                                   type="file">
 
                             {{-- Bio Section --}}
                             <label for="message" class="block mb-2 text-base font-bold text-gray-900">Bio</label>
@@ -277,7 +280,6 @@
                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 xs:basis-full"
                                    placeholder="Instagram"/>
                         </div>
-
                     </div>
                 </div>
                 <div class="flex flex-row justify-end items-center gap-2 xs:mt-5">
