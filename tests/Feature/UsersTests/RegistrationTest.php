@@ -1,11 +1,9 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\UsersTests;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
