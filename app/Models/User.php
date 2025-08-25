@@ -1,19 +1,16 @@
 <?php
 
 namespace App\Models;
-use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\HigherOrderWhenProxy;
 use LaravelIdea\Helper\App\Models\_IH_User_QB;
-use function PHPUnit\Framework\isEmpty;
-use function PHPUnit\Framework\isNull;
+
 
 
 /**
@@ -33,6 +30,7 @@ class User extends Model
     ];
 
 
+
     protected $attributes = [
         'locked' => false
     ];
@@ -45,6 +43,7 @@ class User extends Model
         'password' => 'hashed',
         'locked' => 'boolean',
     ];
+     
 
     public function profile() :HasOne
     {
@@ -63,7 +62,7 @@ class User extends Model
         });
     }
 
-    protected function scopeFilterdSearch(Builder $query, string $searchParameter = null , array $filterdColumns = null ): _IH_User_QB|Builder|HigherOrderWhenProxy
+    protected function scopeFilterdSearch(Builder $query, string $searchParameter , array $filterdColumns ): _IH_User_QB|Builder|HigherOrderWhenProxy
     {
         $search = $searchParameter ?? '' ;
         $filters = $filterdColumns ?? [];
@@ -79,7 +78,7 @@ class User extends Model
 
     }
 
-    protected function scopeSort(Builder $query, string $sortColumn = null, string $dir = 'asc'): _IH_User_QB|Builder
+    protected function scopeSort(Builder $query, string $sortColumn, string $dir = 'asc'): _IH_User_QB|Builder
     {
         $column = $sortColumn ?? 'id';
         if($column === '-1'){

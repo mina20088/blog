@@ -6,6 +6,10 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Middleware\RateLimiterMiddleWare;
+use Illuminate\Support\Facades\Route;
+
+
+
 
 
 Route::controller(HomeController::class)->group(function(){
