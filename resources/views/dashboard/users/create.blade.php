@@ -29,8 +29,6 @@
             <form class="flex flex-col gap-3" method="post" action="{{ route('dashboard.users.store') }}" enctype="multipart/form-data" >
                 {{-- CSRF Token and Error Display --}}
                 @csrf()
-                @ds($errors)
-
                 <div class="flex bg-gray-100 rounded-lg xs:mb-3  xs:flex-col xs:gap-2 md:gap-4
                             xs:py-3 xs:px-3 lg:py-10 lg:px-10">
                     <div class="flex xs:flex-col sm:flex-row gap-3 items-center w-full">
@@ -66,7 +64,7 @@
                                              dark:placeholder-gray-400 dark:text-white
                                              dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                       name="bio"
-                                      placeholder="Add Bio..."></textarea>
+                                      placeholder="Add Bio...">{{ old('bio') }}</textarea>
                             <label for="git_hub_link" class="block mb-2 text-base font-bold text-gray-900">GitHub Repository Link</label>
                             <input type="url" id="git_hub_link" name="git_hub_link" value="{{ old('git_hub_link') }}" class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 ">
                         </div>
@@ -268,19 +266,20 @@
                         <div class="flex xs:flex-col md:flex-row md:items-center xs:basis-full">
                             <label for="twitter-profile"
                                    class="block font-medium text-gray-900 xs:font-bold md:basis-28 text-base">twitter:</label>
-                            <input type="url" name="twitter-profile" id="twitter-profile" value="{{ old('twitter-profile') }}"
+                            <input type="url" name="twitter_profile" id="twitter-profile" value="{{ old('twitter-profile') }}"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 xs:basis-full"
                                    placeholder="twitter-profile"/>
                         </div>
                         {{-- Zip/Postal Code Input: Optional field for user's postal code --}}
                         <div class="flex xs:flex-col md:flex-row md:items-center xs:basis-full">
                             <label for="Instagram"
-                                   class="block font-medium text-gray-900 xs:font-bold md:basis-28 text-base">zipCode:</label>
-                            <input type="url" name="Instagram" id="Instagram" value="{{ old('Instagram') }}"
+                                   class="block font-medium text-gray-900 xs:font-bold md:basis-28 text-base">instagram:</label>
+                            <input type="url" name="instagram" id="Instagram" value="{{ old('Instagram') }}"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 xs:basis-full"
                                    placeholder="Instagram"/>
                         </div>
                     </div>
+                    @ds($errors)
                 </div>
                 <div class="flex flex-row justify-end items-center gap-2 xs:mt-5">
                     <button type="submit"

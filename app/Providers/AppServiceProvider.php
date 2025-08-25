@@ -27,15 +27,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
 
-        RateLimiter::for('user-updates', function (Request $request) {
-          return Limit::perMinutes(2, 4)->by('user-updates')->response(function () use ($request) {
-                return redirect()
-                    ->route('user.update', ['username' => $request->username])
-                    ->withErrors(['email' => 'you have exceeded the limit for this update request please try again after '. RateLimiter::availableIn('user-updates') . ' seconds']);
-            });
-        });
-
-        Password::defaults(function () {
+        Password::defaults(static function () {
             return Password::min(8)->letters()->numbers()->mixedCase()->uncompromised();
         });
     }

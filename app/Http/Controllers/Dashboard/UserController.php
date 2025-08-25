@@ -64,7 +64,7 @@ class UserController extends Controller
     public function store(StoreUserRequest $request):RedirectResponse{
         $validated = $request->validated();
         $profileImage = $request->file('profile_image');
-        $uploaded = Storage::put(\Illuminate\Support\Str::uuid().'.'.$profileImage->getExtension(), $profileImage );
+        $uploaded = Storage::disk('local')->put(\Illuminate\Support\Str::uuid() . '.' . $profileImage->getClientOriginalExtension(), $profileImage);
 
         return redirect()->back();
     }

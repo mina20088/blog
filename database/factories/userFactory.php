@@ -24,7 +24,7 @@ class userFactory extends Factory
            'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
             'email' => $this->faker->unique()->safeEmail(),
-            'username' => $this->faker->unique()->username(),
+            'username' => $this->faker->unique()->regexify('[A-Za-z0-9_]{5,14}'),
             'password' => $this->faker->password(),
             'locked' => $this->faker->boolean(),
         ];

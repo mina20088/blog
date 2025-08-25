@@ -5,23 +5,19 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegistrationRequest;
 use App\Models\User;
-use App\Services\UsersService;
+use Illuminate\Http\RedirectResponse;
 
 
 class RegistrationController extends Controller
 {
 
-    public UsersService $usersService;
-
-    public function __construct(UsersService $usersService){
-        $this->usersService = $usersService;
-    }
     public function create()
     {
         return view('auth.register');
     }
 
-    public function store(RegistrationRequest $request){
+    public function store(RegistrationRequest $request): RedirectResponse
+    {
 
        $validated =  $request->validated();
 

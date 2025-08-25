@@ -21,6 +21,9 @@ class User extends Model
 {
     use SoftDeletes , HasFactory ;
 
+
+    protected $table = 'users';
+
     protected $fillable = [
         'first_name',
         'last_name',
@@ -43,7 +46,7 @@ class User extends Model
         'password' => 'hashed',
         'locked' => 'boolean',
     ];
-     
+
 
     public function profile() :HasOne
     {
@@ -62,7 +65,7 @@ class User extends Model
         });
     }
 
-    protected function scopeFilterdSearch(Builder $query, string $searchParameter , array $filterdColumns ): _IH_User_QB|Builder|HigherOrderWhenProxy
+    protected function scopeFilterdSearch(Builder $query, string $searchParameter = null , array $filterdColumns = null ): _IH_User_QB|Builder|HigherOrderWhenProxy
     {
         $search = $searchParameter ?? '' ;
         $filters = $filterdColumns ?? [];
@@ -78,7 +81,7 @@ class User extends Model
 
     }
 
-    protected function scopeSort(Builder $query, string $sortColumn, string $dir = 'asc'): _IH_User_QB|Builder
+    protected function scopeSort(Builder $query, string $sortColumn = null, string $dir = 'asc'): _IH_User_QB|Builder
     {
         $column = $sortColumn ?? 'id';
         if($column === '-1'){

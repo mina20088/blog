@@ -35,8 +35,8 @@ class RegistrationRequest extends FormRequest
         return [
             'firstName' => 'required|min:3',
             'lastName' => 'required',
-            'username' => 'required|min:3|max:15|unique:auth,username',
-            'email' => 'required|email|unique:auth,email',
+            'username' => 'required|min:3|max:15|unique:users,username',
+            'email' => 'required|email|unique:users,email',
             'password' => ['required', Password::defaults() ],
             'confirmPassword' => 'required|same:password'
         ];

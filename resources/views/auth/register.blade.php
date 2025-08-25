@@ -24,8 +24,8 @@
 
                 <x-flash_messages />
 
-                <form action="/register" method="post">
-                    @csrf
+                <form action="/register" method="post" enctype="multipart/form-data">
+                    @csrf()
                     <div class="grid xs:grid-cols-1 md:grid-cols-2 md:gap-2">
                         <div class="mt-4">
                             <label for="first_name" class="block text-sm font-medium text-gray-900 mb-1">
@@ -50,7 +50,7 @@
                             <label for="username" class="block text-sm font-medium text-gray-900 mb-1">
                                 username
                             </label>
-                            <input type="text" name="username" placeholder="username" value="{{ old('username') }}" id="username"
+                                <input type="text" name="username" placeholder="username" value="{{ old('username') }}" id="username"
                                 class="block w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm font-medium rounded-lg focus:ring-blue-500 focus:border-blue-500" />
                             <x-single-error field-name="username" />
                         </div>
