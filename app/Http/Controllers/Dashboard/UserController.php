@@ -36,6 +36,7 @@ class UserController extends Controller
             'users' => $users,
             'columns' => $columns,
         ]);
+
     }
 
     public function search(SearchFilterRequest $request): \Illuminate\Http\RedirectResponse
