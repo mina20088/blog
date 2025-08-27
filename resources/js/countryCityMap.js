@@ -143,32 +143,3 @@ export const CountryCityUtils = {
 
 // Usage Examples:
 
-console.log('=== Usage Examples ===');
-
-// Get cities for a specific country
-console.log('USA cities:', CountryCityMap.get('USA'));
-
-// Check if a city exists in a country
-console.log('Does USA have New York?', CountryCityUtils.hasCity('USA', 'New York')); // true
-
-// Find which country a city belongs to
-console.log('Paris is in:', CountryCityUtils.findCountryByCity('Paris')); // France
-
-// Get all countries
-console.log('Total countries:', CountryCityUtils.getCountryCount());
-
-// Get total cities
-console.log('Total cities:', CountryCityUtils.getCityCount());
-
-// Iterate through all countries and their cities
-console.log('\n=== All Countries and Cities ===');
-for (const [country, cities] of CountryCityMap) {
-    console.log(`${country}: ${cities.join(', ')}`);
-}
-
-// Search for countries
-console.log('\nCountries containing "United":', CountryCityUtils.searchCountries('United'));
-
-// Convert to regular object if needed
-const countryObject = CountryCityUtils.toObject();
-console.log('\nConverted to object:', Object.keys(countryObject).length, 'countries');

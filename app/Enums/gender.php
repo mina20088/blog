@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum gender: int
+enum Gender: int
 {
     case male = 1;
     case female = 0;

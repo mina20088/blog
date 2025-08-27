@@ -1,4 +1,4 @@
-@use (App\Enums\gender);
+@use (App\Enums\Gender);
 @use (App\Enums\CountryCity);
 @extends('layouts.dashboard')
 
@@ -7,12 +7,21 @@
 
 @section('content')
     {{-- Header Section --}}
-    <div x-data="{
-        show: false,
+    <div x-data= "
+    {
+        show:@js(Session::has('errors')),
         country: '',
-        countryList: Array.from(window.CountryCityMap.keys()),
-        cityList: []
-    }" class="my-10">
+        city: '',
+        countryList: window.CountryCityUtils.getAllCountries(),
+        cityList: (function(){
+            const oldCountry = '{{ old('country') }}';
+            if(oldCountry){
+                return window.CountryCityUtils.getCities(oldCountry);
+            }
+            return [];
+        })(),
+    }"
+    class="my-10">
         {{-- Page Header with Add More Button --}}
         <div class="flex xs:justify-between xs:items-center xs:py-8 lg:py-10 xl:px-20">
             <h1 class="font-bold xs:text-lg md:text-2xl">Create User</h1>
@@ -155,7 +164,7 @@
                             <label for="date_of_birth"
                                    class="block font-medium text-gray-900 md:basis-28 xs:font-bold text-base">gender:</label>
                             <div class="flex flex-row items-center gap-4">
-                                @foreach(gender::cases() as $gender)
+                                @foreach(Gender::cases() as $gender)
                                     <label for="{{ $gender->name }}"
                                            class="flex items-center gap-1 font-medium text-gray-900">
                                         <input id="{{$gender->name}}" type="radio" name="gender" value="{{ $gender->value }}"
@@ -182,23 +191,23 @@
                             <select id="countries"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     name="country" x-model="country" @change="cityList = window.CountryCityUtils.getCities(country)">
-                                <option :value="-1">Select Country</option>
+                                <option value="">Select Country</option>
                                 <template x-for="country in countryList" :key="country">
-                                    <option :value="{{ old('country') }}" x-text="country" ></option>
+                                    <option :value="country" x-text="country" :selected="country === '{{ old('country') }}'"></option>
                                 </template>
                             </select>
                         </div>
                         {{-- City Selection: Required dropdown that depends on selected country --}}
-                        <template x-if="country != '' && country != -1">
+                        <template x-if="country != ''">
                             <div class="flex xs:flex-col md:flex-row md:items-center gap-1">
                                 <label for="city"
                                        class="block font-medium text-gray-900 md:basis-28 xs:font-bold text-base">city:</label>
                                 <select id="city"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                         name="city" x-model="city">
-                                    <option>select city</option>
+                                    <option value="">select city</option>
                                     <template x-for="city in cityList" :key="city">
-                                        <option :value="{{ old('city') }}" x-text="city"></option>
+                                        <option :value="city" x-text="city" :selected="city === '{{ old('city') }}'"></option>
                                     </template>
                                 </select>
                             </div>
@@ -257,7 +266,7 @@
                     <div class="flex xs:flex-col md:flex-row md:items-center gap-4">
                         <label for="website"
                                class="block font-medium text-gray-900 xs:font-bold md:basis-[5.5rem] text-base">website:</label>
-                        <input type="url" name="website" id="website" value="{{ old('website') }}"
+                        <input type="text" name="website" id="website" value="{{ old('website') }}"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 xs:basis-full"
                                placeholder="website"/>
                     </div>
@@ -266,7 +275,7 @@
                         <div class="flex xs:flex-col md:flex-row md:items-center xs:basis-full">
                             <label for="twitter-profile"
                                    class="block font-medium text-gray-900 xs:font-bold md:basis-28 text-base">twitter:</label>
-                            <input type="url" name="twitter_profile" id="twitter-profile" value="{{ old('twitter-profile') }}"
+                            <input type="text" name="twitter_profile" id="twitter-profile" value="{{ old('twitter-profile') }}"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 xs:basis-full"
                                    placeholder="twitter-profile"/>
                         </div>
@@ -274,7 +283,7 @@
                         <div class="flex xs:flex-col md:flex-row md:items-center xs:basis-full">
                             <label for="Instagram"
                                    class="block font-medium text-gray-900 xs:font-bold md:basis-28 text-base">instagram:</label>
-                            <input type="url" name="instagram" id="Instagram" value="{{ old('Instagram') }}"
+                            <input type="text" name="instagram" id="Instagram" value="{{ old('Instagram') }}"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 xs:basis-full"
                                    placeholder="Instagram"/>
                         </div>
@@ -292,4 +301,5 @@
         </div>
 
     </div>
+
 @endsection
