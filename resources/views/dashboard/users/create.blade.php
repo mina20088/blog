@@ -59,8 +59,8 @@
                                 class="block w-full text-sm text-gray-900 border border-gray-300
                                         rounded-lg cursor-pointer bg-gray-50 dark:text-white
                                         dark:bg-gray-700 dark:border-gray-600 focus:outline-none"
-                                id="profile_image" name="profile_image" type="file">
-                            <x-single-error fieldName="profile_image" />
+                                id="profile_image" name="profile_picture" type="file">
+                            <x-single-error fieldName="profile_picture" />
 
                             {{-- Bio Section --}}
                             <label for="message" class="block mb-2 text-base font-bold text-gray-900">Bio</label>
@@ -77,8 +77,9 @@
 
                             <label for="git_hub_link" class="block mb-2 text-base font-bold text-gray-900">GitHub Repository
                                 Link</label>
-                            <input type="text" id="git_hub_link" name="git_hub_link" value="{{ old('git_hub_link') }}"
-                                class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 ">
+                            <input type="text" id="git_hub_link" name="github_repo_url" value="{{ old('github_repo_url') }}"
+                                class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="GitHub_url" />
                             <x-single-error fieldName="git_hub_link" />
                         </div>
 
@@ -102,7 +103,7 @@
                                 name:</label>
                             <input type="text" name="first_name" id="first_name" value="{{ old('first_name') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 xs:basis-full"
-                                placeholder="Enter first name" />
+                                placeholder="first name" />
 
                         </div>
                         <x-single-error fieldName="first_name" />
@@ -113,8 +114,7 @@
                                 name:</label>
                             <input type="text" name="last_name" id="last_name" value="{{ old('last_name') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 xs:basis-full"
-                                placeholder="Enter last name" />
-
+                                placeholder="last name" />
                         </div>
                         <x-single-error fieldName="last_name" />
                         {{-- Email Input: Required field for user's email address, must be unique and valid email format --}}
@@ -263,11 +263,10 @@
                         <div class="flex xs:flex-col md:flex-row md:items-center xs:basis-full">
                             <label for="zipCode"
                                 class="block font-medium text-gray-900 xs:font-bold md:basis-28 text-base">zipCode:</label>
-                            <input type="text" name="zipCode" id="zipCode" value="{{ old('zipCode') }}"
+                            <input type="text" name="zip_code" id="zipCode" value="{{ old('zip_code') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 xs:basis-full"
                                 placeholder="zipCode" />
                         </div>
-
                     </div>
                 </div>
                 <div x-show="show" x-transition:enter="transition ease-out duration-1000"
@@ -293,10 +292,10 @@
                             <div class="flex xs:flex-col md:flex-row md:items-center xs:basis-full">
                                 <label for="twitter-profile"
                                     class="block font-medium text-gray-900 xs:font-bold md:basis-28 text-base">twitter:</label>
-                                <input type="text" name="twitter_profile" id="twitter-profile"
+                                <input type="text" name="x_url" id="twitter-profile"
                                     value="{{ old('twitter-profile') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 xs:basis-full"
-                                    placeholder="twitter-profile" />
+                                    placeholder="x_url" />
 
                             </div>
                             <x-single-error fieldName="twitter_profile" />
@@ -306,12 +305,12 @@
                         <div class="flex xs:flex-col md:flex-row md:items-center xs:basis-full">
                             <label for="Instagram"
                                 class="block font-medium text-gray-900 xs:font-bold md:basis-28 text-base">instagram:</label>
-                            <input type="text" name="instagram" id="Instagram" value="{{ old('Instagram') }}"
+                            <input type="text" name="instagram_url" id="Instagram" value="{{ old('Instagram') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 xs:basis-full"
-                                placeholder="Instagram" />
+                                placeholder="instagram_url" />
 
                         </div>
-                        <x-single-error fieldName="instagram" />
+                        <x-single-error fieldName="instagram_url"/>
                         </div>
 
 

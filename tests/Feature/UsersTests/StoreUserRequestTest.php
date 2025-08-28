@@ -2,11 +2,12 @@
 
 namespace Tests\Feature\UsersTests;
 
-use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Str;
 use Tests\TestCase;
+use App\Models\User;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class StoreUserRequestTest extends TestCase
 {
@@ -214,42 +215,63 @@ class StoreUserRequestTest extends TestCase
     public function test_zip_code_is_string_or_nullable(): void
     {
         $response = $this->post('/dashboard/users', $this->validData(['zipCode' => null]));
+
         $response->assertSessionDoesntHaveErrors('zipCode');
 
         $response = $this->post('/dashboard/users', $this->validData(['zipCode' => 12345]));
+
         $response->assertSessionHasErrors('zipCode');
 
         $response = $this->post('/dashboard/users', $this->validData(['zipCode' => 'ABCDE']));
+
         $response->assertSessionDoesntHaveErrors('zipCode');
     }
 
     public function test_instagram_is_url_or_nullable(): void
     {
         $response = $this->post('/dashboard/users', $this->validData(['instagram' => null]));
+
         $response->assertSessionDoesntHaveErrors('instagram');
 
         $response = $this->post('/dashboard/users', $this->validData(['instagram' => 'not-a-url']));
+
         $response->assertSessionHasErrors('instagram');
 
         $response = $this->post('/dashboard/users', $this->validData(['instagram' => 'https://instagram.com/example']));
+
         $response->assertSessionDoesntHaveErrors('instagram');
     }
 
     public function test_website_is_url_or_nullable(): void
     {
         $response = $this->post('/dashboard/users', $this->validData(['website' => null]));
+
         $response->assertSessionDoesntHaveErrors('website');
 
         $response = $this->post('/dashboard/users', $this->validData(['website' => 'not-a-url']));
+
         $response->assertSessionHasErrors('website');
 
         $response = $this->post('/dashboard/users', $this->validData(['website' => 'https://example.com']));
+
         $response->assertSessionDoesntHaveErrors('website');
     }
 
     public function test_twitter_profile_is_url(): void
     {
         $response = $this->post('/dashboard/users', $this->validData(['twitter_profile' => 'https://twitter.com/example']));
+
         $response->assertSessionDoesntHaveErrors('twitter_profile');
+    }
+
+    public function test_only_users_data_returned()
+    {
+        $usersData = collect($this->validData())->only(['first_name', 'last_name','username' ,'email', 'password'])->toArray();
+
+        $userProfileData = collect($this->validData())->except(['first_name', 'last_name','username' ,'email', 'password'])->toArray();
+
+        foreach($usersData as $key => $value){
+            $this->assertArrayNotHasKey($key, $userProfileData);
+        }
     }
 }
