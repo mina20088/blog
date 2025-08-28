@@ -61,14 +61,15 @@ class UserController extends Controller
     {
         $validated = collect($request->validated());
 
-        $profileImage = $request->file('profile_image');
+        $profileImage = $request->file('profile_picture');
 
         $uploaded = Storage::disk('public')->put(Str::uuid() . '.' . $profileImage->getClientOriginalExtension(), $profileImage);
 
         $userData = $validated->only(['first_name', 'last_name', 'email','username', 'password'])->toArray();
 
-        $profileData = $validated->except(['first_name', 'last_name', 'email', 'password'])->toArray();
+        $profileData = $validated->except(['first_name', 'last_name', 'email', 'password', 'profile_picture'])->toArray();
 
+        $user = User::create($userData)->profile()->create(array_merge($profileData, ['profile_picture' => $uploaded]));
 
         return redirect()->back();
     }

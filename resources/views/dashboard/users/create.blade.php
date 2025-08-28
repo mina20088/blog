@@ -39,14 +39,14 @@
             <form class="flex flex-col gap-3" method="post" action="{{ route('dashboard.users.store') }}"
                 enctype="multipart/form-data">
                 {{-- CSRF Token and Error Display --}}
-                @csrf()
+                @csrf
                 <div
                     class="flex bg-gray-100 rounded-lg xs:mb-3  xs:flex-col xs:gap-2 md:gap-4
                             xs:py-3 xs:px-3 lg:py-10 lg:px-10">
                     <div class="flex xs:flex-col sm:flex-row gap-3 items-center w-full">
                         {{-- Profile Picture Upload --}}
-                        <img src="{{ Vite::asset('resources/images/Aron.png') }}"  height="300"
-                            class="rounded-lg xs:w-72 sm:w-48 md:w-72 h-auto" alt="Profile Preview"  />
+                        <img src="{{ Vite::asset('resources/images/Aron.png') }}" height="300"
+                            class="rounded-lg xs:w-72 sm:w-48 md:w-72 h-auto" alt="Profile Preview" />
 
                         <div class="w-full flex flex-col items-start gap-2">
                             <h1 class="font-bold text-xl">Profile Picture</h1>
@@ -77,10 +77,11 @@
 
                             <label for="git_hub_link" class="block mb-2 text-base font-bold text-gray-900">GitHub Repository
                                 Link</label>
-                            <input type="text" id="git_hub_link" name="github_repo_url" value="{{ old('github_repo_url') }}"
+                            <input type="text" id="git_hub_link" name="github_repo_url"
+                                value="{{ old('github_repo_url') }}"
                                 class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
                                 placeholder="GitHub_url" />
-                            <x-single-error fieldName="git_hub_link" />
+                            <x-single-error fieldName="github_repo_url" />
                         </div>
 
 
@@ -126,7 +127,7 @@
                                 placeholder="Enter email address" />
 
                         </div>
-                         <x-single-error fieldName="email" />
+                        <x-single-error fieldName="email" />
                         {{-- Username Input: Required field for user's unique username, alphanumeric characters only --}}
                         <div class="flex xs:flex-col md:flex-row md:items-center gap-1">
                             <label for="username"
@@ -136,7 +137,7 @@
                                 placeholder="Enter username" />
 
                         </div>
-                         <x-single-error fieldName="username" />
+                        <x-single-error fieldName="username" />
 
                         {{-- Password Input: Required field for user's password, minimum 8 characters with mix of letters, numbers, and symbols --}}
                         <div class="flex xs:flex-col md:flex-row md:items-center gap-1">
@@ -161,10 +162,10 @@
                                 class="block font-medium text-gray-900 md:basis-28 xs:font-bold text-base">birth-date:</label>
                             <input type="date" name="date_of_birth" id="date_of_birth"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 xs:basis-full"
-                                placeholder="Date Of Birth" />
+                                placeholder="Date Of Birth" value="{{ old('date_of_birth') }}" />
                         </div>
 
-                         <x-single-error fieldName="date_of_birth" />
+                        <x-single-error fieldName="date_of_birth" />
 
                         {{-- Gender Input: Optional radio selection for user's gender preference --}}
                         <div class="flex xs:flex xs:flex-col md:flex-row gap-3">
@@ -172,16 +173,20 @@
                                 class="block font-medium text-gray-900 md:basis-28 xs:font-bold text-base">gender:</label>
                             <div class="flex flex-row items-center gap-4">
                                 @foreach (Gender::cases() as $gender)
+                                    @php
+                                        $isChecked = (int)old('gender') === $gender->value;
+                                    @endphp
                                     <label for="{{ $gender->name }}"
                                         class="flex items-center gap-1 font-medium text-gray-900">
                                         <input id="{{ $gender->name }}" type="radio" name="gender"
-                                            value="{{ $gender->value }}"
+                                            value="{{ $gender->value }}" @checked($isChecked)
                                             class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300">
                                         {{ $gender->name }}
                                     </label>
                                 @endforeach
                             </div>
                         </div>
+                        <x-single-error fieldName="gender" />
 
                         {{-- Phone Number Input: Optional field for user's contact number --}}
                         <div class="flex xs:flex-col md:flex-row md:items-center gap-1">
@@ -288,29 +293,29 @@
                     <x-single-error fieldName="website" />
                     <div class="flex xs:flex-col md:flex-row md:items-center gap-3 xs:w-full">
                         <div class="basis-1/2">
-                             {{-- State/Province Input: Optional field for user's state or province --}}
+                            {{-- State/Province Input: Optional field for user's state or province --}}
                             <div class="flex xs:flex-col md:flex-row md:items-center xs:basis-full">
                                 <label for="twitter-profile"
                                     class="block font-medium text-gray-900 xs:font-bold md:basis-28 text-base">twitter:</label>
-                                <input type="text" name="x_url" id="twitter-profile"
-                                    value="{{ old('twitter-profile') }}"
+                                <input type="text" name="x_url" id="twitter-profile" value="{{ old('x_url') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 xs:basis-full"
                                     placeholder="x_url" />
 
                             </div>
-                            <x-single-error fieldName="twitter_profile" />
+                            <x-single-error fieldName="x_url" />
                         </div>
                         <div class="basis-1/2">
-                       {{-- Zip/Postal Code Input: Optional field for user's postal code --}}
-                        <div class="flex xs:flex-col md:flex-row md:items-center xs:basis-full">
-                            <label for="Instagram"
-                                class="block font-medium text-gray-900 xs:font-bold md:basis-28 text-base">instagram:</label>
-                            <input type="text" name="instagram_url" id="Instagram" value="{{ old('Instagram') }}"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 xs:basis-full"
-                                placeholder="instagram_url" />
+                            {{-- Zip/Postal Code Input: Optional field for user's postal code --}}
+                            <div class="flex xs:flex-col md:flex-row md:items-center xs:basis-full">
+                                <label for="Instagram"
+                                    class="block font-medium text-gray-900 xs:font-bold md:basis-28 text-base">instagram:</label>
+                                <input type="text" name="instagram_url" id="Instagram"
+                                    value="{{ old('instagram_url') }}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 xs:basis-full"
+                                    placeholder="instagram_url" />
 
-                        </div>
-                        <x-single-error fieldName="instagram_url"/>
+                            </div>
+                            <x-single-error fieldName="instagram_url" />
                         </div>
 
 

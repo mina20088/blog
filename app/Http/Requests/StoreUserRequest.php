@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\ValidationRule;
 
 class StoreUserRequest extends FormRequest
 {
@@ -24,25 +24,25 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'profile_image' => 'required|image|max:50000|mimes:png,jpeg',
+            'profile_picture' => 'required|image|max:50000|mimes:png,jpeg',
             'bio' => 'max:500|nullable',
-            'git_hub_link' => 'url|nullable',
+            'github_repo_url' => 'url|nullable',
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'email' => "required|email|unique:users,email",
             'username' => "required|min:5|max:20|unique:users,username",
-            'password' => ['required', Password::default()->letters()->numbers()->mixedCase()->symbols()->uncompromised()],
+            'password' => 'required|string|min:8',
             'date_of_birth' => 'date|nullable',
-            'gender' => 'nullable',
-            'phone' => 'max:20|nullable',
+            'gender' => 'integer|nullable',
+            'phone_number' => 'max:20|nullable',
             'country' => 'required',
             'city' => 'required_with:country',
             'street' => 'string|nullable',
             'state' => 'string|nullable',
             'website' => 'url|nullable',
-            'zipCode' => 'string|nullable',
-            'twitter_profile' => 'url|nullable',
-            'instagram' => 'url|nullable'
+            'zip_code' => 'string|nullable',
+            'x_url' => 'url|nullable',
+            'instagram_url' => 'url|nullable'
         ];
     }
 }

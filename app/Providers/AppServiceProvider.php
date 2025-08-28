@@ -28,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
     {
 
         Password::defaults(static function () {
-            return Password::min(8)->letters()->numbers()->mixedCase()->uncompromised();
+            return Password::min(8)->letters()->numbers()->mixedCase()->uncompromised(0);
         });
     }
 }

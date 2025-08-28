@@ -11,9 +11,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class FormHasCorrectNameAttribute extends TestCase
 {
     use refreshDatabase;
-        /**
-         * A basic feature test example.
-     */
+
     public function test_user_form_has_correct_name_attribute(): void
     {
 

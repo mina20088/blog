@@ -28,7 +28,7 @@ class Profile extends Model
     protected function casts(): array
     {
         return [
-            'gender' => gender::class
+            'gender' => 'integer'
         ];
     }
 

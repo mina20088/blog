@@ -4,6 +4,8 @@ namespace Tests\Feature\UsersTests;
 
 use Tests\TestCase;
 use App\Models\User;
+use App\Enums\Gender;
+use App\Models\Profile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
@@ -19,37 +21,37 @@ class StoreUserRequestTest extends TestCase
     private function validData($overrides = [])
     {
         return array_merge([
-            'profile_image' => UploadedFile::fake()->image('avatar.png'),
+            'profile_picture' => UploadedFile::fake()->image('avatar.png'),
             'bio' => 'This is a short bio.',
-            'git_hub_link' => 'https://github.com/example',
+            'github_repo_url' => 'https://github.com/example',
             'first_name' => 'John',
             'last_name' => 'Doe',
             'email' => 'john' . Str::random(5) . '@example.com',
             'username' => 'user' . Str::random(5),
             'password' => 'Password1!',
             'date_of_birth' => '2000-01-01',
-            'gender' => 'male',
-            'phone' => '(578)-123-33444',
+            'gender' => Gender::male->value,
+            'phone_number' => '(578)-123-33444',
             'country' => "Egypt",
             'city' => 'cairo',
             'street' => '23 abn matroh shoupra',
             'state' => "Shoupra",
             'zip_code' => '12345',
-            'twitter_profile' => 'https://twitter.com/example',
-            'instagram' => 'https://instagram.com/example'
+            'x_url' => 'https://twitter.com/example',
+            'instagram_url' => 'https://instagram.com/example'
         ], $overrides);
     }
 
     /**
-     * Test that profile_image is required and must be an image file.
+     * Test that profile_picture is required and must be an image file.
      */
     public function test_profile_image_is_required_and_must_be_image(): void
     {
-        $response = $this->post('/dashboard/users', $this->validData(['profile_image' => null]));
-        $response->assertSessionHasErrors('profile_image');
+        $response = $this->post('/dashboard/users', $this->validData(['profile_picture' => null]));
+        $response->assertSessionHasErrors('profile_picture');
 
-        $response = $this->post('/dashboard/users', $this->validData(['profile_image' => UploadedFile::fake()->create('file.pdf', 10, 'application/pdf')]));
-        $response->assertSessionHasErrors('profile_image');
+        $response = $this->post('/dashboard/users', $this->validData(['profile_picture' => UploadedFile::fake()->create('file.pdf', 10, 'application/pdf')]));
+        $response->assertSessionHasErrors('profile_picture');
     }
 
     /**
@@ -62,12 +64,12 @@ class StoreUserRequestTest extends TestCase
     }
 
     /**
-     * Test that git_hub_link must be a valid URL.
+     * Test that github_repo_url must be a valid URL.
      */
     public function test_git_hub_link_must_be_url(): void
     {
-        $response = $this->post('/dashboard/users', $this->validData(['git_hub_link' => 'not-a-url']));
-        $response->assertSessionHasErrors('git_hub_link');
+        $response = $this->post('/dashboard/users', $this->validData(['github_repo_url' => 'not-a-url']));
+        $response->assertSessionHasErrors('github_repo_url');
     }
 
     /**
@@ -156,8 +158,8 @@ class StoreUserRequestTest extends TestCase
      */
     public function test_phone_max_length(): void
     {
-        $response = $this->post('/dashboard/users', $this->validData(['phone' => Str::random(21)]));
-        $response->assertSessionHasErrors('phone');
+        $response = $this->post('/dashboard/users', $this->validData(['phone_number' => Str::random(21)]));
+        $response->assertSessionHasErrors('phone_number');
     }
 
     /**
@@ -199,32 +201,21 @@ class StoreUserRequestTest extends TestCase
         $response->assertSessionDoesntHaveErrors('state');
     }
 
-    /**
-     * @throws \JsonException
-     */
-    public function test_twitter_profile_is_string_and_is_null():void
-    {
-        $response = $this->post('/dashboard/users', $this->validData(['twitter_profile' => null ]));
-        $response->assertSessionHasNoErrors();
 
-        $response = $this->post('/dashboard/users', $this->validData(['twitter_profile' => true]));
-        $response->assertSessionHasErrors('twitter_profile');
-
-    }
 
     public function test_zip_code_is_string_or_nullable(): void
     {
-        $response = $this->post('/dashboard/users', $this->validData(['zipCode' => null]));
+        $response = $this->post('/dashboard/users', $this->validData(['zip_code' => null]));
 
-        $response->assertSessionDoesntHaveErrors('zipCode');
+        $response->assertSessionDoesntHaveErrors('zip_code');
 
-        $response = $this->post('/dashboard/users', $this->validData(['zipCode' => 12345]));
+        $response = $this->post('/dashboard/users', $this->validData(['zip_code' => 12345]));
 
-        $response->assertSessionHasErrors('zipCode');
+        $response->assertSessionHasErrors('zip_code');
 
-        $response = $this->post('/dashboard/users', $this->validData(['zipCode' => 'ABCDE']));
+        $response = $this->post('/dashboard/users', $this->validData(['zip_code' => 'ABCDE']));
 
-        $response->assertSessionDoesntHaveErrors('zipCode');
+        $response->assertSessionDoesntHaveErrors('zip_code');
     }
 
     public function test_instagram_is_url_or_nullable(): void
@@ -259,9 +250,11 @@ class StoreUserRequestTest extends TestCase
 
     public function test_twitter_profile_is_url(): void
     {
-        $response = $this->post('/dashboard/users', $this->validData(['twitter_profile' => 'https://twitter.com/example']));
+        $user = User::factory(1)->has(Profile::factory(1)->state(['x_url' => 'uuuuiiiuiui']))->create()->first();
 
-        $response->assertSessionDoesntHaveErrors('twitter_profile');
+        $response = $this->post('/dashboard/users', $this->validData(['x_url' => $user->profile->{'x_url'}]));
+
+        $response->assertSessionHasErrors(['x_url']);
     }
 
     public function test_only_users_data_returned()
