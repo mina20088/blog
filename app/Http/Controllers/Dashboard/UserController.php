@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Models\User ;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreUserRequest;
@@ -14,7 +14,7 @@ use App\Http\Requests\SearchFilterRequest;
 
 class UserController extends Controller
 {
-    public function index(request $request)
+    public function index(request $request) : View
     {
         $columns = User::listUsersTableColumns('password', 'email_verified_at', 'remember_token', 'deleted_at');
 
