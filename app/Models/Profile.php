@@ -20,6 +20,10 @@ class Profile extends Model
         'updated_at'
     ];
 
+    protected $attributes = [
+      'phone_number' => '000000000'
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

@@ -34,7 +34,7 @@ class StoreUserRequest extends FormRequest
             'password' => 'required|string|min:8',
             'date_of_birth' => 'date|nullable',
             'gender' => 'integer|nullable',
-            'phone_number' => 'max:20|nullable',
+            'phone_number' => 'required|max:20',
             'country' => 'required',
             'city' => 'required_with:country',
             'street' => 'string|nullable',

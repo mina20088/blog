@@ -3,16 +3,16 @@
 namespace App\Http\Requests;
 
 
+use Illuminate\Support\Str;
 use App\Traits\HandleRateLimiting;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Validator;
+use Illuminate\Validation\Rules\Password;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Contracts\Validation\Validator as ValidatorContract;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Validation\Rules\Password;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Validation\Validator;
-use Illuminate\Support\Str;
 
 class RegistrationRequest extends FormRequest
 {
@@ -33,11 +33,11 @@ class RegistrationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'firstName' => 'required|min:3',
-            'lastName' => 'required',
+            'first_name' => 'required|min:3',
+            'last_name' => 'required|min:3',
             'username' => 'required|min:3|max:15|unique:users,username',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8',
+            'password' => ['required', Password::min(8)->max(15)->letters()->numbers()->symbols()],
             'confirmPassword' => 'required|same:password'
         ];
     }

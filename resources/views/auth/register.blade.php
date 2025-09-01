@@ -31,17 +31,17 @@
                             <label for="first_name" class="block text-sm font-medium text-gray-900 mb-1">
                                 first name
                             </label>
-                            <input type="text" name="firstName" placeholder="first name" value="{{ old('firstName') }}" id="first_name"
+                            <input type="text" name="first_name" placeholder="first name" value="{{ old('first_name') }}" id="first_name"
                                 class="block w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm font-medium rounded-lg focus:ring-blue-500 focus:border-blue-500" />
-                            <x-single-error field-name="firstName" />
+                            <x-single-error field-name="first_name" />
                         </div>
                         <div class="mt-4">
                             <label for="last_name" class="block text-sm font-medium text-gray-900 mb-1">
                                 last name
                             </label>
-                            <input type="text" name="lastName" placeholder="last name" value="{{ old('lastName') }}" id="last_name"
+                            <input type="text" name="last_name" placeholder="last name" value="{{ old('last_name') }}" id="last_name"
                                 class="block w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm font-medium rounded-lg focus:ring-blue-500 focus:border-blue-500" />
-                            <x-single-error field-name="lastName" />
+                            <x-single-error field-name="last_name" />
                         </div>
                     </div>
 

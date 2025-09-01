@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Models\User;
-use Illuminate\Support\Str;
+use App\Models\User ;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreUserRequest;
@@ -61,15 +61,21 @@ class UserController extends Controller
     {
         $validated = collect($request->validated());
 
-        $profileImage = $request->file('profile_picture');
+        //$profileImage = $request->file('profile_picture')->store('profile', 'public');
 
-        $uploaded = Storage::disk('public')->put(Str::uuid() . '.' . $profileImage->getClientOriginalExtension(), $profileImage);
+        //$uploaded = Storage::disk('public')->put(Str::uuid() . '.' . $profileImage->getClientOriginalExtension(), $profileImage);
+        // $uploaded = Storage::put('profile/' . Str::uuid() . '.' . $profileImage->getClientOriginalExtension(), $profileImage, ['visibility' => 'public']);
+
+
 
         $userData = $validated->only(['first_name', 'last_name', 'email','username', 'password'])->toArray();
 
         $profileData = $validated->except(['first_name', 'last_name', 'email', 'password', 'profile_picture'])->toArray();
 
-        $user = User::create($userData)->profile()->create(array_merge($profileData, ['profile_picture' => $uploaded]));
+        $profileImage = Storage::putFile('profile', $request->file('profile_picture'), ['visibility' => 'public']);
+        $user = User::create($userData);
+        $user->profile()->create(array_merge($profileData, ['profile_picture' => $profileImage]));
+
 
         return redirect()->back();
     }

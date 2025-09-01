@@ -1,12 +1,12 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Middleware\RateLimiterMiddleWare;
+use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Dashboard\DashboardController;
-use App\Http\Controllers\Dashboard\UserController;
-use App\Http\Controllers\HomeController;
-use App\Http\Middleware\RateLimiterMiddleWare;
-use Illuminate\Support\Facades\Route;
 
 
 

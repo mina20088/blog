@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\RegistrationRequest;
 use App\Models\User;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\RegistrationRequest;
 
 
 class RegistrationController extends Controller
@@ -21,21 +21,15 @@ class RegistrationController extends Controller
 
        $validated =  $request->validated();
 
-       $createNewUser = User::create([
-           'first_name' => $validated['firstName'],
-           'last_name' => $validated['lastName'],
-           'email' => $validated['email'],
-           'username' => $validated['username'],
-           'password' => $validated['password'],
-       ]);
+        User::create([
+            'first_name' => $validated['first_name'],
+            'last_name' => $validated['last_name'],
+            'email' => $validated['email'],
+            'username' => $validated['username'],
+            'password' => $validated['password'],
+        ]);
 
-       if($createNewUser){
-           return redirect()->route('register')->with('success', 'Registration was successful!');
-       }
-
-       return redirect()->back()->with('failure', 'User could not be created');
-
-
+        return redirect()->route('register')->with('success', 'Registration was successful!');
 
     }
 }
