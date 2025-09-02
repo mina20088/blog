@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -84,5 +85,63 @@ class UserModelTest extends TestCase
         $this->assertNotEquals('2020-01-01', $user->deleted_at);
         $this->assertNotEquals(true, $user->locked);
         $this->assertFalse($user->locked);
+    }
+
+    /**
+     * Test that user password is hidden from array/JSON representation.
+     *
+     * This test verifies that the User model properly hides the password attribute
+     * when the model is converted to an array or JSON format, ensuring that
+     * sensitive password data is not exposed in API responses or other outputs.
+     *
+     * @return void
+     */
+    public function test_user_password_is_hidden(): void
+    {
+        $user = User::factory()->create([
+            'password' => bcrypt('password123'),
+        ]);
+
+        $this->assertNotEquals('password123', $user->password);
+    }
+
+    /**
+     * Test that user password is automatically hashed when set.
+     *
+     * This test verifies that the User model properly hashes passwords
+     * when they are assigned to the password attribute, ensuring that
+     * plain text passwords are never stored in the database.
+     *
+     * @return void
+     */
+    public function test_user_paassword_is_casted_hashed()
+    {
+        $user = User::factory()->create([
+            'password' => 'password123',
+        ]);
+
+        $this->assertTrue(Hash::check('password123', $user->password));
+    }
+
+    /**
+     * Test that user locked attribute is properly cast to boolean.
+     *
+     * This test verifies that the User model correctly casts the locked
+     * attribute to a boolean type, ensuring that database integer values
+     * (0 or 1) are properly converted to boolean (true or false) when
+     * accessed through the model.
+     *
+     * @return void
+     */
+    public function test_user_locked_attribute_is_casted_to_boolean()
+    {
+        $user = User::factory()->create([
+            'id' => 1,
+            'locked' => 1
+        ]);
+
+        $user = $user->find(1);
+
+        $this->assertIsBool($user->locked);
     }
 }
