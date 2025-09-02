@@ -16,14 +16,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 
 /**
- * @method static filterdSearch(array|string $searchParameter = null , mixed $filterdColumns ):_IH_User_QB|Builder|HigherOrderWhenProxy
+ * @method static filterdSearch(array|string $searchParameter = null, array $filterdColumns = []): _IH_User_QB|Builder|HigherOrderWhenProxy
  * @method static sort(mixed $get)
  */
 class User extends Model
 {
-    use SoftDeletes , HasFactory ;
-
-
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'first_name',
@@ -40,9 +38,8 @@ class User extends Model
         'deleted_at',
     ];
 
-
     protected $attributes = [
-        'locked' => false
+        'locked' => false,
     ];
 
     protected $hidden = [
@@ -54,16 +51,14 @@ class User extends Model
         'locked' => 'boolean',
     ];
 
-
-    public function profile() :HasOne
+    public function profile(): HasOne
     {
         return $this->hasOne(Profile::class);
     }
 
-
-    public function scopeSearch(Builder $query, string $value = ''): _IH_User_QB|Builder|HigherOrderWhenProxy
+    public function scopeSearch(Builder $query, string $value = '')
     {
-        return $query->when($value, function ($query) use ($value) {
+        $query->when($value, function ($query) use ($value) {
             $query
                 ->where('first_name', 'like', '%' . $value . '%')
                 ->orWhere('last_name', 'like', '%' . $value . '%')
@@ -72,26 +67,21 @@ class User extends Model
         });
     }
 
-    protected function scopeFilterdSearch(Builder $query, string $searchParameter = null , mixed $filterdColumns = null ): _IH_User_QB|Builder|HigherOrderWhenProxy
+    protected function scopeFilterdSearch(Builder $query, string $searchParameter = '', array $filterdColumns = [])
     {
-        $search = $searchParameter ?? '' ;
-        $filters = $filterdColumns ?? [];
-
-        return  $query->when($search  && $filters , function ($query) use ($search, $filters) {
-            $query->where(function ($query) use ($search, $filters) {
-                foreach ($filters as $column) {
-                    $query->orWhere($column , 'like', '%' . $search . '%');
+        $query->when($searchParameter || $filterdColumns, function ($query) use ($searchParameter, $filterdColumns) {
+            $query->where(function ($query) use ($searchParameter, $filterdColumns) {
+                foreach ($filterdColumns as $column) {
+                    $query->orWhere($column, 'like', '%' . $searchParameter . '%');
                 }
             });
-
         });
-
     }
 
     protected function scopeSort(Builder $query, string $sortColumn = null, string $dir = 'asc'): _IH_User_QB|Builder
     {
         $column = $sortColumn ?? 'id';
-        if($column === '-1'){
+        if ($column === '-1') {
             return $query->orderBy('id', $dir);
         }
         return $query->orderBy($column, $dir);
@@ -100,12 +90,8 @@ class User extends Model
     public static function listUsersTableColumns(string ...$except): array
     {
         $usersTableColumns = DB::getSchemaBuilder()->getColumnListing('users');
-
         $columns = array_combine($usersTableColumns, $usersTableColumns);
 
-        return Arr::except($columns,$except);
-
+        return Arr::except($columns, $except);
     }
-
-
 }

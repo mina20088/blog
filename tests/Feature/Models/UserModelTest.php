@@ -1,12 +1,16 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Models;
 
 use Tests\TestCase;
 use App\Models\User;
+use Hamcrest\Core\Set;
+use App\Models\Profile;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 
 /**
  * UserModelTest
@@ -21,6 +25,65 @@ class UserModelTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
+    protected Collection $user;
+    protected Collection $users;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = collect([
+            'first_name' => 'mina',
+            'last_name' => 'remon',
+            'email' => 'minaremonshaker@gmail.com',
+            'username' => 'mina20088',
+            'password' => 'password123',
+        ]);
+
+        $this->users = User::factory(5)->state(new Sequence(
+            [
+                'first_name' => 'georget',
+                'last_name' => 'wadi',
+                'email' => 'georget',
+                'username' => 'gyr99000',
+                'password' => 'password123',
+                'locked' => false,
+            ],
+            [
+                'first_name' => 'john',
+                'last_name' => 'doe',
+                'email' => 'john.doe@example.com',
+                'username' => 'johndoe',
+                'password' => 'securepass456',
+                'locked' => false,
+            ],
+            [
+                'first_name' => 'jane',
+                'last_name' => 'smith',
+                'email' => 'jane.smith@example.com',
+                'username' => 'janesmith',
+                'password' => 'mypassword789',
+                'locked' => true,
+            ],
+            [
+                'first_name' => 'bob',
+                'last_name' => 'wilson',
+                'email' => 'bob.wilson@test.com',
+                'username' => 'bobwilson',
+                'password' => 'testpass123',
+                'locked' => false,
+            ],
+            [
+                'first_name' => 'alice',
+                'last_name' => 'johnson',
+                'email' => 'alice.johnson@demo.com',
+                'username' => 'alicejohnson',
+                'password' => 'demopass456',
+                'locked' => true,
+            ],
+        ))->create();
+    }
+
     /**
      * Test that a user can be mass assigned with fillable attributes.
      *
@@ -33,21 +96,13 @@ class UserModelTest extends TestCase
     public function test_user_can_be_mass_assigned_with_fillable_attributes(): void
     {
 
-        $userData = [
-            'first_name' => $this->faker->firstName(),
-            'last_name' => $this->faker->lastName(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'username' => $this->faker->unique()->userName(),
-            'password' => 'password123',
-        ];
-
-        User::create($userData);
+        User::create($this->user->toArray());
 
         $this->assertDatabaseHas('users', [
-            'first_name' => $userData['first_name'],
-            'last_name' => $userData['last_name'],
-            'email' => $userData['email'],
-            'username' => $userData['username'],
+            'first_name' => $this->user->get('first_name'),
+            'last_name' => $this->user->get('last_name'),
+            'email' => $this->user->get('email'),
+            'username' => $this->user->get('username'),
         ]);
     }
 
@@ -63,18 +118,13 @@ class UserModelTest extends TestCase
      */
     public function test_user_guraded_attributes_is_not_fillable()
     {
-        $user = User::create([
-            'id' => "",
-            'first_name' => $this->faker->firstName(),
-            'last_name' => $this->faker->lastName(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'username' => $this->faker->unique()->userName(),
-            'password' => 'password123',
+        $user = User::create(array_merge($this->user->toArray(), [
+            'id' => '',
             'locked' => true,
             'updated_at' => '2020-01-01',
             'created_at' => '2020-01-01',
-            'deleted_at' => '2020-01-01',
-        ]);
+            'deleted_at' => '2020-01-01'
+        ]));
 
         $this->assertNotEquals("", $user->id);
         $this->assertNotNull($user->created_at);
@@ -136,12 +186,124 @@ class UserModelTest extends TestCase
     public function test_user_locked_attribute_is_casted_to_boolean()
     {
         $user = User::factory()->create([
-            'id' => 1,
             'locked' => 1
         ]);
 
         $user = $user->find(1);
 
         $this->assertIsBool($user->locked);
+    }
+
+    /**
+     * Test that user has a proper relationship with profile.
+     *
+     * This test verifies that the User model has a correctly configured
+     * relationship with the Profile model, ensuring that when a user is
+     * created with a profile, the relationship is properly established
+     * in the database.
+     *
+     * @return void
+     */
+    public function test_user_has_profile_releashion_ship()
+    {
+        $user = User::factory()->has(Profile::factory())->create();
+
+        $this->assertEquals($user->id, $user->profile->user_id);
+
+        $this->assertDatabaseHas('users', ['id' => $user->id]);
+
+        $this->assertDatabaseHas('profiles', ['user_id' => $user->id]);
+    }
+
+    /**
+     * Test that user search scope returns all results when search value is empty.
+     *
+     * This test verifies that the User model's search scope returns all users
+     * in the database when an empty string is provided as the search parameter,
+     * effectively behaving as a "show all" functionality.
+     *
+     * @return void
+     */
+    public function test_user_scope_search_returnes_results_when_value_is_empty()
+    {
+
+        $users = User::search('')->get();
+
+        $this->assertCount(5, $users);
+
+        $this->assertNotNull($users);
+
+        $this->assertNotEquals([], $users);
+    }
+
+    /**
+     * Test that user search scope returns filtered results when search value is provided.
+     *
+     * This test verifies that the User model's search scope correctly filters
+     * users based on the provided search term, matching against first name,
+     * email, and username fields. It confirms that only relevant users are
+     * returned in the search results.
+     *
+     * @return void
+     */
+    public function test_user_scope_search_returns_results_when_value_is_not_empty(): void
+    {
+
+        $users = User::search('j')->get();
+
+        $this->assertDatabaseCount('users', 5);
+
+        $this->assertCount(3, $users);
+
+        $this->assertContains('jane', $users->pluck('first_name'));
+
+        $this->assertContains('john.doe@example.com', $users->pluck('email'));
+
+        $this->assertContains('alicejohnson', $users->pluck('username'));
+
+        $this->assertContains('alice', $users->pluck('first_name'));
+    }
+
+    /**
+     * Test that filtered search scope returns all results when parameters are empty.
+     *
+     * This test verifies that the User model's filteredSearch scope returns
+     * all users when both the search term and filter array are empty,
+     * ensuring the method handles empty parameters gracefully.
+     *
+     * @return void
+     */
+    public function test_user_scope_filterd_search_get_results_when_there_parameter_are_empty()
+    {
+        $users = User::filterdSearch('', [])->get();
+
+        $this->assertCount(5, $users);
+
+        $this->assertNotContains([], $users);
+
+        $this->assertNotNull($users);
+    }
+
+    /**
+     * Test that filtered search scope works correctly with non-empty parameters.
+     *
+     * This test verifies that the User model's filteredSearch scope correctly
+     * applies both search terms and field filters. It tests that the method
+     * can filter results based on specific fields (like 'first_name') while
+     * also applying the search term, resulting in more refined search results.
+     *
+     * @return void
+     */
+    public function test_user_scope_filterd_search_get_results_when_there_parameter_are_not_empty()
+    {
+        $users = User::search('j')->filterdSearch('j', [])->get();
+
+        $this->assertCount(3, $users);
+
+        $users = User::search('j')->filterdSearch('j', ['first_name'])->get();
+
+        $this->assertCount(2, $users);
+
+        $this->assertNotContains([], $users);
     }
 }

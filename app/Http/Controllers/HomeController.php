@@ -2,25 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\SearchFilterRequest;
-use App\Mail\UnsubscribeMail;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\URL;
+use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
     public function home(){
-
-/*        $searchQuery = $request->query('search') ?? '';
-
-        $searchByQuery = $request->query('searchBy') ?? [];*/
-
-
-/*        $users = User::filterdSearch($searchQuery, $searchByQuery)
-            ->sort('first_name')
-            ->get();*/
-
 
         return view("home");
     }
