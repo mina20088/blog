@@ -1,17 +1,10 @@
 <?php
 
-use Illuminate\Support\Arr;
+use App\Models\User;
 use App\services\UsersService;
-use Illuminate\Support\Facades\Schema;
+
+$service = app(UsersService::class);
 
 
 
-
-$userService = app(UsersService::class);
-
-$users = $userService->search('j')->get();
-
-$users->count();
-
-
-
+$service->listUsersTableColumnsExcept('password','remember_token' ,'created_at', 'updated_at', 'deleted_at');

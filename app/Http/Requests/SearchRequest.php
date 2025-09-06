@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SearchFilterRequest extends FormRequest
+class SearchRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,21 +22,11 @@ class SearchFilterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'search' => 'required',
+            'search' => 'sometimes',
             'searchBy' => 'sometimes',
             'sortBy' => 'sometimes',
         ];
     }
-
-    public function messages(): array
-    {
-        return [
-            'search.required' => 'Please enter a search term',
-            'searchBy.required_with' => 'Please select a search option'
-        ];
-    }
-
-
 }
 
 

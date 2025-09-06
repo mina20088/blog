@@ -4,10 +4,10 @@ namespace Tests\Feature\Services;
 
 use Tests\TestCase;
 use App\Models\User;
+use Illuminate\Support\Arr;
 use App\services\UsersService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Database\Eloquent\Factories\Sequence;
-
 
 class UsersServiceTest extends TestCase
 {
@@ -65,8 +65,6 @@ class UsersServiceTest extends TestCase
         ))->create();
 
         $this->service = app(UsersService::class);
-
-
     }
     public function test_list_of_columns_users_table_returned()
     {
@@ -85,20 +83,72 @@ class UsersServiceTest extends TestCase
         $this->assertArrayHasKey('username', $listOfColumns);
     }
 
-    public function test_user_search_service_dose_not_return_empty_array()
+    public function test_dose_not_return_empty_when_search_term_is_empty_or_not_set()
     {
-        $users = $this->service->search('j')->get();
+       $users = $this->service
+            ->search()
+            ->getQuery()
+            ->get();
+
+        $this->assertCount(5 , $users);
 
         $this->assertNotEmpty($users);
 
     }
 
-    public function test_user_service_returns_three_items(){
+    public function test_dose_not_return_empty_array()
+    {
+        $users = $this->service
+            ->search('j')
+            ->getQuery()
+            ->get();
 
-         $users = $this->service->search('j')->get();
-
-         $this->assertCount(3, $users);
+        $this->assertNotEmpty($users);
     }
 
-    
+    public function test_returns_three_items()
+    {
+
+        $users = $this->service
+            ->search('j')
+            ->getQuery()
+            ->get();
+
+        $this->assertCount(3, $users);
+    }
+
+    public function test_contains_first_name_has_j_letter()
+    {
+        $users = $this->service
+            ->search('j')
+            ->getQuery()
+            ->get();
+
+        $this->assertTrue($users->contains('first_name', 'john'));
+
+        $this->assertTrue($users->contains('first_name', 'jane'));
+    }
+
+    public function test_returns_two_items_when_searhBy_first_name_is_set()
+    {
+        $users = $this->service
+            ->search('j', ['first_name'])
+            ->getQuery()
+            ->get();
+        $this->assertCount(2, $users);
+    }
+
+    public function test_result_is_sortable()
+    {
+        $users = $this->service
+            ->search()
+            ->sort('first_name')
+            ->getQuery()
+            ->get();
+
+        $first_names = Arr::flatten($users->pluck('first_name'));
+
+        $this->assertEquals(["alice",'bob', 'georget', 'jane', 'john'], $first_names);
+
+    }
 }

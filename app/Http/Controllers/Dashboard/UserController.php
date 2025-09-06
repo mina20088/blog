@@ -1,11 +1,15 @@
-<?php /** @noinspection PhpVoidFunctionResultUsedInspection */
+<?php
+
+/** @noinspection PhpVoidFunctionResultUsedInspection */
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Models\User ;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\services\UsersService;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SearchRequest;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreUserRequest;
 use Illuminate\Support\Facades\Session;
@@ -14,35 +18,22 @@ use App\Http\Requests\SearchFilterRequest;
 
 class UserController extends Controller
 {
-    public function index(request $request) : View
+    public function index(SearchRequest $request, UsersService $userService): View
     {
-        $columns = User::listUsersTableColumns('password', 'email_verified_at', 'remember_token', 'deleted_at');
+        $columns = $userService->listUsersTableColumnsExcept('password','remember_token' ,'created_at', 'updated_at', 'deleted_at');
 
-        if (Session::has('results')) {
-            $users = Session::get('results');
-        } else {
-            $users = User::sort($request->input('sortBy'), $request->input('dir') ?? 'asc')->get();
-        }
+        $users = $userService
+            ->search($request->input('search')?? '', $request->input('searchBy') ?? [])
+            ->sort($request->input('sortBy') ?? 'id')
+            ->getQuery()
+            ->get();
 
         return view('dashboard.users.index', [
             'users' => $users,
             'columns' => $columns,
         ]);
-
     }
 
-    public function search(SearchFilterRequest $request): RedirectResponse
-    {
-
-        $validated = collect($request->validated());
-
-        $users = User::filterdSearch($validated->get('search',''), $validated->get('searchBy', []))
-            ->sort($validated->get('sortBy'))->get();
-
-        Session::put('results', $users);
-
-        return redirect()->route('dashboard.users')->withInput();
-    }
 
     public function resetFilters(): RedirectResponse
     {
@@ -51,13 +42,13 @@ class UserController extends Controller
         return redirect()->route('dashboard.users');
     }
 
-    public function create(){
+    public function create()
+    {
 
         return view('dashboard.users.create');
-
     }
 
-    public function store(StoreUserRequest $request):RedirectResponse
+    public function store(StoreUserRequest $request): RedirectResponse
     {
         $validated = collect($request->validated());
 
@@ -68,7 +59,7 @@ class UserController extends Controller
 
 
 
-        $userData = $validated->only(['first_name', 'last_name', 'email','username', 'password'])->toArray();
+        $userData = $validated->only(['first_name', 'last_name', 'email', 'username', 'password'])->toArray();
 
         $profileData = $validated->except(['first_name', 'last_name', 'email', 'password', 'profile_picture'])->toArray();
 
@@ -79,6 +70,4 @@ class UserController extends Controller
 
         return redirect()->back();
     }
-
-
 }

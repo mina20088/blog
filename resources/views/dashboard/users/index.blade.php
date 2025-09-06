@@ -1,4 +1,4 @@
-@use(App\Helpers\ViewHelpers);
+@use(App\Helpers\DashboardUsersViewHelpers);
 @use(Illuminate\Support\Facades\Session)
 @extends('layouts.dashboard')
 @section('title', 'users')
@@ -29,22 +29,21 @@
             x-transition:leave-start="opacity-100 translate-y-0"
             x-transition:leave-end="opacity-20 -translate-y-20"
         >
-            <form class="flex flex-col xs:gap-3 m-0" method="post" action="{{ route('dashboard.users.search') }}">
-                @csrf
+            <form class="flex flex-col xs:gap-3 m-0" method="Get" action="{{ route('dashboard.users') }}">
                 <div class="flex xs:flex-col md:flex-row justify-between xs:gap-3">
                     <input type="text" id="large-input"
                            class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
                            name="search"
-                           value="{{old('search')}}"
+                           value="{{ request('search', old('search')) }}"
                            placeholder="search...">
 
                     <select
                         class="g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 "
                         name="sortBy">
-                        <option value="-1">Sort By</option>
+                        <option value="">Sort By</option>
                         @foreach($columns as $column)
                             <option
-                                value="{{ $column }}" @selected(old('sortBy', '-1') === $column )>{{ $column }}</option>
+                                value="{{ $column }}" @selected(request('sortBy') === $column ?? '')>{{ $column }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -59,22 +58,24 @@
                                     id="{{ $column }}" type="checkbox"
                                     value="{{ $column }}"
                                     name="searchBy[]"
-                                    @checked(in_array($column,old('searchBy', []),true))
+                                    @checked(in_array($column,request('searchBy')?? []))
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500">
                                 <label for="checkbox-1"
                                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ $column }}</label>
                             </div>
                         @endforeach
+                        @ds(request('searchBy'))
                     </div>
                     <x-single-error field-name="searchBy"/>
                 </div>
+
                 <div class="">
                     <button type="submit"
                             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                         Apply
                     </button>
 
-                    @if(Session::has('results'))
+                    @if(DashboardUsersViewHelpers::requestHas())
                         <a
                             href="{{ route('dashboard.users.reset-filters') }}"
                             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
@@ -99,7 +100,7 @@
 
                     <div class="flex items-center gap-2">
 
-                        <a href="{{ route('dashboard.users', ['sortBy' => 'id' , 'dir' => ViewHelpers::sortTogglers(request())]) }}">
+                        <a href="{{ route('dashboard.users', ['sortBy' => 'id' , 'dir' => DashboardUsersViewHelpers::sortTogglers(request())]) }}">
                             <span>#</span>
                         </a>
                         <x-svgs.sort class="w-3" upper-color="#acb0b7"/>
@@ -107,7 +108,7 @@
                 </th>
                 <th scope="col" class="px-6 py-3">
                     <div class="flex items-center gap-2">
-                        <a href="{{ route('dashboard.users', ['sortBy' => 'first_name', 'dir' => ViewHelpers::sortTogglers(request())]) }}">
+                        <a href="{{ route('dashboard.users', ['sortBy' => 'first_name', 'dir' => DashboardUsersViewHelpers::sortTogglers(request())]) }}">
                             <span>Full Name</span>
                         </a>
                         <x-svgs.sort class="w-3" upper-color="#acb0b7"/>
@@ -116,7 +117,7 @@
                 </th>
                 <th scope="col" class="px-6 py-3">
                     <div class="flex items-center gap-2">
-                        <a href="{{ route('dashboard.users' , ['sortBy' => 'email' , 'dir' => ViewHelpers::sortTogglers(request())])  }}">
+                        <a href="{{ route('dashboard.users' , ['sortBy' => 'email' , 'dir' => DashboardUsersViewHelpers::sortTogglers(request())])  }}">
                             <span>Email</span>
                         </a>
                         <x-svgs.sort class="w-3" upper-color="#acb0b7"/>
@@ -124,7 +125,7 @@
                 </th>
                 <th scope="col" class="px-6 py-3">
                     <div class="flex items-center gap-2">
-                        <a href="{{ route('dashboard.users' , ['sortBy' => 'username', 'dir' => ViewHelpers::sortTogglers(request())])  }}">
+                        <a href="{{ route('dashboard.users' , ['sortBy' => 'username', 'dir' => DashboardUsersViewHelpers::sortTogglers(request())])  }}">
                             <span>Username</span>
                         </a>
                         <x-svgs.sort class="w-3" upper-color="#acb0b7"/>
@@ -133,7 +134,7 @@
                 </th>
                 <th scope="col" class="px-6 py-3">
                     <div class="flex items-center gap-2">
-                        <a href="{{route('dashboard.users' , ['sortBy' ,'locked', 'dir'=> ViewHelpers::sortTogglers(request())])}}">
+                        <a href="{{route('dashboard.users' , ['sortBy' ,'locked', 'dir'=> DashboardUsersViewHelpers::sortTogglers(request())])}}">
                             <span>Active</span>
                         </a>
                         <x-svgs.sort class="w-3" upper-color="#acb0b7"/>
