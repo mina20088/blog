@@ -36,7 +36,7 @@ class UserController extends Controller
 
         $validated = collect($request->validated());
 
-        $users = User::filterdSearch($validated->get('search'), $validated->get('searchBy'))
+        $users = User::filterdSearch($validated->get('search',''), $validated->get('searchBy', []))
             ->sort($validated->get('sortBy'))->get();
 
         Session::put('results', $users);

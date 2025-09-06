@@ -2,10 +2,10 @@
 
 namespace App\Traits;
 
+use Ra;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Validation\ValidationException;
 
 trait HandleRateLimiting
 {
@@ -19,7 +19,7 @@ trait HandleRateLimiting
 
         if (RateLimiter::tooManyAttempts($name, $maxAttempts)) {
 
-            $seconds = \RateLimiter::availableIn($name);
+            $seconds = RateLimiter::availableIn($name);
 
              $this->message = 'you have exceeded the limit for this request try after ' . $seconds . ' seconds';
 
@@ -27,7 +27,7 @@ trait HandleRateLimiting
                 'time' => Carbon::now() ,
                 'decayAfter' => $seconds,
                 'message' => $this->message,
-                'attempts' => \RateLimiter::attempts($name),
+                'attempts' => RateLimiter::attempts($name),
                 'tryAt' => Carbon::now()->addSeconds($seconds)
             ]);
 

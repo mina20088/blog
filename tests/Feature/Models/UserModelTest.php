@@ -4,7 +4,6 @@ namespace Tests\Feature\Models;
 
 use Tests\TestCase;
 use App\Models\User;
-use Hamcrest\Core\Set;
 use App\Models\Profile;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;

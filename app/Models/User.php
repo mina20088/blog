@@ -5,15 +5,14 @@ namespace App\Models;
 use App\Models\Profile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\HigherOrderWhenProxy;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use LaravelIdea\Helper\App\Models\_IH_User_QB;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
-
 
 /**
  * @method static filterdSearch(array|string $searchParameter = null, array $filterdColumns = []): _IH_User_QB|Builder|HigherOrderWhenProxy
@@ -56,25 +55,44 @@ class User extends Model
         return $this->hasOne(Profile::class);
     }
 
-    public function scopeSearch(Builder $query, string $value = '')
-    {
-        $query->when($value, function ($query) use ($value) {
-            $query
-                ->where('first_name', 'like', '%' . $value . '%')
-                ->orWhere('last_name', 'like', '%' . $value . '%')
-                ->orWhere('username', 'like', '%' . $value . '%')
-                ->orWhere('email', 'like', '%' . $value . '%');
+    // public function scopeSearch(Builder $query, string $value = '')
+    // {
+    //     $query->when($value, function ($query) use ($value) {
+    //         $query
+    //             ->where('first_name', 'like', '%' . $value . '%')
+    //             ->orWhere('last_name', 'like', '%' . $value . '%')
+    //             ->orWhere('username', 'like', '%' . $value . '%')
+    //             ->orWhere('email', 'like', '%' . $value . '%');
+    //     });
+    // }
+
+    // protected function scopeFilterdSearch(Builder $query, string $searchParameter = '', array $filterdColumns = [])
+    // {
+    //     $query->when($searchParameter || $filterdColumns, function ($query) use ($searchParameter, $filterdColumns) {
+    //         $query->where(function ($query) use ($searchParameter, $filterdColumns) {
+    //             foreach ($filterdColumns as $column) {
+    //                 $query->orWhere($column, 'like', '%' . $searchParameter . '%');
+    //             }
+    //         });
+    //     });
+    // }
+
+    #[Scope]
+    protected function search(Builder $query, string $searchTerm){
+        $usersTableColumns = collect(Schema::getColumnListing('users'));
+        $query->where(function($query) use($usersTableColumns, $searchTerm){
+            foreach($usersTableColumns as $column)
+            {
+                $query->orWhere($column , 'like' , '%' . $searchTerm . '%');
+            }
         });
     }
 
-    protected function scopeFilterdSearch(Builder $query, string $searchParameter = '', array $filterdColumns = [])
-    {
-        $query->when($searchParameter || $filterdColumns, function ($query) use ($searchParameter, $filterdColumns) {
-            $query->where(function ($query) use ($searchParameter, $filterdColumns) {
-                foreach ($filterdColumns as $column) {
-                    $query->orWhere($column, 'like', '%' . $searchParameter . '%');
-                }
-            });
+
+    #[Scope]
+    protected function filters(Builder $query , string $searchFilter){
+        $query->when(isset($searchFilter), function($query){
+
         });
     }
 

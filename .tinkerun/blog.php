@@ -1,7 +1,17 @@
 <?php
 
-use App\Models\User;
-use Illuminate\Database\Eloquent\Factories\Sequence;
+use Illuminate\Support\Arr;
+use App\services\UsersService;
+use Illuminate\Support\Facades\Schema;
 
 
- $users = User::search('j')->filterdSearch('j', ['first_name'])->get();
+
+
+$userService = app(UsersService::class);
+
+$users = $userService->search('j')->get();
+
+$users->count();
+
+
+

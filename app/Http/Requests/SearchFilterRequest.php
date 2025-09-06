@@ -2,10 +2,7 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Validator;
-use function PHPUnit\Framework\isNull;
 
 class SearchFilterRequest extends FormRequest
 {
@@ -26,7 +23,7 @@ class SearchFilterRequest extends FormRequest
     {
         return [
             'search' => 'required',
-            'searchBy' => 'required_with:search',
+            'searchBy' => 'sometimes',
             'sortBy' => 'sometimes',
         ];
     }
