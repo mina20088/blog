@@ -5,40 +5,35 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\User;
-use Illuminate\Http\Request;
 use App\services\UsersService;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SearchRequest;
+use App\Traits\HandlesUserOperations;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreUserRequest;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\SearchFilterRequest;
 
 class UserController extends Controller
 {
+    use HandlesUserOperations;
+
+
     public function index(SearchRequest $request, UsersService $userService): View
     {
-        $columns = $userService->listUsersTableColumnsExcept('password','remember_token' ,'created_at', 'updated_at', 'deleted_at');
+        $users = $this->getUsers($userService, $request->input('search') ?? '', $request->input('searchBy') ?? [], $request->input('sortBy') ?? 'id', $request->input('dir') ?? 'asc');
 
-        $users = $userService
-            ->search($request->input('search')?? '', $request->input('searchBy') ?? [])
-            ->sort($request->input('sortBy') ?? 'id')
-            ->getQuery()
-            ->get();
+        $columns =  $this->getUsersTableColumnNameList($userService);
 
         return view('dashboard.users.index', [
             'users' => $users,
-            'columns' => $columns,
+            'columns' => $columns
         ]);
     }
 
 
     public function resetFilters(): RedirectResponse
     {
-        Session::forget('results');
-
         return redirect()->route('dashboard.users');
     }
 
