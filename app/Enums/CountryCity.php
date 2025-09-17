@@ -97,41 +97,4 @@ enum CountryCity: string
         }
         return $cities;
     }
-    public static function get(self $country): array
-    {
-        return $country->getCities();
-    }
 }
-
-// Usage Examples:
-
-// Get all cities for a specific country
-$usaCities = CountryCity::USA->getCities();
-print_r($usaCities);
-
-// Check if a city exists in a country
-$hasNewYork = CountryCity::USA->hasCity('New York'); // true
-
-// Find which country a city belongs to
-$country = CountryCity::findCountryByCity('Paris');
-echo $country?->getCountryName(); // "FRANCE"
-
-// Get all countries
-$allCountries = CountryCity::getAllCountries();
-
-// Get total number of cities for a country
-$cityCount = CountryCity::GERMANY->getCityCount(); // 10
-
-
-
-// Iterate through all countries and their cities
-foreach (CountryCity::cases() as $country) {
-    echo $country->getCountryName() . ":\n";
-    foreach ($country->getCities() as $city) {
-        echo "  - $city\n";
-    }
-    echo "\n";
-}
-
-
-
