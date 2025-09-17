@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Helpers\Logger;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;

@@ -4,7 +4,6 @@ namespace Tests\Feature\Dashboard;
 
 use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Support\Testing\Fakes\Fake;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Database\Eloquent\Factories\Sequence;

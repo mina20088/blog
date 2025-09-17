@@ -2,12 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use App\Http\Requests\AuthRequest;
 use App\Traits\HandleRateLimiting;
 use Closure;
-use Illuminate\Cache\RateLimiter;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
 class RateLimiterMiddleWare

@@ -2,17 +2,9 @@
 
 namespace App\Http\Requests;
 
-
-use Illuminate\Support\Str;
-use App\Traits\HandleRateLimiting;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Validation\Validator;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Contracts\Validation\Validator as ValidatorContract;
 
 class RegistrationRequest extends FormRequest
 {

@@ -11,10 +11,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SearchRequest;
 use App\Traits\HandlesUserOperations;
 use Illuminate\Http\RedirectResponse;
-use Spatie\QueryBuilder\QueryBuilder;
 use App\Http\Requests\StoreUserRequest;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Database\Eloquent\Builder;
 
 class UserController extends Controller
 {

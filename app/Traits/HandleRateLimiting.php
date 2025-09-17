@@ -2,7 +2,6 @@
 
 namespace App\Traits;
 
-use Ra;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\RateLimiter;

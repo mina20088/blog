@@ -82,8 +82,6 @@ class UsersService
         return $this;
     }
 
-
-
     public function getQuery(): Builder
     {
         return $this->query;

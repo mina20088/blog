@@ -7,7 +7,6 @@ namespace App\Traits;
 use Illuminate\Http\Request;
 use App\services\UsersService;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Builder;
 
 trait HandlesUserOperations
 {

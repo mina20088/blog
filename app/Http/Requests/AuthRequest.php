@@ -3,12 +3,8 @@
 namespace App\Http\Requests;
 
 use App\Traits\HandleRateLimiting;
-use Illuminate\Contracts\Validation\Factory as ValidationFactory;
 use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Validation\ValidationException;
 
 
 class AuthRequest extends FormRequest
