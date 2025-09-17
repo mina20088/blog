@@ -2,13 +2,15 @@
 
 namespace App\services;
 
+use Exception;
+use App\Models\User;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Builder;
-
 
 class UsersService
 {
     protected Builder $query;
+
 
     public function __construct(Builder $query)
     {
@@ -32,31 +34,54 @@ class UsersService
             ->toArray();
     }
 
-    public function search(string $searchTerm = '', array $searchBy = []): self
+
+
+    public function whereFirstName(string $term = ''): self
     {
 
-        if (!$searchTerm || empty($searchTerm)) {
-            return $this;
+        $this->query->where('first_name' , 'like', "%{$term}%");
+
+        return $this;
+    }
+
+    public function whereLastName(string $term = '')
+    {
+
+        $this->query->orWhere('last_name' , 'like', "%{$term}%");
+
+        return $this;
+    }
+
+    public function whereEmail(string $term = '')
+    {
+
+        $this->query->orWhere('email' , 'like', "%{$term}%");
+
+        return $this;
+    }
+
+    public function whereUsername(string $term = '')
+    {
+
+        $this->query->orWhere('username' , 'like', "%{$term}%");
+
+        return $this;
+    }
+
+    public function whereAny(string $term = '', array $feilds = [])
+    {
+        if(!isset($feilds))
+        {
+            return new Exception('feilds need to be not empty', '303');
         }
 
-        if (!$searchBy) {
-            $this->query->whereAny(['id', 'first_name', 'last_name', 'email', 'username'], 'like', '%' . $searchTerm . '%');
-        } else {
-            $this->query->whereAny($searchBy, 'like', '%' . $searchTerm . '%');
+        foreach ($feilds as $feild) {
+            $this->query->orWhere($feild , 'like' , "%{$term}%");
         }
 
         return $this;
     }
 
-    public function sort(string $sortTerm, string $sortDiriction = 'asc')
-    {
-        $this->query->when($sortDiriction, function (Builder $query) use ($sortTerm, $sortDiriction) {
-            $query->orderBy($sortTerm, $sortDiriction);
-        });
-
-
-        return $this;
-    }
 
 
     public function getQuery(): Builder

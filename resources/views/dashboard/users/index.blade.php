@@ -35,6 +35,7 @@
                            class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
                            name="search"
                            value="{{ request('search', old('search')) }}"
+                           value = ""
                            placeholder="search...">
 
                     <select
@@ -47,7 +48,6 @@
                         @endforeach
                     </select>
                 </div>
-                <x-single-error field-name="search"/>
                 <div class="flex flex-col xs:items-start  md:items-center">
 
                     <div class="flex xs:flex-col xs:justify-start md:flex-row md:flex-wrap  items-start mb-4 gap-2">
@@ -64,9 +64,7 @@
                                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ $column }}</label>
                             </div>
                         @endforeach
-                        @ds(request('searchBy'))
                     </div>
-                    <x-single-error field-name="searchBy"/>
                 </div>
 
                 <div class="">

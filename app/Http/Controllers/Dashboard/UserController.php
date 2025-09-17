@@ -11,8 +11,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SearchRequest;
 use App\Traits\HandlesUserOperations;
 use Illuminate\Http\RedirectResponse;
+use Spatie\QueryBuilder\QueryBuilder;
 use App\Http\Requests\StoreUserRequest;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Builder;
 
 class UserController extends Controller
 {
@@ -21,7 +23,9 @@ class UserController extends Controller
 
     public function index(SearchRequest $request, UsersService $userService): View
     {
-        $users = $this->getUsers($userService, $request->input('search') ?? '', $request->input('searchBy') ?? [], $request->input('sortBy') ?? 'id', $request->input('dir') ?? 'asc');
+        // $users = $this->getUsers($userService, $request->input('search') ?? '', $request->input('searchBy') ?? [], $request->input('sortBy') ?? 'id', $request->input('dir') ?? 'asc');
+
+        $users = $this->setup($request, $userService)->search();
 
         $columns =  $this->getUsersTableColumnNameList($userService);
 
