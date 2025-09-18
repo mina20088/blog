@@ -36,48 +36,56 @@ class UsersService
 
 
 
-    public function whereFirstName(string $term = ''): self
+    public function whereFirstName(string $term): self
     {
-
-        $this->query->where('first_name' , 'like', "%{$term}%");
+        $this->query->where('first_name', 'like', "%{$term}%");
 
         return $this;
     }
 
-    public function whereLastName(string $term = '')
+    public function whereLastName(string $term): self
     {
-
-        $this->query->orWhere('last_name' , 'like', "%{$term}%");
+        $this->query->orWhere('last_name', 'like', "%{$term}%");
 
         return $this;
     }
 
-    public function whereEmail(string $term = '')
+    public function whereEmail(string $term): self
     {
 
-        $this->query->orWhere('email' , 'like', "%{$term}%");
+        $this->query->orWhere('email', 'like', "%{$term}%");
 
         return $this;
     }
 
-    public function whereUsername(string $term = '')
+    public function whereUsername(string $term): self
     {
 
-        $this->query->orWhere('username' , 'like', "%{$term}%");
+        $this->query->orWhere('username', 'like', "%{$term}%");
 
         return $this;
     }
 
-    public function whereAny(string $term = '', array $feilds = [])
+    public function whereAny(string $term = '', array $fields = []): self
     {
-        if(!isset($feilds))
-        {
-            return new Exception('feilds need to be not empty', '303');
+        foreach ($fields as $field) {
+
+            $this->query->orWhere($field, 'like', "%{$term}%");
         }
 
-        foreach ($feilds as $feild) {
-            $this->query->orWhere($feild , 'like' , "%{$term}%");
-        }
+        return $this;
+    }
+
+    public function orderBy(string $column = 'id', string $dir = 'asc')
+    {
+        $this->query->orderBy($column, $dir);
+
+        return $this;
+    }
+
+    public function selectColumnsFromUsers(array $columns)
+    {
+        $this->query->select(...$columns);
 
         return $this;
     }

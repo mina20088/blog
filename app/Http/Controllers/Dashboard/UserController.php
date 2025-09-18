@@ -21,9 +21,10 @@ class UserController extends Controller
 
     public function index(SearchRequest $request, UsersService $userService): View
     {
-        // $users = $this->getUsers($userService, $request->input('search') ?? '', $request->input('searchBy') ?? [], $request->input('sortBy') ?? 'id', $request->input('dir') ?? 'asc');
 
-        $users = $this->setup($request, $userService)->search();
+        $users = $this
+            ->setup($request, $userService)
+            ->search();
 
         $columns =  $this->getUsersTableColumnNameList($userService);
 

@@ -7,6 +7,7 @@ namespace App\Traits;
 use Illuminate\Http\Request;
 use App\services\UsersService;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
 trait HandlesUserOperations
 {
@@ -33,17 +34,17 @@ trait HandlesUserOperations
 
         $this->usersService = $service;
 
-        $this->searchTerm = $request->input('search', '') ;
+        $this->searchTerm = $request->input('search') ?? '' ;
 
-        $this->searchBy = $request->input('searchBy', []);
+        $this->searchBy = $request->input('searchBy') ?? [];
 
-        $this->orderBy = $request->input('orderBy', 'id');
+        $this->orderBy = $request->input('orderBy') ?? 'id';
 
         $this->hasSearch = $request->has('search');
 
         $this->hasSearchBy = $request->has('searchBy');
 
-        $this->dir = $request->input('dir', 'asc');
+        $this->dir = $request->input('dir') ?? 'asc';
 
         return $this;
 
@@ -52,28 +53,31 @@ trait HandlesUserOperations
     public function search()
     {
 
-       return  $this->usersService->getQuery()
-       ->when($this->hasSearch && $this->request->missing('searchBy'), function() {
-            $this
-            ->usersService
+        $users = $this->usersService->selectColumnsFromUsers(['id', 'first_name', 'last_name', 'email', 'username' , 'locked']);
+
+        if($this->hasSearch && !$this->hasSearchBy){
+            $users
             ->whereFirstName($this->searchTerm)
             ->whereLastName($this->searchTerm)
             ->whereEmail($this->searchTerm)
-            ->whereUsername($this->searchTerm );
-        })
-        ->when($this->hasSearchBy, function(){
-            $this->usersService->whereAny($this->searchTerm, $this->searchBy);
-        })
+            ->whereUsername($this->searchTerm)->whereAny($this->searchTerm , $this->searchBy);
+        };
+
+        $users->whereAny($this->searchTerm, $this->searchBy);
+
+        $this->orderBy && $this->dir ? $users->orderBy($this->orderBy, $this->dir) : $users->orderBy();
+
+        return $users
         ->getQuery()
         ->get();
 
-
     }
-
     public function getUsersTableColumnNameList(UsersService $userService)
     {
         return Cache::remember('users_table_columns_list',now()->addDays(10), function()use($userService){
-             return $userService->listUsersTableColumnsExcept('password','remember_token' ,'created_at', 'updated_at', 'deleted_at');
+             return $userService->listUsersTableColumnsExcept('id','password','locked', 'remember_token' ,'created_at', 'updated_at', 'deleted_at');
         });
+
     }
 }
+
