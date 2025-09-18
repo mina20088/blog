@@ -19,7 +19,7 @@ class UserController extends Controller
     use HandlesUserOperations;
 
 
-    public function index(SearchRequest $request, UsersService $userService): View
+    public function index(SearchRequest $request, UsersService $userService)
     {
 
         $users = $this
@@ -27,6 +27,7 @@ class UserController extends Controller
             ->search();
 
         $columns =  $this->getUsersTableColumnNameList($userService);
+
 
         return view('dashboard.users.index', [
             'users' => $users,

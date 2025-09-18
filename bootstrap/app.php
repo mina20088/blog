@@ -1,11 +1,11 @@
 <?php
 
-
-use App\Http\Middleware\RateLimiterMiddleWare;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Middleware\RateLimiterMiddleWare;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\ClearQueryParamsWhenNoUsers;
 
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -22,7 +22,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            'login-rate-limiter' => RateLimiterMiddleWare::class,
+            'rate.limiter' => RateLimiterMiddleWare::class,
+            'clear.query.no.users' => ClearQueryParamsWhenNoUsers::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

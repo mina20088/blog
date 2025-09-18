@@ -2,9 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use App\Traits\HandleRateLimiting;
 use Closure;
 use Illuminate\Http\Request;
+use App\Traits\HandleRateLimiting;
 use Symfony\Component\HttpFoundation\Response;
 
 class RateLimiterMiddleWare
@@ -17,7 +17,9 @@ class RateLimiterMiddleWare
      */
     public function handle(Request $request, Closure $next , string $name, int $maxAttempts = 5 , int $decay = 120): Response
     {
-        if($request->method() !== 'GET'){
+        if($request->method() !== 'GET')
+        {
+
             $isRateLimited =  $this->rateLimiting($name, $maxAttempts, $decay);
 
             if($isRateLimited){
