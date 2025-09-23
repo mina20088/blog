@@ -20,9 +20,9 @@ class ClearQueryParamsWhenNoUsers
         if ($request->routeIs('dashboard.users'))
         {
 
-            $users = User::all();
+            //$users = User::all();
 
-            if (count($users) <= 0 &&  $request->hasAny(['search', 'searchBy', 'orderBy', 'dir'])) {
+            if (User::count() <= 0  &&  $request->hasAny(['search', 'searchBy', 'orderBy', 'dir','filters'])) {
 
                 $request->query->replace([]);
 

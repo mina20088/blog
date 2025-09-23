@@ -4,6 +4,6 @@ namespace App\Enums;
 
 enum LogTypes :string
 {
-    case Info  = 'info';
-    case Error = 'error';
+    case Info= 'info';
+    case Error= 'error';
 }

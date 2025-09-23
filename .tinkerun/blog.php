@@ -1,7 +1,17 @@
 <?php
 
 use App\Models\User;
-use App\Models\Profile;
+use App\services\UsersService;
 
-User::factory(10)->has(Profile::factory())->create();
 
+
+
+$service = app(UsersService::class);
+
+$service
+    ->whereAny('m')->profile()->getQuery()->get();
+
+    
+
+
+//$users->count();

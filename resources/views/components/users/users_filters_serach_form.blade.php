@@ -1,4 +1,4 @@
-@use(App\Helpers\DashboardUsersViewHelpers);
+@use(App\Helpers\DashboardUsersViewHelpers)
 @props(['users'])
 
 

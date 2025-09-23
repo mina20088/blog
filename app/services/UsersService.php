@@ -38,14 +38,18 @@ class UsersService
 
     public function whereFirstName(string $term): self
     {
-        $this->query->where('first_name', 'like', "%{$term}%");
+        //$this->query->where('first_name', 'like', "%{$term}%");
+
+        $this->query->whereFullText('first_name', "*{$term}*", ['mode' => 'boolean'], 'or');
 
         return $this;
     }
 
     public function whereLastName(string $term): self
     {
-        $this->query->orWhere('last_name', 'like', "%{$term}%");
+        //$this->query->orWhere('last_name', 'like', "%{$term}%");
+
+        $this->query->whereFullText('last_name', "*{$term}*", ['mode' => 'boolean'], 'or');
 
         return $this;
     }
@@ -53,7 +57,9 @@ class UsersService
     public function whereEmail(string $term): self
     {
 
-        $this->query->orWhere('email', 'like', "%{$term}%");
+        // $this->query->orWhere('email', 'like', "%{$term}%");
+
+        $this->query->whereFullText('email', "*{$term}*", ['mode' => 'boolean'], 'or');
 
         return $this;
     }
@@ -61,18 +67,31 @@ class UsersService
     public function whereUsername(string $term): self
     {
 
-        $this->query->orWhere('username', 'like', "%{$term}%");
+        // $this->query->orWhere('username', 'like', "%{$term}%");
+
+        $this->query->whereFullText('username', "*{$term}*", ['mode' => 'boolean'], 'or');
 
         return $this;
     }
 
-    public function whereAny(string $term = '', array $fields = []): self
+    public function whereAny(string $term = ''): self
     {
-        foreach ($fields as $field) {
 
-            $this->query->orWhere($field, 'like', "%{$term}%");
-        }
+        $this->query->whereFullText(['first_name', 'last_name', 'email', "username"], "*{$term}*", ['mode' => 'boolean']);
 
+        return $this;
+    }
+    public function filterByAccountStatus(string $status): self
+    {
+
+        $this->query->where("locked", '=', $status );
+
+        return $this;
+    }
+
+    public function filterByGender(string $gender = ''): self
+    {
+        $this->query->whereRelation('profile', 'gender', $gender);
         return $this;
     }
 
@@ -83,6 +102,8 @@ class UsersService
         return $this;
     }
 
+
+
     public function selectColumnsFromUsers(array $columns)
     {
         $this->query->select(...$columns);
@@ -90,8 +111,14 @@ class UsersService
         return $this;
     }
 
+    public function profile(){
+        $this->query->with('profile');
+        return $this;
+    }
+
     public function getQuery(): Builder
     {
         return $this->query;
     }
+
 }

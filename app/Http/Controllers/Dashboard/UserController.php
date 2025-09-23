@@ -5,6 +5,8 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\User;
+use App\Models\Profile;
+use Clockwork\Clockwork;
 use App\services\UsersService;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
@@ -13,6 +15,7 @@ use App\Traits\HandlesUserOperations;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreUserRequest;
 use Illuminate\Support\Facades\Storage;
+use Clockwork\Support\Doctrine\Legacy\Logger;
 
 class UserController extends Controller
 {
@@ -24,10 +27,12 @@ class UserController extends Controller
 
         $users = $this
             ->setup($request, $userService)
-            ->search();
+            ->search()
+            ->with('profile')
+            ->paginate($request->per_page)
+            ->withQueryString();
 
-        $columns =  $this->getUsersTableColumnNameList($userService);
-
+        $columns = $this->getUsersTableColumnNameList($userService);
 
         return view('dashboard.users.index', [
             'users' => $users,

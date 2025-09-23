@@ -21,7 +21,8 @@ class DashboardUsersViewHelpers
             'search',
             'searchBy',
             'orderBy',
-            'dir'
+            'dir',
+            'filters'
         ]);
     }
 

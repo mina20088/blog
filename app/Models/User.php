@@ -3,15 +3,13 @@
 namespace App\Models;
 
 use App\Models\Profile;
+use App\Enums\UserAccountStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-/**
- * @method static filterdSearch(array|string $searchParameter = null, array $filterdColumns = []): _IH_User_QB|Builder|HigherOrderWhenProxy
- * @method static sort(mixed $get)
- */
 class User extends Model
 {
     use HasFactory, SoftDeletes;
@@ -39,14 +37,25 @@ class User extends Model
         'password',
     ];
 
-    protected $casts = [
-        'password' => 'hashed',
-        'locked' => 'boolean',
-    ];
+
+    protected function locked(): Attribute
+    {
+        return Attribute::make(
+            get: fn (int $value) => $value === 1 ? "locked" : "unlocked",
+        );
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'password' => 'hashed',
+        ];
+    }
 
     public function profile(): HasOne
     {
         return $this->hasOne(Profile::class);
+
     }
 
 }

@@ -26,7 +26,7 @@ Route::controller(LoginController::class)->middleware('rate.limiter:login')->gro
 
 
 
-Route::prefix('dashboard')->middleware(['clear.query.no.users'])->name('dashboard.')->group(function () {
+Route::prefix('dashboard')->middleware(['sanitize_query','clear.query.no.users'])->name('dashboard.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/users', [UserController::class, 'index'])->name('users');
     Route::get('/users/reset-filters', [UserController::class, 'resetFilters'])->name('users.reset-filters');

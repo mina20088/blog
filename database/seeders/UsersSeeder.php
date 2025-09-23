@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Profile;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class UsersSeeder extends Seeder
 {
@@ -13,6 +15,13 @@ class UsersSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(50)->create();
+
+        ini_set('memory_limit', '512M');
+
+        DB::disableQueryLog();
+
+        User::factory(200)->has(Profile::factory())->create();
+
+        DB::enableQueryLog();
     }
 }

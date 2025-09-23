@@ -6,7 +6,7 @@
 
 @section('content')
     <div x-data="{ show: $persist(false) }">
-        @if (count($users) > 0  || DashboardUsersViewHelpers::requestHas())
+        @if ($users->count() > 0 || DashboardUsersViewHelpers::requestHas())
             <div class="flex xs:flex-col sm:flex-row sm:justify-between sm:items-center my-4 sm:my-9 xs:gap-3">
                 <h1 class="font-bold text-2xl">Users</h1>
                 <div class="flex gap-3 xs:justify-between sm:items-center">
@@ -30,7 +30,8 @@
         <x-users.users_filters_serach_form :users="$users">
             <x-users.users_filters_serach_form_search_sort :columns="$columns" />
             <x-users.users_filter_search_form_serach_by :columns="$columns" />
-            <div class="xs:w-full">
+            <x-users.users_filter_search_form_filters />
+            <div class="flex xs:w-full">
                 <button type="submit"
                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none xs:w-full md:w-28">
                     Apply
@@ -48,7 +49,11 @@
     </div>
 
     <div class="relative overflow-x-auto mt-4">
-        @if(count($users) > 0 | DashboardUsersViewHelpers::requestHas() )
+        @if($users->count() > 0 | DashboardUsersViewHelpers::requestHas())
+            <div class="flex flex-col">
+                {{ $users->links() }}
+            </div>
+
             <table id="users-table" class="w-full text-sm text-left rtl:text-right text-gray-500 rounded-xl">
                 <thead class="text-xs text-gray-700 bg-gray-50 ">
                     <tr>
@@ -108,6 +113,7 @@
                 </thead>
                 <tbody>
                     @foreach ($users as $user)
+
                         <tr class="bg-white border-b border-gray-200">
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                 {{ $user->id }}
@@ -122,15 +128,18 @@
                                 {{ $user->username }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ $user->locked ? 'locked' : 'unlocked' }}
+                                {{ $user->locked  }}
                             </td>
                             <td class="px-6 py-4">
 
                             </td>
                         </tr>
+
                     @endforeach
                 </tbody>
             </table>
+
+
         @else
             <div class="flex flex-col items-center justify-center min-h-[60vh] w-full overflow-hidden px-4 py-8">
                 <div class="flex flex-col items-center justify-center gap-2 xs:gap-3 max-w-full">
