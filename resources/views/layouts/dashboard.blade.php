@@ -110,7 +110,7 @@
 </aside>
 
 <!--main-->
-<main class="p-4 lg:ml-60">
+<main class="xs:p-2 sm:px-5 lg:p-5 lg:ml-60">
     @yield('content')
 </main>
 

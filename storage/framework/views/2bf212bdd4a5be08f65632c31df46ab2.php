@@ -33,7 +33,7 @@ unset($__defined_vars, $__key, $__value); ?>
 <div class="flex xs:flex-col xs:justify-start xs:gap-3 md:flex-row md:items-center">
     <div class="flex flex-col justify-center xs:basis-full xs:order-2 md:order-1">
         <h1>search By</h1>
-        <div class="flex xs:flex-col xs:justify-start md:flex-row md:flex-wrap items-start md:jus gap-2 md:py-2.5">
+        <div class="flex xs:flex-col xs:justify-start md:flex-row md:flex-wrap items-start md:jus xs:gap-3 md:gap-2 md:py-2.5">
             <?php $__currentLoopData = $columns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $column): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="flex items-center">
                     <input id="<?php echo e($column); ?>" type="checkbox" value="<?php echo e($column); ?>" name="searchBy[]"

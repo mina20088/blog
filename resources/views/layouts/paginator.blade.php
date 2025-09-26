@@ -10,17 +10,18 @@
 </head>
 
 <body>
-    <section class="flex justify-between items-center my-9">
-        <div>
+    <section class="flex xs:flex-col xs:gap-3 lg:flex-row justify-between md:items-center xs:my-3 md:my-9">
+        <div class='flex xs:basis-full xs:order-2'>
             @if($paginator->hasPages())
-                <nav aria-label="Page navigation example">
-                    <ul class="flex items-center -space-x-px h-8 text-sm">
+                <nav class="basis-full">
+                    <ul
+                        class="flex md:items-center xs:items-start -space-x-px h-8 text-sm xs:justify-between md:justify-normal">
 
                         {{-- Paginatore Previous --}}
                         @if($paginator->onFirstPage())
                             <li>
                                 <button type="button" disabled
-                                    class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s">
+                                    class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border borderl-0 border-gray-300 rounded-l-lg xs:w-full">
                                     <span class="sr-only">Previous</span>
                                     <svg class="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true"
                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
@@ -33,8 +34,13 @@
                         @else
                             <li>
                                 <a href="{{  $paginator->previousPageUrl()  }}"
-                                    class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                    class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-l-0 border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 xs:w-full">
                                     <span class="sr-only">Previous</span>
+                                    <svg class="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="M5 1 1 5l4 4" />
+                                    </svg>
                                     Previous
                                 </a>
                             </li>
@@ -43,7 +49,7 @@
 
                         {{-- Page Numbers with Limited Range --}}
                         @php
-                            $onEachSide = 3; // Set your desired number
+                            $onEachSide = 1; // Set your desired number
                             $currentPage = $paginator->currentPage();
                             $lastPage = $paginator->lastPage();
 
@@ -109,7 +115,7 @@
                         @if($paginator->hasMorePages())
                             <li>
                                 <a href="{{ $paginator->nextPageUrl() }}"
-                                    class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                    class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 xs:w-fu">
                                     <span class="sr-only">Next</span>
                                     <svg class="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true"
                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
@@ -135,10 +141,11 @@
                 </nav>
             @endif
         </div>
-        <div class='flex items-center gap-4'>
-            <form method="GET" action="{{ route('dashboard.users') }}" class="m-0">
+
+        <div class='flex xs:flex-col md:flex-row  md:items-center xs:basis-full md:justify-between xs:gap-4 xs:order-1 '>
+            <form method="GET" action="{{ route('dashboard.users') }}" class="m-0 xs:basis-full">
                 <select id="perPageSelect" onchange="this.form.submit()" name="per_page"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+                    class="block w-full xs:px-5 xs:py-1 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
                     <option value="">Items per page</option>
                     <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5 per page</option>
                     <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10 per page</option>
@@ -147,11 +154,15 @@
                 </select>
             </form>
 
-            <span class="text-sm text-gray-700 dark:text-gray-400">
-                Showing <span class="font-semibold text-gray-900 dark:text-white">1</span> to <span
-                    class="font-semibold text-gray-900 dark:text-white">{{ $paginator->count()	}}</span> of <span
-                    class="font-semibold text-gray-900 dark:text-white">{{ $paginator->total()	 }}</span> Entries
-            </span>
+            <div class="xs:basis-full xs:text-center">
+                <span class="text-sm text-gray-700   text-nowrap">
+                    Showing <span class="font-semibold text-gray-900 dark:text-white">1</span> to <span
+                        class="font-semibold text-gray-900 dark:text-white">{{ $paginator->count()	}}</span> of <span
+                        class="font-semibold text-gray-900 dark:text-white">{{ $paginator->total()	 }}</span>
+                        <span>Entries</span>
+                </span>
+            </div>
+
 
         </div>
 

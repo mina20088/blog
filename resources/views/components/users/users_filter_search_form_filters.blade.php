@@ -6,37 +6,37 @@
         <div class="w-full">
             <label for="status" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">status</label>
             <select id="status" name="filters[locked]"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full xs:p-1 md:p-2.5">
                 <option value="">Choose a Filter</option>
                 @foreach (UserAccountStatus::cases() as $status)
-                  <option value='{{ $status->value }}'>{{ $status->name }}</option>
+                    <option value='{{ $status->value }}'>{{ $status->name }}</option>
                 @endforeach
             </select>
 
         </div>
         <div class="w-full">
-            <label for="gender" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
+            <label for="gender" class="block mb-2 text-sm font-medium text-gray-900">Gender</label>
             <select id="gender" name="filters[gender]"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full xs:p-1 md:p-2.5">
                 <option value="">Choose a Filter</option>
-                @foreach (Gender::cases() as $gender )
-                  <option value='{{ $gender->value }}'>{{ $gender->name }}</option>
+                @foreach (Gender::cases() as $gender)
+                    <option value='{{ $gender->value }}'>{{ $gender->name }}</option>
                 @endforeach
             </select>
 
         </div>
-        <div class="w-full" >
-            <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">City</label>
+        <div class="w-full">
+            <label for="countries" class="block mb-2 text-sm font-medium text-gray-900">City</label>
             <select id="countries"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full   xs:p-1 md:p-2.5">
                 <option selected>Choose a Filter</option>
             </select>
 
         </div>
         <div class="w-full md:col-span-3 lg:col-span-1">
-            <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Country</label>
+            <label for="countries" class="block mb-2 text-sm font-medium text-gray-900">Country</label>
             <select id="countries"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  xs:p-1 md:p-2.5 ">
                 <option selected>Choose a Filter</option>
             </select>
 
