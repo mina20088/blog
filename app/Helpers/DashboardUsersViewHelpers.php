@@ -15,7 +15,7 @@ class DashboardUsersViewHelpers
         return $request->input($item) === 'asc' ? 'desc' : 'asc';
     }
 
-    public static function requestHas()
+    public static function requestHasActiveFilters(): bool
     {
         return request()->hasAny([
             'search',
@@ -26,13 +26,13 @@ class DashboardUsersViewHelpers
         ]);
     }
 
-    public static function buildFilterUrl($newParams = [])
+    public static function buildFilterUrl($newParams = []): string
     {
         $currentParams = request()->except(['page']); // Exclude pagination
         $params = array_merge($currentParams, $newParams);
 
         // Remove empty parameters
-        $params = array_filter($params, function ($value) {
+        $params = array_filter($params, static function ($value) {
             return !is_null($value) && $value !== '';
         });
 

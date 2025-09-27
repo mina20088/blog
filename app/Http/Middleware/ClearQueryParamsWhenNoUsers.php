@@ -17,17 +17,12 @@ class ClearQueryParamsWhenNoUsers
     public function handle(Request $request, Closure $next)
     {
 
-        if ($request->routeIs('dashboard.users'))
-        {
+        //$users = User::all();
+        if ($request->routeIs('dashboard.users') && User::count('id') <= 0 && $request->hasAny(['search', 'searchBy', 'orderBy', 'dir', 'filters'])) {
 
-            //$users = User::all();
+            $request->query->replace([]);
 
-            if (User::count() <= 0  &&  $request->hasAny(['search', 'searchBy', 'orderBy', 'dir','filters'])) {
-
-                $request->query->replace([]);
-
-                return redirect('/dashboard/users');
-            }
+            return redirect('/dashboard/users');
         }
 
 

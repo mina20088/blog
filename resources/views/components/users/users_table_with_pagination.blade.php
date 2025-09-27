@@ -2,7 +2,7 @@
 
 @props(['users'])
 
-@if($users->count() > 0 | DashboardUsersViewHelpers::requestHas())
+@if($users->count() > 0 | DashboardUsersViewHelpers::requestHasActiveFilters())
 
     {{-- <div class="flex flex-col">
 
@@ -84,6 +84,19 @@
                 </th>
                 <th scope="col" class="px-6 py-3">
 
+                    <div class="flex items-center gap-2">
+
+                        <a
+                            href="{{ route('dashboard.users', ['sortBy', 'locked', 'dir' => DashboardUsersViewHelpers::sortTogglers(request())]) }}">
+                            <span>Gender</span>
+                        </a>
+
+                        <x-svgs.sort class="w-3" upper-color="#acb0b7" />
+
+                    </div>
+                </th>
+                <th scope="col" class="px-6 py-3">
+
                     Actions
 
                 </th>
@@ -125,6 +138,14 @@
 
                     <td class="px-6 py-4">
 
+
+
+                        {{  $user->profile->gender ?? 'N/A' }}
+
+                    </td>
+
+                    <td class="px-6 py-4">
+
                     </td>
                 </tr>
 
@@ -146,7 +167,7 @@
             <div class="text-slate-400 max-w-xs xs:max-w-sm text-center">
 
                 <p class="text-xs xs:text-sm leading-relaxed break-words">Users Will Appear here once they are
-                    registerd or added by admin</p>
+                    registered or added by admin</p>
 
                 <p class="text-xs xs:text-sm leading-relaxed break-words">please Register New User</p>
 

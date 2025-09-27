@@ -3,7 +3,7 @@
 
 <?php $__env->startSection('content'); ?>
     <main class="flex-1">
-   
+
     </main>
 <?php $__env->stopSection(); ?>
 

@@ -17,6 +17,7 @@ use App\Http\Requests\StoreUserRequest;
 use Illuminate\Support\Facades\Storage;
 use Clockwork\Support\Doctrine\Legacy\Logger;
 
+
 class UserController extends Controller
 {
     use HandlesUserOperations;
@@ -24,11 +25,9 @@ class UserController extends Controller
 
     public function index(SearchRequest $request, UsersService $userService)
     {
-
         $users = $this
             ->setup($request, $userService)
             ->search()
-            ->with('profile')
             ->paginate($request->per_page)
             ->withQueryString();
 
@@ -74,4 +73,5 @@ class UserController extends Controller
 
         return redirect()->back();
     }
+
 }

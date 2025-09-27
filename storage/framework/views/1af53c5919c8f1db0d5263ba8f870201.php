@@ -4,14 +4,16 @@
 
 
 
-<?php $__env->startSection('title', 'users'); ?>
+<?php $__env->startSection('title'); ?>
+    Users
+<?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
 
     <div class="xs:mt-16" x-data="{ show: $persist(false) }">
-        <?php if($users->count() > 0 || DashboardUsersViewHelpers::requestHas()): ?>
+        <?php if($users->count() > 0 || DashboardUsersViewHelpers::requestHasActiveFilters()): ?>
 
-            <div class="flex xs:flex-col  md:flex-row sm:justify-between xs:my-4 sm:mt-24 sm:mb-4 xs:gap-3">
+            <div class="flex xs:flex-col  md:flex-col sm:justify-between xs:my-4 sm:mt-24 sm:mb-4 xs:gap-3">
                 <div class='flex xs:flex-col xs:gap-3 sm:flex-row  sm:justify-between sm:basis-full sm:items-center'>
                     <h1 class="font-bold text-2xl">Users</h1>
 
@@ -154,7 +156,7 @@
                     Apply
                 </button>
 
-                <?php if(DashboardUsersViewHelpers::requestHas()): ?>
+                <?php if(DashboardUsersViewHelpers::requestHasActiveFilters()): ?>
 
                     <a href="<?php echo e(route('dashboard.users.reset-filters')); ?>"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none">

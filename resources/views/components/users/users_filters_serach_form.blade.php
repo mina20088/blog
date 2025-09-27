@@ -2,7 +2,7 @@
 
 @props(['users'])
 
-@if (count($users) > 0 || DashboardUsersViewHelpers::requestHas())
+@if (count($users) > 0 || DashboardUsersViewHelpers::requestHasActiveFilters())
 
     <div class="border bg-gray-200 xs:py-3 xs:px-3 lg:py-5 lg:px-5 rounded-lg" x-show="show"
         x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-20 -translate-y-20"

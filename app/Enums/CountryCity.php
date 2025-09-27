@@ -84,6 +84,16 @@ enum CountryCity: string
         return null;
     }
 
+    public static function getCitiesByCountry(string $countryName): array
+    {
+        foreach (self::cases() as $country) {
+            if (strcasecmp($country->getCountryName(), $countryName) === 0) {
+                return $country->getCities();
+            }
+        }
+        return [];
+    }
+
     public static function getAllCountries(): array
     {
         return array_map(static fn($case) => $case->getCountryName(), self::cases());

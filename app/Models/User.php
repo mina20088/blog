@@ -41,7 +41,7 @@ class User extends Model
     protected function locked(): Attribute
     {
         return Attribute::make(
-            get: fn (int $value) => $value === 1 ? "locked" : "unlocked",
+            get: static fn (int $value) => $value === 1 ? "locked" : "unlocked",
         );
     }
 

@@ -30,7 +30,7 @@ foreach ($attributes->all() as $__key => $__value) {
 
 unset($__defined_vars, $__key, $__value); ?>
 
-<?php if($users->count() > 0 | DashboardUsersViewHelpers::requestHas()): ?>
+<?php if($users->count() > 0 | DashboardUsersViewHelpers::requestHasActiveFilters()): ?>
 
     
 
@@ -203,6 +203,38 @@ unset($__defined_vars, $__key, $__value); ?>
                 </th>
                 <th scope="col" class="px-6 py-3">
 
+                    <div class="flex items-center gap-2">
+
+                        <a
+                            href="<?php echo e(route('dashboard.users', ['sortBy', 'locked', 'dir' => DashboardUsersViewHelpers::sortTogglers(request())])); ?>">
+                            <span>Gender</span>
+                        </a>
+
+                        <?php if (isset($component)) { $__componentOriginal37c9740c7bfffcb83811d6b9b0cc6f97 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal37c9740c7bfffcb83811d6b9b0cc6f97 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.svgs.sort','data' => ['class' => 'w-3','upperColor' => '#acb0b7']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('svgs.sort'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['class' => 'w-3','upper-color' => '#acb0b7']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal37c9740c7bfffcb83811d6b9b0cc6f97)): ?>
+<?php $attributes = $__attributesOriginal37c9740c7bfffcb83811d6b9b0cc6f97; ?>
+<?php unset($__attributesOriginal37c9740c7bfffcb83811d6b9b0cc6f97); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal37c9740c7bfffcb83811d6b9b0cc6f97)): ?>
+<?php $component = $__componentOriginal37c9740c7bfffcb83811d6b9b0cc6f97; ?>
+<?php unset($__componentOriginal37c9740c7bfffcb83811d6b9b0cc6f97); ?>
+<?php endif; ?>
+
+                    </div>
+                </th>
+                <th scope="col" class="px-6 py-3">
+
                     Actions
 
                 </th>
@@ -249,6 +281,15 @@ unset($__defined_vars, $__key, $__value); ?>
 
                     <td class="px-6 py-4">
 
+
+
+                        <?php echo e($user->profile->gender ?? 'N/A'); ?>
+
+
+                    </td>
+
+                    <td class="px-6 py-4">
+
                     </td>
                 </tr>
 
@@ -289,7 +330,7 @@ unset($__defined_vars, $__key, $__value); ?>
             <div class="text-slate-400 max-w-xs xs:max-w-sm text-center">
 
                 <p class="text-xs xs:text-sm leading-relaxed break-words">Users Will Appear here once they are
-                    registerd or added by admin</p>
+                    registered or added by admin</p>
 
                 <p class="text-xs xs:text-sm leading-relaxed break-words">please Register New User</p>
 

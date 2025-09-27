@@ -10,8 +10,8 @@
 </head>
 
 <body>
-    <section class="flex xs:flex-col xs:gap-3 lg:flex-row justify-between md:items-center xs:my-3 md:my-9">
-        <div class='flex xs:basis-full xs:order-2'>
+    <section class="flex xs:flex-col xs:gap-3 md:flex-row justify-between md:items-center xs:my-3 md:my-9">
+        <div class='flex xs:basis-full xs:order-2 md:order-1'>
             <?php if($paginator->hasPages()): ?>
                 <nav class="basis-full">
                     <ul
@@ -59,7 +59,7 @@
 
                             // Adjust if we're near the beginning or end
                             if ($end - $start < $onEachSide * 2) {
-                                if ($start == 1) {
+                                if ($start === 1) {
                                     $end = min($start + ($onEachSide * 2), $lastPage);
                                 } else {
                                     $start = max($end - ($onEachSide * 2), 1);
@@ -142,19 +142,19 @@
             <?php endif; ?>
         </div>
 
-        <div class='flex xs:flex-col md:flex-row  md:items-center xs:basis-full md:justify-between xs:gap-4 xs:order-1 '>
-            <form method="GET" action="<?php echo e(route('dashboard.users')); ?>" class="m-0 xs:basis-full">
+        <div class='flex xs:flex-col md:flex-row  md:items-center xs:basis-full xl:basis-1/3 xxl:basis-2/4 md:justify-between xl:justify-end xs:gap-4 xs:order-1 '>
+            <form method="GET" action="<?php echo e(route('dashboard.users')); ?>" class="m-0 xs:basis-full xl:basis-1/3">
                 <select id="perPageSelect" onchange="this.form.submit()" name="per_page"
-                    class="block w-full xs:px-5 xs:py-1 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
-                    <option value="">Items per page</option>
-                    <option value="5" <?php echo e(request('per_page') == 5 ? 'selected' : ''); ?>>5 per page</option>
-                    <option value="10" <?php echo e(request('per_page') == 10 ? 'selected' : ''); ?>>10 per page</option>
-                    <option value="25" <?php echo e(request('per_page') == 25 ? 'selected' : ''); ?>>25 per page</option>
-                    <option value="50" <?php echo e(request('per_page') == 50 ? 'selected' : ''); ?>>50 per page</option>
+                    class="block w-full xs:px-5 xs:py-1 text-sm text-center text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
+                    <option value="">per page</option>
+                    <option value="5" <?php echo e(request('per_page') === 5 ? 'selected' : ''); ?>>5 per page</option>
+                    <option value="10" <?php echo e(request('per_page') === 10 ? 'selected' : ''); ?>>10 per page</option>
+                    <option value="25" <?php echo e(request('per_page') === 25 ? 'selected' : ''); ?>>25 per page</option>
+                    <option value="50" <?php echo e(request('per_page') === 50 ? 'selected' : ''); ?>>50 per page</option>
                 </select>
             </form>
 
-            <div class="xs:basis-full xs:text-center">
+            <div class="xs:basis-full xs:text-center xl:basis-2/5">
                 <span class="text-sm text-gray-700   text-nowrap">
                     Showing <span class="font-semibold text-gray-900 dark:text-white">1</span> to <span
                         class="font-semibold text-gray-900 dark:text-white"><?php echo e($paginator->count()); ?></span> of <span
