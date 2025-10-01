@@ -10,6 +10,7 @@
             <select id="countries"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  xs:p-1 md:p-2.5 ">
                 <option selected>Choose a Filter</option>
+                <!--Todo:add country-->
             </select>
         </div>
 
@@ -19,6 +20,7 @@
             <select id="countries"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full   xs:p-1 md:p-2.5">
                 <option selected>Choose a Filter</option>
+                <!--TODO:add city
             </select>
         </div>
 

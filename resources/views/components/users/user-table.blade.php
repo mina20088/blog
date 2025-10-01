@@ -4,12 +4,6 @@
 
 @if($users->count() > 0 | DashboardUsersViewHelpers::requestHasActiveFilters())
 
-    {{-- <div class="flex flex-col">
-
-        {{ $users->links() }}
-
-    </div> --}}
-
     <table id="users-table" class="w-full text-sm text-left rtl:text-right text-gray-500 rounded-xl">
         <thead class="text-sm text-nowrap text-gray-700 bg-gray-50 ">
             <tr>

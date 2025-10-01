@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function(Blueprint $table){
+        Schema::table('users', static function(Blueprint $table){
             $table->fullText('first_name',"USERS_FIRST_NAME_FULLTEXT");
             $table->fullText('last_name',"USERS_LAST_NAME_FULLTEXT" );
             $table->fullText('email', 'USERS_EMAIL_FULLTEXT');
@@ -24,11 +24,12 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function(Blueprint $table){
+        Schema::table('users', static function(Blueprint $table){
             $table->dropFullText("USERS_FIRST_NAME_FULLTEXT");
             $table->dropFullText("USERS_LAST_NAME_FULLTEXT");
             $table->dropFullText('USERS_EMAIL_FULLTEXT');
             $table->dropFullText("USERS_USERNAME_FULLTEXT");
         });
+
     }
 };

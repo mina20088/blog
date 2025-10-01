@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Paginator::defaultView("layouts.paginator");
+        Paginator::defaultView('components.users.users_pagination');
         Password::defaults(static function () {
             return Password::min(8)->letters()->numbers()->mixedCase()->uncompromised(0);
         });

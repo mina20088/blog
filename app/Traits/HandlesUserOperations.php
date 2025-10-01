@@ -6,6 +6,7 @@ namespace App\Traits;
 
 use Illuminate\Http\Request;
 use App\services\UsersService;
+use Illuminate\Pagination\AbstractPaginator;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 
@@ -45,7 +46,7 @@ trait HandlesUserOperations
 
         $this->hasSearch = $request->has('search');
 
-        $this->filters = $request->input('filters', []);
+        $this->filters = $request->input('filters', [])  ?? [];
 
         $this->hasSearchBy = $request->has('searchBy');
 
@@ -55,29 +56,20 @@ trait HandlesUserOperations
 
     }
 
-    public function search(): \Illuminate\Database\Eloquent\Builder
+    public function search(): \Illuminate\Pagination\LengthAwarePaginator|AbstractPaginator
     {
 
-        $users = $this->usersService
+        return $this->usersService
             ->selectColumnsFromUsers(['id', 'first_name', 'last_name', 'email', 'username', 'locked'])
-            ->whereAny($this->searchTerm)
-            ->whereFirstName($this->searchTerm)
-            ->whereLastName($this->searchTerm)
-            ->whereEmail($this->searchTerm)
-            ->whereUsername($this->searchTerm);
-
-        if ($this->filters) {
-            $users
-                ->filterByAccountStatus($this->filters["locked"] ?? '')
-                ->filterByGender($this->filters["gender"] ?? '');
-        }
-
-
-        $this->orderBy && $this->dir ? $users->orderBy($this->orderBy, $this->dir) : $users->orderBy();
-
-        return $users
+            ->search($this->searchTerm)
+            ->searchBy($this->searchTerm)
+            ->filterByAccountStatus()
+            ->filterByGender()
+            ->orderBy()
             ->profile()
-            ->getQuery();
+            ->getQuery()
+            ->paginate($this->request->per_page ?? 10)
+            ->withQueryString();
 
     }
     public function getUsersTableColumnNameList(UsersService $userService)

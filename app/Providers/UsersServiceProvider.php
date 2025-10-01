@@ -20,7 +20,13 @@ class UsersServiceProvider extends ServiceProvider
 
         $this->app->bind(UsersService::class, function($app){
 
-            return new UsersService(User::query(),Request::input('searchBy', []), Request::input('filters', []));
+            return new UsersService(
+                User::query(),
+                Request::input('searchBy', []),
+                Request::input('filters', []),
+                Request::input('orderBy', 'id'),
+                Request::input('dir', 'asc')
+            );
         });
     }
 

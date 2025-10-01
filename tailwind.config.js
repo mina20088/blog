@@ -18,7 +18,16 @@ export default {
                 'lg' : "992px",
                 'xl' : "1200px",
                 'xxl' : "1400px",
+                'xxxl' :"1919px"
             },
+            spacing: {
+                '212' : '53rem',
+                '228' : "57rem",
+                '528': '132rem',
+                '752': '188rem',
+                '1680': '420rem'
+
+            }
         },
     },
     plugins: [

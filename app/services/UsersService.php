@@ -17,14 +17,22 @@ class UsersService
 
     protected array $searchBy;
 
+    protected string $orderBy;
 
-    public function __construct(Builder $query , array $searchBy, array $filters)
+    protected string $orderDir;
+
+
+    public function __construct(Builder $query, array $searchBy, array $filters, string $orderBy, string $orderDir)
     {
         $this->query = $query;
 
         $this->filters = $filters;
 
         $this->searchBy = $searchBy;
+
+        $this->orderBy = $orderBy;
+
+        $this->orderDir = $orderDir;
     }
 
     public function listUsersTableColumns(): array
@@ -43,75 +51,71 @@ class UsersService
     }
 
 
-
-    public function whereFirstName(string $term): self
+    public function search(string $term): self
     {
-        $this->query->when($term !== '' && in_array('first_name', $this->searchBy, true), function (Builder $query) use ($term) {
 
-            $query->whereFullText('first_name', "{$term}*", ['mode' => 'boolean'], 'or');
+
+        $this->query->when( empty($this->searchBy) &&$term  !== "" , function(Builder $query) use($term){
+            $query->whereFullText(['first_name', 'last_name', 'email', 'username'], "{$term}*", ['mode' => 'boolean'], 'or');
         });
+
+
 
         return $this;
     }
 
-    public function whereLastName(string $term): self
+    public function searchBy(string $term): self
     {
-        $this->query->when($term !== '' && in_array('last_name', $this->searchBy, true), function (Builder $query) use ($term) {
-            $query->whereFullText('last_name', "{$term}*", ['mode' => 'boolean'], 'or');
+        $this->query->when($term !== ""  && !empty($this->searchBy), function (Builder $query) use ($term) {
+            $query->where(function (builder $query) use ($term) {
+                $query->whereFullText($this->searchBy, "{$term}*", ['mode' => 'boolean'], 'or');
+            });
         });
 
-        return $this;
-    }
-
-    public function whereEmail(string $term): self
-    {
-        $this->query->when($term !== ''  && in_array('email', $this->searchBy, true), function (Builder $query) use ($term) {
-            $query->whereFullText('email', "{$term}*", ['mode' => 'boolean'], 'or');
-        });
-
-        return $this;
-    }
-
-    public function whereUsername(string $term): self
-    {
-        $this->query->when($term !== ''  && in_array('username', $this->searchBy, true), function (Builder $query) use ($term) {
-            $query->whereFullText('username', "{$term}*", ['mode' => 'boolean'], 'or');
-        });
 
         return $this;
     }
 
     public function whereAny(string $term): self
     {
-        $this->query->when(empty($this->searchBy) && $term !== '' , function (Builder $query) use ($term) {
-            $query->whereFullText(['first_name', 'last_name', 'email', "username"], "{$term}*", ['mode' => 'boolean']);
+
+        $this->query->when($term === '' && empty($this->searchBy),
+            function (Builder $query) use ($term) {
+                $query->whereFullText(['first_name', 'last_name', 'email', "username"], $term, [], boolean: 'or');
+            });
+
+        return $this;
+    }
+
+    public function filterByAccountStatus(): self
+    {
+        $this->query->when(
+            array_key_exists('locked', $this->filters) && $this->filters['locked'] !== "", function (Builder $query) {
+            $query->where('locked', $this->filters['locked']);
         });
 
         return $this;
     }
-    public function filterByAccountStatus(string $status): self
+
+    public function filterByGender(): self
     {
-        $this->query
-            ->when($status !== '' , static fn(Builder $query) => $query->where('locked',  $status));
+        $this->query->when(array_key_exists('gender', $this->filters) && $this->filters['gender'] !== "",
+            function (Builder $query) {
+                $query->WhereRelation('profile', 'gender', $this->filters['gender']);
+            });
 
         return $this;
     }
 
-    public function filterByGender(string $gender = ''): self
+    public function orderBy(): static
     {
-        $this->query
-            ->whereRelation('profile', 'gender', $gender);
+
+        $this->query->when($this->orderBy !== '' && $this->orderDir !== '', function (Builder $query) {
+            $query->orderBy($this->orderBy, $this->orderDir);
+        });
 
         return $this;
     }
-
-    public function orderBy(string $column = 'id', string $dir = 'asc'): static
-    {
-        $this->query->orderBy($column, $dir);
-
-        return $this;
-    }
-
 
 
     public function selectColumnsFromUsers(array $columns): static

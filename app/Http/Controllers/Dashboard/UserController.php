@@ -27,9 +27,8 @@ class UserController extends Controller
     {
         $users = $this
             ->setup($request, $userService)
-            ->search()
-            ->paginate($request->per_page)
-            ->withQueryString();
+            ->search();
+
 
         $columns = $this->getUsersTableColumnNameList($userService);
 
