@@ -17,7 +17,7 @@ trait HandlesUserOperations
     protected Request $request;
 
     protected UsersService $usersService;
-
+/*
     protected string $searchTerm;
 
     protected array $searchBy;
@@ -30,7 +30,7 @@ trait HandlesUserOperations
 
     protected bool $hasSearch = false;
 
-    protected bool $hasSearchBy = false;
+    protected bool $hasSearchBy = false;*/
 
     public function setup(Request $request, UsersService $service): self
     {
@@ -38,7 +38,7 @@ trait HandlesUserOperations
 
         $this->usersService = $service;
 
-        $this->searchTerm = $request->input('search') ?? '';
+/*        $this->searchTerm = $request->input('search') ?? '';
 
         $this->searchBy = $request->input('searchBy') ?? [];
 
@@ -50,7 +50,7 @@ trait HandlesUserOperations
 
         $this->hasSearchBy = $request->has('searchBy');
 
-        $this->dir = $request->input('dir') ?? 'asc';
+        $this->dir = $request->input('dir') ?? 'asc';*/
 
         return $this;
 
@@ -61,8 +61,8 @@ trait HandlesUserOperations
 
         return $this->usersService
             ->selectColumnsFromUsers(['id', 'first_name', 'last_name', 'email', 'username', 'locked'])
-            ->search($this->searchTerm)
-            ->searchBy($this->searchTerm)
+            ->search()
+            ->searchBy()
             ->filterByAccountStatus()
             ->filterByGender()
             ->orderBy()

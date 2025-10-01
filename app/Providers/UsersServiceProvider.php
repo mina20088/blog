@@ -22,6 +22,7 @@ class UsersServiceProvider extends ServiceProvider
 
             return new UsersService(
                 User::query(),
+                Request::input('search', '') ,
                 Request::input('searchBy', []),
                 Request::input('filters', []),
                 Request::input('orderBy', 'id'),

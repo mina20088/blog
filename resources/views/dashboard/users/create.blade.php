@@ -7,7 +7,7 @@
 
 @section('content')
     {{-- Header Section --}}
-    <div x-data= "
+    <div x-data="
     {
         show:@js(Session::has('errors')),
         country: '',
@@ -22,7 +22,7 @@
         })(),
         sessionHasErrors: @js(Session::has('errors'))
     }"
-        class="my-10">
+         class="my-10">
         {{-- Page Header with Add More Button --}}
         <div class="flex xs:justify-between xs:items-center xs:py-8 lg:py-10 xl:px-20">
             <h1 class="font-bold xs:text-lg md:text-2xl">Create User</h1>
@@ -199,6 +199,8 @@
 
                         </div>
                         <x-single-error fieldName="phone_number" />
+
+
                         {{-- Country Selection: Required dropdown for user's country, dynamically populated --}}
                         <div class="flex xs:flex-col md:flex-row md:items-center gap-1">
                             <label for="countries"

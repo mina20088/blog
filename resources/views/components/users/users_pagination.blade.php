@@ -1,8 +1,3 @@
-{{--@props([
-    'users'
-])
-
-@ds($paginator)--}}
 <section class="flex xs:flex-col xs:gap-3 md:flex-row justify-between md:items-center xs:my-3 md:my-9">
 
     <div class='flex xs:order-2  md:order-1'>

@@ -13,6 +13,8 @@ class UsersService
 {
     protected Builder $query;
 
+    protected string $term;
+
     protected array $filters;
 
     protected array $searchBy;
@@ -22,9 +24,11 @@ class UsersService
     protected string $orderDir;
 
 
-    public function __construct(Builder $query, array $searchBy, array $filters, string $orderBy, string $orderDir)
+    public function __construct(Builder $query, string $term , array $searchBy, array $filters, string $orderBy, string $orderDir)
     {
         $this->query = $query;
+
+        $this->term = $term;
 
         $this->filters = $filters;
 
@@ -51,24 +55,21 @@ class UsersService
     }
 
 
-    public function search(string $term): self
+    public function search(): self
     {
 
-
-        $this->query->when( empty($this->searchBy) &&$term  !== "" , function(Builder $query) use($term){
-            $query->whereFullText(['first_name', 'last_name', 'email', 'username'], "{$term}*", ['mode' => 'boolean'], 'or');
+        $this->query->when( empty($this->searchBy) && $this->term  !== "" , function(Builder $query){
+            $query->whereFullText(['first_name', 'last_name', 'email', 'username'], "{$this->term}*", ['mode' => 'boolean'], 'or');
         });
-
-
 
         return $this;
     }
 
-    public function searchBy(string $term): self
+    public function searchBy(): self
     {
-        $this->query->when($term !== ""  && !empty($this->searchBy), function (Builder $query) use ($term) {
-            $query->where(function (builder $query) use ($term) {
-                $query->whereFullText($this->searchBy, "{$term}*", ['mode' => 'boolean'], 'or');
+        $this->query->when($this->term !== ""  && !empty($this->searchBy), function (Builder $query)  {
+            $query->where(function (builder $query)  {
+                $query->whereFullText($this->searchBy, "{$this->term}*", ['mode' => 'boolean'], 'or');
             });
         });
 
@@ -76,12 +77,12 @@ class UsersService
         return $this;
     }
 
-    public function whereAny(string $term): self
+    public function whereAny(): self
     {
 
-        $this->query->when($term === '' && empty($this->searchBy),
-            function (Builder $query) use ($term) {
-                $query->whereFullText(['first_name', 'last_name', 'email', "username"], $term, [], boolean: 'or');
+        $this->query->when($this->term === '' && empty($this->searchBy),
+            function (Builder $query)  {
+                $query->whereFullText(['first_name', 'last_name', 'email', "username"], "{$this->term}*", [], boolean: 'or');
             });
 
         return $this;
