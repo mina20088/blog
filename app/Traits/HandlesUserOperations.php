@@ -65,6 +65,8 @@ trait HandlesUserOperations
             ->searchBy()
             ->filterByAccountStatus()
             ->filterByGender()
+            ->filterByCountry()
+            ->filterByCity()
             ->orderBy()
             ->profile()
             ->getQuery()
