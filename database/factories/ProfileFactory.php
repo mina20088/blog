@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\Countries;
 use App\Enums\CountryCity;
 use App\Enums\gender;
 use App\Models\Profile;
@@ -13,6 +14,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ProfileFactory extends Factory
 {
+
+
     /**
      * Define the model's default state.
      *
@@ -20,19 +23,20 @@ class ProfileFactory extends Factory
      */
     public function definition(): array
     {
+        $country = $this->faker->randomElement(Countries::getAllCountries());
+
+        $city = collect(Countries::getCities($country))->random();
+
         return [
             'user_id' => User::factory(),
             'date_of_birth' =>  $this->faker->date,
             'gender' => $this->faker->randomElement(gender::cases()),
             'phone_number' => $this->faker->phoneNumber(),
             'street' => $this->faker->streetAddress,
-            'city' => function (array $attributes) {
-                $cities = CountryCity::getCitiesByCountry($attributes['country']);
-                return collect($cities)->random();
-                },
+            'city' => $city,
             'state' => $this->faker->citySuffix,
             'zip_code' => $this->faker->numberBetween(1000, 5000),
-            'country' => $this->faker->randomElement(CountryCity::getAllCountries()),
+            'country' => $country,
             'profile_picture' => $this->faker->imageUrl,
             'bio' => $this->faker->sentence(100),
             'website' => $this->faker->url(),
