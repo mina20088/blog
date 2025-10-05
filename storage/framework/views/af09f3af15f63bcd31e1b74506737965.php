@@ -1,0 +1,1 @@
+components.buttons.button<?php /**PATH C:\Users\minar\projects\blog\storage\framework\views/cc037bd3f812fd34d2adc7abf89c0f6d.blade.php ENDPATH**/ ?>
