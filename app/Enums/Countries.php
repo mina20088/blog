@@ -76,10 +76,12 @@ enum Countries: string
         return $countries;
     }
 
-    public static function getCities(string $country):array
+    public static function getCities(string $name): array
     {
-        ds(self::cases());
-        return [];
+        $filterCountry = array_find(self::cases(), static fn($country) => $country->name === $name);
+
+        return explode(',', $filterCountry->value)    ;
+
     }
 
 }
