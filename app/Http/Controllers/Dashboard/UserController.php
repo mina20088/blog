@@ -25,6 +25,7 @@ class UserController extends Controller
 
     public function index(SearchRequest $request, UsersService $userService)
     {
+
         $users = $this
             ->setup($request, $userService)
             ->search();
