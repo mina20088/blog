@@ -78,7 +78,7 @@ enum Countries: string
 
     public static function getCities(string $country):array
     {
-
+        ds(self::cases());
         return [];
     }
 
