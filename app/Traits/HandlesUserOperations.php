@@ -17,40 +17,13 @@ trait HandlesUserOperations
     protected Request $request;
 
     protected UsersService $usersService;
-/*
-    protected string $searchTerm;
 
-    protected array $searchBy;
-
-    protected array $filters;
-
-    protected string $orderBy = 'id';
-
-    protected string $dir = "asc";
-
-    protected bool $hasSearch = false;
-
-    protected bool $hasSearchBy = false;*/
 
     public function setup(Request $request, UsersService $service): self
     {
         $this->request = $request;
 
         $this->usersService = $service;
-
-/*        $this->searchTerm = $request->input('search') ?? '';
-
-        $this->searchBy = $request->input('searchBy') ?? [];
-
-        $this->orderBy = $request->input('orderBy') ?? 'id';
-
-        $this->hasSearch = $request->has('search');
-
-        $this->filters = $request->input('filters', [])  ?? [];
-
-        $this->hasSearchBy = $request->has('searchBy');
-
-        $this->dir = $request->input('dir') ?? 'asc';*/
 
         return $this;
 
