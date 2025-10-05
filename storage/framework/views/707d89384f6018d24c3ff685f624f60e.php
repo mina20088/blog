@@ -8,7 +8,6 @@ $__propNames = \Illuminate\View\ComponentAttributeBag::extractPropNames(([
     'rounded_md' => false,
     'rounded_lg' => false,
     'rounded_xl' => false,
-    'text_white' => true
 
 ]));
 
@@ -32,7 +31,6 @@ foreach (array_filter(([
     'rounded_md' => false,
     'rounded_lg' => false,
     'rounded_xl' => false,
-    'text_white' => true
 
 ]), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
     $$__key = $$__key ?? $__value;
@@ -48,7 +46,9 @@ unset($__defined_vars, $__key, $__value); ?>
 
 <button
     type="<?php echo e($type); ?>"
-    <?php echo e($attributes->class(['rounded-sm' => $rounded_sm, 'rounded-lg' => $rounded_lg , 'rounded-md' => $rounded_md , '$rounded_xl' => $rounded_xl , 'text-white' => $text_white])->merge(['class' => 'py-3 px-4 text-center font-medium'])); ?>)>
+    <?php echo e($attributes
+            ->class(['rounded-sm' => $rounded_sm, 'rounded-lg' => $rounded_lg , 'rounded-md' => $rounded_md , '$rounded_xl' => $rounded_xl])
+            ->merge(['class' => 'py-3 px-4 text-center font-base bg-gray-200 text-black'])); ?>)>
     <?php echo e($content); ?>
 
 </button>
