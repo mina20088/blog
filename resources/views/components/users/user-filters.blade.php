@@ -15,7 +15,7 @@
             <label for="countries" class="block mb-2 text-sm font-medium text-gray-900">Country</label>
             <select id="countries" x-model="country" name="filters[country]"  @change="cities = window.CountryCityUtils.getCities(country)"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  xs:p-1 md:p-2.5 ">
-                <option selected>Choose a Filter</option>
+                <option value="" selected>Choose a Filter</option>
                 <template x-for="country in countries">
                     <option x-text="country" :value="country" :selected="country === '{{ request('filters.country')  }}'"></option>
                 </template>
@@ -27,7 +27,7 @@
             <label for="city" class="block mb-2 text-sm font-medium text-gray-900">City</label>
             <select id="city"  name="filters[city]"  x-model="scity"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full   xs:p-1 md:p-2.5">
-                <option selected>Choose a Filter</option>
+                <option value selected>Choose a Filter</option>
                 <template x-for="city in cities">
                     <option x-text="city" :value="city" :selected="city === '{{ request('filters.city') }}'" ></option>
                 </template>
