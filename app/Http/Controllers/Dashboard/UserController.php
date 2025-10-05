@@ -53,24 +53,7 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request): RedirectResponse
     {
-        $validated = collect($request->validated());
-
-        //$profileImage = $request->file('profile_picture')->store('profile', 'public');
-
-        //$uploaded = Storage::disk('public')->put(Str::uuid() . '.' . $profileImage->getClientOriginalExtension(), $profileImage);
-        // $uploaded = Storage::put('profile/' . Str::uuid() . '.' . $profileImage->getClientOriginalExtension(), $profileImage, ['visibility' => 'public']);
-
-
-
-        $userData = $validated->only(['first_name', 'last_name', 'email', 'username', 'password'])->toArray();
-
-        $profileData = $validated->except(['first_name', 'last_name', 'email', 'password', 'profile_picture'])->toArray();
-
-        $profileImage = Storage::putFile('profile', $request->file('profile_picture'), ['visibility' => 'public']);
-        $user = User::create($userData);
-        $user->profile()->create(array_merge($profileData, ['profile_picture' => $profileImage]));
-
-
+        ds($request->validated());
         return redirect()->back();
     }
 
