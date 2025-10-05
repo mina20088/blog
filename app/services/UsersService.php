@@ -108,6 +108,24 @@ class UsersService
         return $this;
     }
 
+    public function filterByCountry(): self
+    {
+        $this->query->when(array_key_exists('country', $this->filters) && $this->filters['country'] !== "",
+            function(Builder $query){
+               $query->whereRelation('profile', 'country' , $this->filters['country'] );
+            });
+        return $this;
+    }
+
+    public function filterByCity():self
+    {
+        $this->query->when(array_key_exists('city' , $this->filters) && $this->filters['city'] !== "" ,
+            function (Builder $query){
+                    $query->whereRelation('profile', 'city', $this->filters['city']);
+            });
+        return $this;
+    }
+
     public function orderBy(): static
     {
 
