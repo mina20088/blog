@@ -11,20 +11,20 @@ class FilterNullQueryParams
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param Closure(Request): (Response) $next
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $quaryParams = $request->query->all();
+        $queryParams = $request->query->all();
 
-        $filterParams = array_filter($quaryParams, function ($value) {
+        $filterParams = array_filter($queryParams,  static function ($value) {
 
             return $value !== null && $value !== '';
 
         });
 
 
-        if (count($filterParams) !== count($quaryParams)) {
+        if (count($filterParams) !== count($queryParams)) {
 
             $request->replace($filterParams);
 
@@ -36,8 +36,8 @@ class FilterNullQueryParams
         }
 
 
-        if (array_key_exists('per_page', $quaryParams)) {
-            if ($quaryParams['per_page'] == '' || $quaryParams['per_page'] == null) {
+        if (array_key_exists('per_page', $queryParams)) {
+            if ($queryParams['per_page'] === '' || $queryParams['per_page'] === null) {
 
                 $request->replace([]);
 
