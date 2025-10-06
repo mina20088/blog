@@ -74,7 +74,24 @@
         <x-single-error fieldName="github_repo_url"/>
     </section>
 
-    <section >
+    <section class="grid grid-cols-2 md:gap-3">
+        <section>
+            <x-label for="Date_Of_Birth" content="Date Of Birth"/>
+            <x-input type="date" id="Date_Of_Birth" name="date_of_birth" placeholder="DOB" />
+        </section>
+        <section>
+            <x-label for="gender" content="Gender"/>
+            <x-select id="gender" name="gender">
+                <x-option value="" content="Choose Gender"/>
+                @foreach(\App\Enums\Gender::cases() as $gender)
+                    <x-option :value="$gender->value" :content="$gender->name"/>
+                @endforeach
+            </x-select>
+        </section>
+
+    </section>
+
+    <section class="grid grid-cols-2 md:gap-3">
 
     </section>
 
