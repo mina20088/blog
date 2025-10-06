@@ -406,7 +406,137 @@
 <?php endif; ?>
     </section>
 
-    <section >
+    <section class="grid grid-cols-2 md:gap-3">
+        <section>
+            <?php if (isset($component)) { $__componentOriginald8ba2b4c22a13c55321e34443c386276 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginald8ba2b4c22a13c55321e34443c386276 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.label','data' => ['for' => 'Date_Of_Birth','content' => 'Date Of Birth']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('label'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['for' => 'Date_Of_Birth','content' => 'Date Of Birth']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginald8ba2b4c22a13c55321e34443c386276)): ?>
+<?php $attributes = $__attributesOriginald8ba2b4c22a13c55321e34443c386276; ?>
+<?php unset($__attributesOriginald8ba2b4c22a13c55321e34443c386276); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginald8ba2b4c22a13c55321e34443c386276)): ?>
+<?php $component = $__componentOriginald8ba2b4c22a13c55321e34443c386276; ?>
+<?php unset($__componentOriginald8ba2b4c22a13c55321e34443c386276); ?>
+<?php endif; ?>
+            <?php if (isset($component)) { $__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['type' => 'date','id' => 'Date_Of_Birth','name' => 'date_of_birth','placeholder' => 'DOB']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['type' => 'date','id' => 'Date_Of_Birth','name' => 'date_of_birth','placeholder' => 'DOB']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1)): ?>
+<?php $attributes = $__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1; ?>
+<?php unset($__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1)): ?>
+<?php $component = $__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1; ?>
+<?php unset($__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1); ?>
+<?php endif; ?>
+        </section>
+        <section>
+            <?php if (isset($component)) { $__componentOriginald8ba2b4c22a13c55321e34443c386276 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginald8ba2b4c22a13c55321e34443c386276 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.label','data' => ['for' => 'gender','content' => 'Gender']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('label'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['for' => 'gender','content' => 'Gender']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginald8ba2b4c22a13c55321e34443c386276)): ?>
+<?php $attributes = $__attributesOriginald8ba2b4c22a13c55321e34443c386276; ?>
+<?php unset($__attributesOriginald8ba2b4c22a13c55321e34443c386276); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginald8ba2b4c22a13c55321e34443c386276)): ?>
+<?php $component = $__componentOriginald8ba2b4c22a13c55321e34443c386276; ?>
+<?php unset($__componentOriginald8ba2b4c22a13c55321e34443c386276); ?>
+<?php endif; ?>
+            <?php if (isset($component)) { $__componentOriginaled2cde6083938c436304f332ba96bb7c = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginaled2cde6083938c436304f332ba96bb7c = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.select','data' => ['id' => 'gender','name' => 'gender']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('select'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['id' => 'gender','name' => 'gender']); ?>
+                <?php if (isset($component)) { $__componentOriginal0b955b160e71b527d724d3a9da304a03 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal0b955b160e71b527d724d3a9da304a03 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.option','data' => ['value' => '','content' => 'Choose Gender']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('option'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['value' => '','content' => 'Choose Gender']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal0b955b160e71b527d724d3a9da304a03)): ?>
+<?php $attributes = $__attributesOriginal0b955b160e71b527d724d3a9da304a03; ?>
+<?php unset($__attributesOriginal0b955b160e71b527d724d3a9da304a03); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal0b955b160e71b527d724d3a9da304a03)): ?>
+<?php $component = $__componentOriginal0b955b160e71b527d724d3a9da304a03; ?>
+<?php unset($__componentOriginal0b955b160e71b527d724d3a9da304a03); ?>
+<?php endif; ?>
+                <?php $__currentLoopData = \App\Enums\Gender::cases(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $gender): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php if (isset($component)) { $__componentOriginal0b955b160e71b527d724d3a9da304a03 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal0b955b160e71b527d724d3a9da304a03 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.option','data' => ['value' => $gender->value,'content' => $gender->name]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('option'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['value' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($gender->value),'content' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($gender->name)]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal0b955b160e71b527d724d3a9da304a03)): ?>
+<?php $attributes = $__attributesOriginal0b955b160e71b527d724d3a9da304a03; ?>
+<?php unset($__attributesOriginal0b955b160e71b527d724d3a9da304a03); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal0b955b160e71b527d724d3a9da304a03)): ?>
+<?php $component = $__componentOriginal0b955b160e71b527d724d3a9da304a03; ?>
+<?php unset($__componentOriginal0b955b160e71b527d724d3a9da304a03); ?>
+<?php endif; ?>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+             <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginaled2cde6083938c436304f332ba96bb7c)): ?>
+<?php $attributes = $__attributesOriginaled2cde6083938c436304f332ba96bb7c; ?>
+<?php unset($__attributesOriginaled2cde6083938c436304f332ba96bb7c); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginaled2cde6083938c436304f332ba96bb7c)): ?>
+<?php $component = $__componentOriginaled2cde6083938c436304f332ba96bb7c; ?>
+<?php unset($__componentOriginaled2cde6083938c436304f332ba96bb7c); ?>
+<?php endif; ?>
+        </section>
+
+    </section>
+
+    <section class="grid grid-cols-2 md:gap-3">
 
     </section>
 
