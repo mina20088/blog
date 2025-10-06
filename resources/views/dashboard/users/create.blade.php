@@ -37,12 +37,33 @@
 
                         {{-- Profile Picture Upload --}}
 
-                        <img
-                            src="{{ Vite::asset('resources/images/Aron.png') }}"
-                            height="300"
-                            class="rounded-lg xs:w-80 sm:w-48 md:w-72 h-auto"
-                            alt="Profile Preview"
-                        />
+                        <section class="grid xs:grid-cols-1 sm:grid-cols-2">
+                            <img
+                                src="{{ Vite::asset('resources/images/Aron.png') }}"
+                                height="300"
+                                class="rounded-lg xs:w-80 sm:w-48 md:w-72 h-auto"
+                                alt="Profile Preview"
+                            />
+                            <section class="xs:hidden sm:grid  md:hidden">
+                                <section class="font-bold text-xl">
+                                    <h1>Personal Information</h1>
+                                </section>
+
+                                <section class="grid xs:grid-row-2  sm:grid-cols-2 md:gap-3">
+                                    <div>
+                                        <x-label for="first_name" content="First Name"/>
+                                        <x-input type="text" id="first_name" name="first_name" placeholder="First Name" />
+                                    </div>
+                                    <div>
+                                        <x-label for="last_name" content="Last Name"/>
+                                        <x-input type="last_name" id="last_name" name="last_name" placeholder="Last Name" />
+                                    </div>
+                                </section>
+                            </section>
+
+                        </section>
+
+
 
                         <section class="w-full grid items-start gap-2">
 
@@ -50,7 +71,7 @@
                                 <h1>Personal Information</h1>
                             </section>
 
-                            <section class="grid xs:grid-cols-1 md:grid-cols-2 md:gap-3">
+                            <section class="grid xs:grid-cols-1 sm:hidden md:grid-cols-2 md:gap-3">
                                 <div>
                                     <x-label for="first_name" content="First Name"/>
                                     <x-input type="text" id="first_name" name="first_name" placeholder="First Name" />
