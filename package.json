@@ -23,6 +23,7 @@
         "animate.css": "^4.1.1",
         "datatables.net-dt": "^2.3.2",
         "datatables.net-searchbuilder-dt": "^1.8.3",
-        "flowbite": "^3.1.2"
+        "flowbite": "^3.1.2",
+        "intl-tel-input": "^25.11.2"
     }
 }
