@@ -25,17 +25,5 @@ class DashboardUsersViewHelpers
             'filters'
         ]);
     }
-
-    public static function buildFilterUrl($newParams = []): string
-    {
-        $currentParams = request()->except(['page']); // Exclude pagination
-        $params = array_merge($currentParams, $newParams);
-
-        // Remove empty parameters
-        $params = array_filter($params, static function ($value) {
-            return !is_null($value) && $value !== '';
-        });
-
-        return route('dashboard.users', $params);
-    }
+    
 }
