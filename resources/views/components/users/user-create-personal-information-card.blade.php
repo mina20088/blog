@@ -58,7 +58,7 @@
             </section>
 
             <x-label for="profile_image" content="Upload picture"/>
-            <x-input type="file" id="profile_image" class="p-0" name="profile_picture"/>
+            <x-input type="file" id="profile_image" class="!p-0" name="profile_picture"/>
             <x-single-error fieldName="profile_picture"/>
 
             <x-label for="bio" content="Bio"/>
@@ -91,10 +91,15 @@
 
     </section>
 
-    <section class="grid grid-cols-2 md:gap-3">
+    <section class="grid grid-flow-row md:gap-3">
+        <section>
+            <x-label for="phone" content="Phone"/>
+            <x-input type="tel" id="phone" name="phone_number" class="!w-full"/>
+        </section>
 
     </section>
 
 
-
 </x-card>
+
+
