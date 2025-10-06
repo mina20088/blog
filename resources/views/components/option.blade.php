@@ -1,4 +1,4 @@
 
-<option value="{{$value}}">
-    {{ $content }}
+<option {{$attributes}} value="{{$value ?? ''}}">
+    {{ $content ?? '' }}
 </option>
