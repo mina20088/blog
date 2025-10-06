@@ -40,11 +40,7 @@
             </section>
         </section>
 
-
-        {{-- hidden on sm --}}
         <section class="w-full grid items-start gap-2">
-
-
 
             <section class="sm:hidden md:block font-bold text-xl">
                 <h1>Personal Information</h1>
@@ -69,14 +65,19 @@
             <x-text-area id="bio" :rows="9" name="bio" placeholder="Add Bio..."/>
             <x-single-error fieldName="bio"/>
 
-
-
         </section>
 
     </section>
+    <section>
+        <x-label for="git_hub_link" content="Git Hub"/>
+        <x-input id="git_hub_link" type="text" name="github_repo_url" placeholder="add github link"/>
+        <x-single-error fieldName="github_repo_url"/>
+    </section>
 
-    <x-label for="git_hub_link" content="Git Hub"/>
-    <x-input id="git_hub_link" type="text" name="github_repo_url" placeholder="add github link"/>
-    <x-single-error fieldName="github_repo_url"/>
+    <section >
+
+    </section>
+
+
 
 </x-card>

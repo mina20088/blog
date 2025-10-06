@@ -125,11 +125,7 @@
             </section>
         </section>
 
-
-        
         <section class="w-full grid items-start gap-2">
-
-
 
             <section class="sm:hidden md:block font-bold text-xl">
                 <h1>Personal Information</h1>
@@ -344,13 +340,11 @@
 <?php unset($__componentOriginal3fa50f77369b75df29651d5bd60f0643); ?>
 <?php endif; ?>
 
-
-
         </section>
 
     </section>
-
-    <?php if (isset($component)) { $__componentOriginald8ba2b4c22a13c55321e34443c386276 = $component; } ?>
+    <section>
+        <?php if (isset($component)) { $__componentOriginald8ba2b4c22a13c55321e34443c386276 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginald8ba2b4c22a13c55321e34443c386276 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.label','data' => ['for' => 'git_hub_link','content' => 'Git Hub']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('label'); ?>
@@ -370,7 +364,7 @@
 <?php $component = $__componentOriginald8ba2b4c22a13c55321e34443c386276; ?>
 <?php unset($__componentOriginald8ba2b4c22a13c55321e34443c386276); ?>
 <?php endif; ?>
-    <?php if (isset($component)) { $__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $component; } ?>
+        <?php if (isset($component)) { $__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['id' => 'git_hub_link','type' => 'text','name' => 'github_repo_url','placeholder' => 'add github link']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('input'); ?>
@@ -390,7 +384,7 @@
 <?php $component = $__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1; ?>
 <?php unset($__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1); ?>
 <?php endif; ?>
-    <?php if (isset($component)) { $__componentOriginal3fa50f77369b75df29651d5bd60f0643 = $component; } ?>
+        <?php if (isset($component)) { $__componentOriginal3fa50f77369b75df29651d5bd60f0643 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal3fa50f77369b75df29651d5bd60f0643 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.single-error','data' => ['fieldName' => 'github_repo_url']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('single-error'); ?>
@@ -410,6 +404,13 @@
 <?php $component = $__componentOriginal3fa50f77369b75df29651d5bd60f0643; ?>
 <?php unset($__componentOriginal3fa50f77369b75df29651d5bd60f0643); ?>
 <?php endif; ?>
+    </section>
+
+    <section >
+
+    </section>
+
+
 
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
