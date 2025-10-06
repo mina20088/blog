@@ -9,4 +9,6 @@
     <?php echo e($slot); ?>
 
 </select>
+
+
 <?php /**PATH C:\Users\minar\projects\blog\resources\views/components/select.blade.php ENDPATH**/ ?>

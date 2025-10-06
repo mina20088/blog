@@ -8,8 +8,7 @@
 <?php $__env->startSection('content'); ?>
     <?php dsBlade(session()->has('errors')); ?>
     
-    <section x-data="{
-        show: <?php echo \Illuminate\Support\Js::from(session()->has('errors'), JSON_THROW_ON_ERROR)->toHtml() ?> ,countries: CountryCityUtils.getAllCountries(),cities : [],country:''}" class="my-10">
+    <section class="my-10">
         
         <section class="flex xs:justify-between xs:items-center xs:py-8 lg:py-10">
 
@@ -39,10 +38,10 @@
         </section>
 
         
-        <section class="">
+        <section >
 
-            <form class="flex flex-col gap-3" method="post" action="<?php echo e(route('dashboard.users.store')); ?>"
-                  enctype="multipart/form-data">
+            <form
+                class="flex flex-col gap-3" method="post" action="<?php echo e(route('dashboard.users.store')); ?>"  enctype="multipart/form-data">
 
                 <?php echo csrf_field(); ?>
 
@@ -92,11 +91,35 @@
 <?php unset($__componentOriginal5aedf1664cd7fdab3882e9dd02094cdf); ?>
 <?php endif; ?>
 
+                
+
+                <?php if (isset($component)) { $__componentOriginalb92aa2f08686aa76b47fb98a30ff2e23 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalb92aa2f08686aa76b47fb98a30ff2e23 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.users.user-create-address-information-card','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('users.user-create-address-information-card'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalb92aa2f08686aa76b47fb98a30ff2e23)): ?>
+<?php $attributes = $__attributesOriginalb92aa2f08686aa76b47fb98a30ff2e23; ?>
+<?php unset($__attributesOriginalb92aa2f08686aa76b47fb98a30ff2e23); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalb92aa2f08686aa76b47fb98a30ff2e23)): ?>
+<?php $component = $__componentOriginalb92aa2f08686aa76b47fb98a30ff2e23; ?>
+<?php unset($__componentOriginalb92aa2f08686aa76b47fb98a30ff2e23); ?>
+<?php endif; ?>
+
 
             </form>
         </section>
-    <section/>
+        <section/>
 
 <?php $__env->stopSection(); ?>
+
 
 <?php echo $__env->make('layouts.dashboard', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\minar\projects\blog\resources\views/dashboard/users/create.blade.php ENDPATH**/ ?>
