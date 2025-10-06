@@ -8,8 +8,7 @@
 @section('content')
     @ds(session()->has('errors'))
     {{-- Header Section --}}
-    <section x-data="{
-        show: @js(session()->has('errors'), JSON_THROW_ON_ERROR) ,countries: CountryCityUtils.getAllCountries(),cities : [],country:''}" class="my-10">
+    <section class="my-10">
         {{-- Page Header with Add More Button --}}
         <section class="flex xs:justify-between xs:items-center xs:py-8 lg:py-10">
 
@@ -24,10 +23,10 @@
         </section>
 
         {{-- Main Form Content --}}
-        <section class="">
+        <section >
 
-            <form class="flex flex-col gap-3" method="post" action="{{ route('dashboard.users.store') }}"
-                  enctype="multipart/form-data">
+            <form
+                class="flex flex-col gap-3" method="post" action="{{ route('dashboard.users.store') }}"  enctype="multipart/form-data">
 
                 @csrf
 
@@ -39,9 +38,14 @@
 
                 <x-users.user-create-account-information-card/>
 
+                {{-- User Adderess Information --}}
+
+                <x-users.user-create-address-information-card/>
+
 
             </form>
         </section>
-    <section/>
+        <section/>
 
 @endsection
+
