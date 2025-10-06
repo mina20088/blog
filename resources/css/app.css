@@ -1,5 +1,7 @@
+@import "intl-tel-input.css";
 @import "animate.css";
 @import "tailwind.css";
+
 @layer base{
     html, body {
         font-size: 16px;
