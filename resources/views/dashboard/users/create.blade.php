@@ -6,19 +6,12 @@
 @section('title', 'create')
 
 @section('content')
-    @ds(session()->has('errors'))
     {{-- Header Section --}}
     <section class="my-10">
         {{-- Page Header with Add More Button --}}
         <section class="flex xs:justify-between xs:items-center xs:py-8 lg:py-10">
 
             <h1 class="font-bold xs:text-lg md:text-2xl">Create User</h1>
-
-            <x-button
-                @click="show = !show"
-                class="bg-green-700 hover:bg-green-800 text-white font-bold"
-                :rounded_lg="true" content="Add More"
-            />
 
         </section>
 
@@ -43,6 +36,14 @@
                 <x-users.user-create-address-information-card/>
 
 
+                <section class="grid justify-end grid-col-2">
+
+                    <section class="col-span-1">
+                        <x-button type="submit" class="!bg-blue-600 text-white font-bold" :rounded_lg="true" content="Submit" />
+                        <x-link-button :link="route('dashboard.users')" class="font-bold !bg-red-600 " :rounded_lg="true" :text_white="true" content="Cancel" />
+                    </section>
+
+                </section>
             </form>
         </section>
         <section/>

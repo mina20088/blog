@@ -6,34 +6,12 @@
 <?php $__env->startSection('title', 'create'); ?>
 
 <?php $__env->startSection('content'); ?>
-    <?php dsBlade(session()->has('errors')); ?>
     
     <section class="my-10">
         
         <section class="flex xs:justify-between xs:items-center xs:py-8 lg:py-10">
 
             <h1 class="font-bold xs:text-lg md:text-2xl">Create User</h1>
-
-            <?php if (isset($component)) { $__componentOriginald0f1fd2689e4bb7060122a5b91fe8561 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginald0f1fd2689e4bb7060122a5b91fe8561 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.button','data' => ['@click' => 'show = !show','class' => 'bg-green-700 hover:bg-green-800 text-white font-bold','roundedLg' => true,'content' => 'Add More']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('button'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['@click' => 'show = !show','class' => 'bg-green-700 hover:bg-green-800 text-white font-bold','rounded_lg' => true,'content' => 'Add More']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginald0f1fd2689e4bb7060122a5b91fe8561)): ?>
-<?php $attributes = $__attributesOriginald0f1fd2689e4bb7060122a5b91fe8561; ?>
-<?php unset($__attributesOriginald0f1fd2689e4bb7060122a5b91fe8561); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginald0f1fd2689e4bb7060122a5b91fe8561)): ?>
-<?php $component = $__componentOriginald0f1fd2689e4bb7060122a5b91fe8561; ?>
-<?php unset($__componentOriginald0f1fd2689e4bb7060122a5b91fe8561); ?>
-<?php endif; ?>
 
         </section>
 
@@ -115,6 +93,52 @@
 <?php endif; ?>
 
 
+                <section class="grid justify-end grid-col-2">
+
+                    <section class="col-span-1">
+                        <?php if (isset($component)) { $__componentOriginald0f1fd2689e4bb7060122a5b91fe8561 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginald0f1fd2689e4bb7060122a5b91fe8561 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.button','data' => ['type' => 'submit','class' => '!bg-blue-600 text-white font-bold','roundedLg' => true,'content' => 'Submit']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('button'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['type' => 'submit','class' => '!bg-blue-600 text-white font-bold','rounded_lg' => true,'content' => 'Submit']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginald0f1fd2689e4bb7060122a5b91fe8561)): ?>
+<?php $attributes = $__attributesOriginald0f1fd2689e4bb7060122a5b91fe8561; ?>
+<?php unset($__attributesOriginald0f1fd2689e4bb7060122a5b91fe8561); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginald0f1fd2689e4bb7060122a5b91fe8561)): ?>
+<?php $component = $__componentOriginald0f1fd2689e4bb7060122a5b91fe8561; ?>
+<?php unset($__componentOriginald0f1fd2689e4bb7060122a5b91fe8561); ?>
+<?php endif; ?>
+                        <?php if (isset($component)) { $__componentOriginalfb5b48b69fbd6989c24c2377cf6cf379 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalfb5b48b69fbd6989c24c2377cf6cf379 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.link-button','data' => ['link' => route('dashboard.users'),'class' => 'font-bold !bg-red-600 ','roundedLg' => true,'textWhite' => true,'content' => 'Cancel']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('link-button'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['link' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('dashboard.users')),'class' => 'font-bold !bg-red-600 ','rounded_lg' => true,'text_white' => true,'content' => 'Cancel']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalfb5b48b69fbd6989c24c2377cf6cf379)): ?>
+<?php $attributes = $__attributesOriginalfb5b48b69fbd6989c24c2377cf6cf379; ?>
+<?php unset($__attributesOriginalfb5b48b69fbd6989c24c2377cf6cf379); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalfb5b48b69fbd6989c24c2377cf6cf379)): ?>
+<?php $component = $__componentOriginalfb5b48b69fbd6989c24c2377cf6cf379; ?>
+<?php unset($__componentOriginalfb5b48b69fbd6989c24c2377cf6cf379); ?>
+<?php endif; ?>
+                    </section>
+
+                </section>
             </form>
         </section>
         <section/>

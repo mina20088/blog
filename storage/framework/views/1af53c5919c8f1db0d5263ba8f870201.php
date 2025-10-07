@@ -53,8 +53,6 @@
                            class="bg-blue-600 text-white xs:px-4 xs:py-1 xs:basis-1/2 rounded-lg text-center ">Create</a>
                     </div>
                 </div>
-
-
             </div>
 
         <?php else: ?>
