@@ -4,12 +4,14 @@ namespace Tests\Feature\Dashboard;
 
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
+use JsonException;
 use Tests\TestCase;
 
 class CreateUsersTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
 
     private function validData(array $override = []): array
     {
@@ -75,4 +77,62 @@ class CreateUsersTest extends TestCase
           'city' => 'The city field is required when country is present.'
         ]);
     }
+
+
+    public function test_profile_picture_validations():void
+    {
+        $response = $this->post('/dashboard/users', $this->validData([
+            'profile_picture' =>  UploadedFile::fake()
+                ->image('profile_photo.png', 600, 600)
+                ->size(60000)
+        ]));
+
+        $response->assertSessionHasErrors([
+            'profile_picture' => 'The profile picture field must not be greater than 50000 kilobytes.',
+        ]);
+
+        $response = $this->post('/dashboard/users', $this->validData([
+            'profile_picture' =>  UploadedFile::fake()
+                ->image('profile_photo.png', 600, 600)
+                ->mimeType('application/pdf')
+        ]));
+
+        $response->assertSessionHasErrors([
+            'profile_picture' => 'The profile picture field must be an image.',
+        ]);
+
+        $response = $this->post('/dashboard/users', $this->validData([
+            'profile_picture' =>  UploadedFile::fake()
+                ->image('profile_photo.bmp', 600, 600)
+        ]));
+
+        $response->assertSessionHasErrors([
+            'profile_picture' => 'The profile picture field must be a file of type: png, jpeg.',
+        ]);
+    }
+
+
+    /**
+     * @throws JsonException
+     */
+    public function test_bio_max_length_and_nullable() :void
+    {
+        $response = $this->post('/dashboard/users', $this->validData([
+             'bio' =>  $this->faker()->sentence(400)
+        ]));
+
+        $response->assertSessionHasErrors([
+            'bio' => 'The bio field must not be greater than 500 characters.'
+        ]);
+
+        $response = $this->post('/dashboard/users', $this->validData([
+            'bio' => null
+        ]));
+
+        $response->assertSessionHasNoErrors();
+    }
+
+
+
+
 }
