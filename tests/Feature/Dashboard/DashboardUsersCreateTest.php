@@ -9,7 +9,7 @@ use Illuminate\Http\UploadedFile;
 use JsonException;
 use Tests\TestCase;
 
-class CreateUsersTest extends TestCase
+class DashboardUsersCreateTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
