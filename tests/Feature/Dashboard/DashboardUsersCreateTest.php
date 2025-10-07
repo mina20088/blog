@@ -112,9 +112,7 @@ class DashboardUsersCreateTest extends TestCase
     }
 
 
-    /**
-     * @throws JsonException
-     */
+
     public function test_bio_max_length_and_nullable() :void
     {
         $response = $this->post('/dashboard/users', $this->validData([
@@ -125,12 +123,90 @@ class DashboardUsersCreateTest extends TestCase
             'bio' => 'The bio field must not be greater than 500 characters.'
         ]);
 
+    }
+
+
+    public function test_github_rebo_url_is_url_and_nullable():void
+    {
         $response = $this->post('/dashboard/users', $this->validData([
-            'bio' => null
+            'github_repo_url' => $this->faker()->sentence(5)
         ]));
+
+        $response->assertSessionHasErrors([
+            'github_repo_url' =>  "The github repo url field must be a valid URL."
+        ]);
+
+    }
+
+
+    public function test_must_be_string_fields():void
+    {
+         $response = $this->post('/dashboard/users', $this->validData([
+             'first_name' => $this->faker()->randomNumber() ,
+             'last_name' => $this->faker()->randomNumber(),
+             'password' => $this->faker()->randomNumber(8),
+             'street' => $this->faker()->randomNumber() ,
+             'state' => $this->faker()->randomNumber(),
+             'zip_code' => $this->faker()->randomNumber()
+         ]));
+
+         $response->assertSessionHasErrors([
+             'first_name' => 'The first name field must be a string.' ,
+             'last_name' => 'The last name field must be a string.',
+             'password' => "The password field must be a string.",
+             'street' => "The street field must be a string.",
+             'state' => "The state field must be a string.",
+             'zip_code' => "The zip code field must be a string."
+         ]);
+    }
+
+
+    /**
+     * @throws JsonException
+     */
+    public function test_nullable_fields() :void
+    {
+        $response = $this->post('/dashboard/users', $this->validData([
+            'bio' => null,
+            'github_repo_url' => null,
+            'date_of_birth' => null,
+            'gender' => null,
+            'street' => null,
+            'state' => null,
+            'website' => null,
+            'zip_code' => null,
+            'x-url' => null,
+            'instagram_url' => null
+        ]));
+
+        $response->assertSessionDoesntHaveErrors([
+            'bio',
+            'github_repo_url',
+            'date_of_birth',
+            'gender',
+            'street',
+            'state',
+            'website',
+            'zip_code',
+            'x-url',
+            'instagram_url'
+        ]);
 
         $response->assertSessionHasNoErrors();
     }
+
+    public function test_filed_is_email():void
+    {
+        $response = $this->post('/dashboard/users' , $this->validData([
+             'email' => 'minaremon@'
+        ]));
+
+        $response->assertSessionHasErrors([
+            'email' => 'The email field must be a valid email address.'
+        ]) ;
+    }
+
+
 
 
 
