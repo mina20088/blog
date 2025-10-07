@@ -50,20 +50,22 @@
                 <div>
                     <x-label for="first_name" content="First Name"/>
                     <x-input type="text" id="first_name" name="first_name" placeholder="First Name" />
+                    <x-single-error field-name="first_name"/>
                 </div>
                 <div>
                     <x-label for="last_name" content="Last Name"/>
                     <x-input type="last_name" id="last_name" name="last_name" placeholder="Last Name" />
+                    <x-single-error field-name="last_name"/>
                 </div>
             </section>
 
             <x-label for="profile_image" content="Upload picture"/>
             <x-input type="file" id="profile_image" class="!p-0" name="profile_picture"/>
-            <x-single-error fieldName="profile_picture"/>
+            <x-single-error field-name="profile_picture"/>
 
             <x-label for="bio" content="Bio"/>
             <x-text-area id="bio" :rows="9" name="bio" placeholder="Add Bio..."/>
-            <x-single-error fieldName="bio"/>
+            <x-single-error field-name="bio"/>
 
         </section>
 
