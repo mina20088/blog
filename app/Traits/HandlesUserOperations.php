@@ -19,7 +19,7 @@ trait HandlesUserOperations
     protected UsersService $usersService;
 
 
-    public function setup(Request $request, UsersService $service): self
+    public function initialize(Request $request, UsersService $service): self
     {
         $this->request = $request;
 

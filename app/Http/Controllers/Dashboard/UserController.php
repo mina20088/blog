@@ -27,9 +27,8 @@ class UserController extends Controller
     {
 
         $users = $this
-            ->setup($request, $userService)
+            ->initialize($request, $userService)
             ->search();
-
 
         $columns = $this->getUsersTableColumnNameList($userService);
 
@@ -53,7 +52,6 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request): RedirectResponse
     {
-        ds($request->validated());
         return redirect()->back();
     }
 
