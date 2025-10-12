@@ -14,6 +14,7 @@ use App\Http\Requests\SearchRequest;
 use App\Traits\HandlesUserOperations;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreUserRequest;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Clockwork\Support\Doctrine\Legacy\Logger;
 

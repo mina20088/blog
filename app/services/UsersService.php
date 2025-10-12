@@ -58,8 +58,8 @@ class UsersService
     public function search(): self
     {
 
-        $this->query->when( empty($this->searchBy) && $this->term  !== "" , function(Builder $query){
-            $query->whereFullText(['first_name', 'last_name', 'email', 'username'], "{$this->term}*", ['mode' => 'boolean'], 'or');
+        $this->query->when(  $this->term  !== "" && empty($this->searchBy)  , function(Builder $query){
+            $query->whereFullText(['first_name', 'last_name', 'email', 'username'], "{$this->term}*", ['mode' => 'boolean']);
         });
 
         return $this;
@@ -77,16 +77,6 @@ class UsersService
         return $this;
     }
 
-    public function whereAny(): self
-    {
-
-        $this->query->when($this->term === '' && empty($this->searchBy),
-            function (Builder $query)  {
-                $query->whereFullText(['first_name', 'last_name', 'email', "username"], "{$this->term}*", [], boolean: 'or');
-            });
-
-        return $this;
-    }
 
     public function filterByAccountStatus(): self
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Dashboard\Users;
+namespace Tests\Feature;
 
 
 use App\Models\User;
@@ -10,7 +10,7 @@ use Illuminate\Http\UploadedFile;
 use JsonException;
 use Tests\TestCase;
 
-class CreateTests extends TestCase
+class CreateUserTests extends TestCase
 {
     use RefreshDatabase, WithFaker;
 

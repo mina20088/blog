@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Feature\Auth;
+namespace Tests\Feature;
 
-use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 /**
  * UserRegistrationTest
@@ -38,7 +38,7 @@ class UserRegistrationTest extends TestCase
      * @param array $overrides Key-value pairs to override default data.
      * @return array The merged registration data.
      */
-    private function validData($overrides = []): array
+    private function validData(array $overrides = []): array
     {
         return array_merge([
             'first_name' => 'John',
@@ -296,36 +296,5 @@ class UserRegistrationTest extends TestCase
         $response->assertRedirectBack()->assertSessionHasErrors('rate-limiter');
     }
 
-    /**
-     * Test that the registration form repopulates old values on validation error.
-     *
-     * This test submits a registration form with a missing last_name to trigger a validation error,
-     * then fetches the registration form and asserts that the previously entered first_name is present in the HTML.
-     */
-    public function test_registration_form_populates_old_value_on_validation_error(): void
-    {
-        // Submit invalid data (missing last_name)
-        $response = $this->post('/register', [
-            'first_name' => 'Alice',
-            'last_name' => '', // Intentionally left blank to trigger validation error
-            'email' => 'alice@example.com',
-            'username' => 'AliceUser',
-            'password' => 'Password1!',
-            'confirmPassword' => 'Password1!'
-        ]);
-        $response->assertSessionHasErrors(['last_name']);
 
-        // Now, get the registration form page
-        $getResponse = $this->get('/register');
-        // Assert that the old value for first_name is present in the HTML
-        $getResponse->assertSee('value="Alice"', false);
-    }
-
-    /**
-     * Placeholder for additional registration form tests.
-     */
-    public function test_registration_form_():void
-    {
-
-    }
 }

@@ -28,5 +28,6 @@
         <env name="CACHE_DRIVER" value="array" force="true"/>
         <env name="SESSION_DRIVER" value="array" force="true"/>
         <env name="QUEUE_CONNECTION" value="sync" force="true"/>
+
     </php>
 </phpunit>

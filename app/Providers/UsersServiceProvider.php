@@ -18,15 +18,15 @@ class UsersServiceProvider extends ServiceProvider
     public function register(): void
     {
 
-        $this->app->bind(UsersService::class, function($app){
+        $this->app->bind(UsersService::class, function($app, $params){
 
             return new UsersService(
                 User::query(),
-                Request::input('search', '') ,
-                Request::input('searchBy', []),
-                Request::input('filters', []),
-                Request::input('orderBy', 'id'),
-                Request::input('dir', 'asc')
+                Request::has('search') ? Request::input('search') : ($params['term'] ?? ''),
+                Request::has('searchBy') ? Request::input('searchBy') : ($params['searchBy'] ?? []),
+                Request::has('filters') ? Request::input('filters') : ($params['filters'] ?? []),
+                Request::has('orderBy') ? Request::input('orderBy') : ($params['orderBy'] ?? 'id'),
+                Request::has('dir') ? Request::input('dir') : ($params['orderDir'] ?? 'asc')
             );
         });
     }
