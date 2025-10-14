@@ -17,14 +17,14 @@ class UsersService
 
     protected array $filters;
 
-    protected array $searchBy;
+    protected array|string $searchBy;
 
     protected string $orderBy;
 
     protected string $orderDir;
 
 
-    public function __construct(Builder $query, string $term , array $searchBy, array $filters, string $orderBy, string $orderDir)
+    public function __construct(Builder $query, string $term , array|string $searchBy, array $filters, string $orderBy, string $orderDir)
     {
         $this->query = $query;
 
@@ -39,9 +39,15 @@ class UsersService
         $this->orderDir = $orderDir;
     }
 
-    public function listUsersTableColumns(): array
+    public function listUsersTableColumns(...$values): array
     {
         $usersTableColumns = Schema::getColumnListing('users');
+
+        if(!empty($values)){
+            return collect($usersTableColumns)
+                ->except($values)
+                ->toArray();
+        }
 
         return array_combine($usersTableColumns, $usersTableColumns);
     }

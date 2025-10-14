@@ -17,16 +17,17 @@
         "yajra/laravel-datatables-oracle": "^12.0"
     },
     "require-dev": {
-        "roave/security-advisories": "dev-latest",
-        "symfony/var-dumper": "^7.3",
         "fakerphp/faker": "^1.23",
-        "laradumps/laradumps": "4.0",
+        "laradumps/laradumps": "^4.5",
+        "laradumps/laradumps-core": "^3.2",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.41",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
-        "phpunit/phpunit": "^11.5.3"
+        "phpunit/phpunit": "^11.5.3",
+        "roave/security-advisories": "dev-latest",
+        "symfony/var-dumper": "^7.3"
     },
     "autoload": {
         "psr-4": {

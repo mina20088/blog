@@ -8,11 +8,16 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Arr;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\DataProviderExternal;
+use Tests\DataProviders\UsersDataProvider;
 use Tests\TestCase;
 
 class UsersServiceTests extends TestCase
 {
     use DatabaseMigrations, WithFaker;
+
 
     private function userServiceParams(array $override = []): array
     {
@@ -30,173 +35,115 @@ class UsersServiceTests extends TestCase
     /**
      * @throws BindingResolutionException
      */
-    public function test_list_user_table_column_return_columns(): void
+
+    #[DataProviderExternal(UsersDataProvider::class, 'provideAllUsersTableColumns')]
+    public function test_list_user_table_column_return_columns(array $data, array $expected): void
+    {
+
+        $service = $this->app->make(UsersService::class);
+
+        $column = $service->listUsersTableColumns(...$data);
+
+        $keys = array_values($column);
+
+        $this->assertCount(count($expected), $column);
+
+        $this->assertEqualsCanonicalizing($expected, $keys);
+
+    }
+
+    /**
+     *
+     * @throws BindingResolutionException
+     */
+
+    #[DataProviderExternal(UsersDataProvider::class, 'selectedUserColumnsProvider')]
+    public function test_list_user_table_columns_except_spacifc_columns_return_columns(array $data, array $expected): void
     {
         $service = $this->app->make(UsersService::class);
 
-        $columns = $service->listUsersTableColumns();
+        $columns = $service->listUsersTableColumnsExcept(...$data);
 
-        $this->assertCount(12, $columns);
+        $this->assertCount(count($expected), $columns);
 
-        $this->assertArrayIsEqualToArrayOnlyConsideringListOfKeys(
-            expected: array(
-                'id' => 'id',
-                'first_name' => 'first_name',
-                'last_name' => 'last_name',
-                'email' => 'email',
-                'email_verified_at' => 'email_verified_at',
-                'username' => 'username',
-                'password' => 'password',
-                'locked' => 'locked',
-                'remember_token' => 'remember_token',
-                'created_at' => 'created_at',
-                'updated_at' => 'updated_at',
-                'deleted_at' => 'deleted_at'
-            ),
-            actual: $columns,
-            keysToBeConsidered: [
-                'id',
-                'first_name',
-                'last_name',
-                'email',
-                'email_verified_at',
-                'username',
-                'password',
-                'locked',
-                'remember_token',
-                'created_at',
-                'updated_at',
-                'deleted_at'
-            ]);
-
+        $this->assertEqualsCanonicalizing($expected, $columns);
 
     }
+
 
     /**
      * @throws BindingResolutionException
      */
-    public function test_list_user_table_columns_except_spacifc_columns_return_columns(): void
+    #[DataProviderExternal(UsersDataProvider::class, 'searchableUsersProvider')]
+    public function test_user_search(array $users, string $term, array $searchBy, array $expected): void
     {
-        $service = $this->app->make(UsersService::class);
 
-        $columns = $service->listUsersTableColumnsExcept('email_verified_at', 'created_at', 'updated_at', 'deleted_at', 'remember_token');
-
-        $this->assertCount(7, $columns);
-
-        $this->assertArrayNotHasKey('email_verified_at', $columns);
-
-        $this->assertArrayNotHasKey('created_at', $columns);
-
-        $this->assertArrayNotHasKey('updated_at', $columns);
-
-        $this->assertArrayNotHasKey('deleted_at', $columns);
-
-        $this->assertArrayNotHasKey('remember_token', $columns);
-    }
-
-    /**
-     * @throws BindingResolutionException
-     */
-    public function test_user_search(): void
-    {
-        $createUser = User::factory()->createMany([
-            [
-                "first_name" => "mina",
-                "last_name" => "remon",
-                "email" => "minaremonshaker@gmail.com",
-                "username" => "mina20088"
-            ],
-            [
-                "first_name" => "georget",
-                "last_name" => "wadi",
-                "email" => "georget@yahoo.com",
-                "username" => "gyr99000"
-            ],
-        ]);
+        User::factory()->createMany($users);
 
         $service = $this->app->make(UsersService::class, $this->userServiceParams([
-            'term' => 'mina'
+            'term' => $term
         ]));
 
-        $user = $service->search()->getQuery()->first();
+        $user = $service->search()->getQuery()->get();
 
-        $this->assertModelExists($user);
+        $this->assertCount(count($expected), $user);
 
-        $this->assertSame('mina', $user->first_name);
+        $this->assertEqualsCanonicalizing(
+            Arr::pluck(
+                $expected, ['first_name', 'last_name']),
+            $user->pluck(['first_name', 'last_name'])->toArray()
+        );
 
-        $this->assertSame('remon', $user->last_name);
+    }
 
-        $this->assertSame('minaremonshaker@gmail.com', $user->email);
+
+    /**
+     * @throws BindingResolutionException
+     */
+    #[DataProviderExternal(UsersDataProvider::class, 'searchableUsersWithSearchByProvider')]
+    public function test_user_search_with_searchBy(array $users, array $term, array $searchBy, array $expected): void
+    {
+
+        User::factory()->createMany($users);
+
+        $service = $this->app->make(UsersService::class, $this->userServiceParams([
+            'term' => $term['email'],
+            'searchBy' => $searchBy['email']
+        ]));
+
+        $user = $service->search()->searchBy()->getQuery()->get();
+
+        $this->assertCount(count($expected['email']), $user);
+
+        $emails = $user->pluck('email');
+
+        $this->assertEqualsCanonicalizing($expected['email'], $emails->toArray());
 
     }
 
     /**
      * @throws BindingResolutionException
      */
-    public function test_user_search_with_searchBy():void
+
+    #[DataProviderExternal(UsersDataProvider::class, 'searchableUsersWithSearchByProvider')]
+    public function test_users_search_with_searchBy_return_empty_results(array $users, array $term, array $searchBy, array $expected): void
     {
-        $userCreate = User::factory()->createMany([
-            [
-                "first_name" => "georget",
-                "last_name" => "wadi",
-                "email" => "georget@yahoo.com",
-                "username" => "gyr99000"
-            ],
-            [
-                "first_name" => 'gorgena' ,
-                "last_name" =>   'lalerona',
-                "email"  =>  $this->faker()->email(),
-                "username" => $this->faker->userName()
-            ]
-        ]) ;
-        $service = $this->app->make(UsersService::class, $this->userServiceParams([
-            'term' => 'ge',
-            'searchBy' => ['first_name']
-        ]));
+        $creatUsers = User::factory()->createMany($users);
 
-        $query = $service->search()->searchBy()->getQuery();
-
-        $users = $query->get();
-
-        $this->assertCount(2, $users);
-
-        $this->assertInstanceOf(Collection::class, $users);
-
-        $userNames = $users->pluck('first_name');
-
-        $this->assertContains('georget', $userNames);
-
-    }
-
-    /**
-     * @throws BindingResolutionException
-     */
-    public function test_users_serach_with_searchBy_is_empty_result_return():void
-    {
-        $creatUsers = User::factory()->createMany([
-            [
-                "first_name" => "George",
-                "last_name" => "Best",
-                "email" => "best@gmail.com",
-                "username" => 'best',
-            ],
-            [
-                "first_name" => "Geoff",
-                "last_name" => "Hurst",
-                "email" => "hurst@gmail.com",
-                "username" => 'hurst',
-            ]
-        ]);
 
         $service = $this->app->make(UsersService::class, $this->userServiceParams([
-            'term' => 'Ge',
-            'searchBy' => ['last_name','email','username']
+            'term' => $term['email'],
+            'searchBy' => $searchBy['username']
         ]));
+
 
         $users = $service->search()->searchBy()->getQuery()->get();
 
-        $this->assertCount(0, $users);
+        $this->assertCount(count($expected['users']), $users);
 
-        $this->assertSame([], $users->all());
+        $this->assertEqualsCanonicalizing($expected['users'], $users->toArray());
+
     }
+
+
 }

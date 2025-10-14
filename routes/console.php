@@ -11,4 +11,3 @@ Artisan::command('inspire', function () {
 
 Schedule::command('model:prune')->everySecond();
 
-ds()->commandsOn();
