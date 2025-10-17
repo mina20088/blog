@@ -30,7 +30,7 @@ class ProfileFactory extends Factory
         return [
             'user_id' => User::factory(),
             'date_of_birth' =>  $this->faker->date,
-            'gender' => $this->faker->randomElement(gender::cases()),
+            'gender' => $this->faker->randomElement(gender::values()),
             'phone_number' => $this->faker->phoneNumber(),
             'street' => $this->faker->streetAddress,
             'city' => $city,

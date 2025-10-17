@@ -2,11 +2,14 @@
 
 namespace Tests\Feature;
 
+use App\Models\Profile;
 use App\Models\User;
 use App\services\UsersService;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTruncation;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -16,7 +19,7 @@ use Tests\TestCase;
 
 class UsersServiceTests extends TestCase
 {
-    use DatabaseMigrations, WithFaker;
+    use DatabaseTruncation, WithFaker;
 
 
     private function userServiceParams(array $override = []): array
@@ -36,19 +39,20 @@ class UsersServiceTests extends TestCase
      * @throws BindingResolutionException
      */
 
-    #[DataProviderExternal(UsersDataProvider::class, 'provideAllUsersTableColumns')]
+    #[DataProviderExternal(UsersDataProvider::class, 'userColumnsProvider')]
     public function test_list_user_table_column_return_columns(array $data, array $expected): void
     {
 
+
         $service = $this->app->make(UsersService::class);
 
-        $column = $service->listUsersTableColumns(...$data);
+        $column = $service->listUsersTableColumns(Arr::get($data, 'all'));
 
         $keys = array_values($column);
 
-        $this->assertCount(count($expected), $column);
+        $this->assertCount(count(Arr::get($expected, 'all')), $column);
 
-        $this->assertEqualsCanonicalizing($expected, $keys);
+        $this->assertEqualsCanonicalizing(Arr::get($expected, 'all'), $keys);
 
     }
 
@@ -57,16 +61,16 @@ class UsersServiceTests extends TestCase
      * @throws BindingResolutionException
      */
 
-    #[DataProviderExternal(UsersDataProvider::class, 'selectedUserColumnsProvider')]
+    #[DataProviderExternal(UsersDataProvider::class, 'userColumnsProvider')]
     public function test_list_user_table_columns_except_spacifc_columns_return_columns(array $data, array $expected): void
     {
         $service = $this->app->make(UsersService::class);
 
-        $columns = $service->listUsersTableColumnsExcept(...$data);
+        $columns = $service->listUsersTableColumnsExcept(...Arr::get($data, 'ignored'));
 
-        $this->assertCount(count($expected), $columns);
+        $this->assertCount(count(Arr::get($expected, 'returned')), $columns);
 
-        $this->assertEqualsCanonicalizing($expected, $columns);
+        $this->assertEqualsCanonicalizing(Arr::get($expected, 'returned'), $columns);
 
     }
 
@@ -75,24 +79,24 @@ class UsersServiceTests extends TestCase
      * @throws BindingResolutionException
      */
     #[DataProviderExternal(UsersDataProvider::class, 'searchableUsersProvider')]
-    public function test_user_search(array $users, string $term, array $searchBy, array $expected): void
+    public function test_user_search(array $data,array $searchCriteria ,array $expected): void
     {
 
-        User::factory()->createMany($users);
+        User::factory()->createMany(Arr::get($data, 'users'));
 
         $service = $this->app->make(UsersService::class, $this->userServiceParams([
-            'term' => $term
+            'term' => Arr::get($searchCriteria, 'term.noFiltersTerm')
         ]));
 
-        $user = $service->search()->getQuery()->get();
+        $users = $service->search()->getQuery()->get();
 
-        $this->assertCount(count($expected), $user);
+        $lastNames = $users->pluck('last_name')->toArray();
 
-        $this->assertEqualsCanonicalizing(
-            Arr::pluck(
-                $expected, ['first_name', 'last_name']),
-            $user->pluck(['first_name', 'last_name'])->toArray()
-        );
+        ds($lastNames);
+
+        $this->assertCount(count(Arr::get($expected, 'noFiltersResult.users')), $users);
+
+        $this->assertEqualsCanonicalizing(Arr::get($expected, 'noFiltersResult.last_names'), $lastNames);
 
     }
 
@@ -100,24 +104,24 @@ class UsersServiceTests extends TestCase
     /**
      * @throws BindingResolutionException
      */
-    #[DataProviderExternal(UsersDataProvider::class, 'searchableUsersWithSearchByProvider')]
-    public function test_user_search_with_searchBy(array $users, array $term, array $searchBy, array $expected): void
+    #[DataProviderExternal(UsersDataProvider::class, 'searchableUsersProvider')]
+    public function test_user_search_with_searchBy(array $data,array $searchCriteria ,array $expected): void
     {
 
-        User::factory()->createMany($users);
+        User::factory()->createMany(Arr::get($data, 'users'));
 
         $service = $this->app->make(UsersService::class, $this->userServiceParams([
-            'term' => $term['email'],
-            'searchBy' => $searchBy['email']
+            'term' => Arr::get($searchCriteria, 'term.searchByTerm'),
+            'searchBy' => Arr::get($searchCriteria, 'searchBy.searchByFirstNameAndEmail')
         ]));
 
         $user = $service->search()->searchBy()->getQuery()->get();
 
-        $this->assertCount(count($expected['email']), $user);
+        $emails = $user->pluck('first_name');
 
-        $emails = $user->pluck('email');
+        $this->assertCount(count(Arr::get($expected, 'multipleSearchByResults.first_names')), $user);
 
-        $this->assertEqualsCanonicalizing($expected['email'], $emails->toArray());
+        $this->assertEqualsCanonicalizing(Arr::get($expected, 'multipleSearchByResults.first_names'), $emails->toArray());
 
     }
 
@@ -125,23 +129,51 @@ class UsersServiceTests extends TestCase
      * @throws BindingResolutionException
      */
 
-    #[DataProviderExternal(UsersDataProvider::class, 'searchableUsersWithSearchByProvider')]
+    #[DataProviderExternal(UsersDataProvider::class, 'searchableUsersProvider')]
     public function test_users_search_with_searchBy_return_empty_results(array $users, array $term, array $searchBy, array $expected): void
     {
         $creatUsers = User::factory()->createMany($users);
 
 
         $service = $this->app->make(UsersService::class, $this->userServiceParams([
-            'term' => $term['email'],
-            'searchBy' => $searchBy['username']
+            'term' => $term['multipleSearchByTerm'],
+            'searchBy' => $searchBy['multipleSearchByItemsEmptyResults']
         ]));
 
 
         $users = $service->search()->searchBy()->getQuery()->get();
 
-        $this->assertCount(count($expected['users']), $users);
+        $this->assertCount(count($expected['multipleSearchByItemsEmptyResults']), $users);
 
-        $this->assertEqualsCanonicalizing($expected['users'], $users->toArray());
+        $this->assertEqualsCanonicalizing($expected['multipleSearchByItemsEmptyResults'], $users->toArray());
+
+    }
+
+    /**
+     * @throws BindingResolutionException
+     */
+    #[DataProviderExternal(UsersDataProvider::class, 'searchableUsersProvider')]
+    public function test_get_users_filterd_by_country(array $data, array $term, array $searchBy,array $filters , array $expected):void
+    {
+        $creatUsers = User::factory()
+            ->has(Profile::factory()->state(new Sequence(...$data['profiles'])))
+            ->createMany($data['users']);
+
+
+        $service = $this->app->make(UsersService::class, $this->userServiceParams([
+            'filters' => $filters['countryFilters']
+        ]));
+
+        $users = $service->search()->filterByCountry()->getQuery()->get();
+
+        $names = $users->pluck('first_name');
+
+        $this->assertDatabaseCount('profiles', count($data['profiles']));
+
+        $this->assertCount(count(Arr::get($expected, 'countryFilterItems.users')), $users);
+
+        $this->assertEqualsCanonicalizing(Arr::get($expected, 'countryFilterItems.names'), $names->toArray());
+
 
     }
 

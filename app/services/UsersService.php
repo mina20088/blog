@@ -24,7 +24,7 @@ class UsersService
     protected string $orderDir;
 
 
-    public function __construct(Builder $query, string $term , array|string $searchBy, array $filters, string $orderBy, string $orderDir)
+    public function __construct(Builder $query, string $term , array|string $searchBy = []  , array $filters = [], string $orderBy = 'id', string $orderDir = 'asc')
     {
         $this->query = $query;
 
