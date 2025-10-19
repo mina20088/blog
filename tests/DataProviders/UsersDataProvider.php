@@ -31,7 +31,7 @@ class UsersDataProvider
 
         return [
             "search" => [
-                    'searchCriteria' => [
+                'searchCriteria' => [
                     'generalSearch' => [
                         'usersToCreate' => $usersToCreate,
                         'searchTerm' => 'mina',
@@ -72,7 +72,18 @@ class UsersDataProvider
                             ['first_name' => 'mina', 'last_name' => 'shaker', 'email' => 'minakiroollos@gmail.com', 'username' => 'mina20088'],
                             ['first_name' => 'mina', 'last_name' => 'nader', 'email' => 'minanader@gmail.com', 'username' => 'mina_nader'],
                         ]
+                    ],
+                    'search_with_search_by_filterd_by_country' => [
+                        'usersToCreate' => $usersToCreate,
+                        'profilesToCreate' => $profilesToCreate,
+                        'searchTerm' => 's',
+                        'searchBy' => ['last_name'],
+                        'filters' => ['country' => "Egypt"],
+                        'expectedCount' => 1,
+                        'expectedUsername' => ['mina20088']
+
                     ]
+
                 ]
 
             ]

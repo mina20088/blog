@@ -35,7 +35,6 @@ class UsersServiceTests extends TestCase
         ], $override);
     }
 
-
     /**
      * @throws BindingResolutionException
      */
@@ -185,7 +184,7 @@ class UsersServiceTests extends TestCase
             'filters' => $filters,
             'expectedCount' => $count,
             'expectedFirstNames' => $expected
-        ] =   $searchCriteria['filter_by_country'];
+        ] = $searchCriteria['filter_by_country'];
 
 
         User::factory()
@@ -193,7 +192,7 @@ class UsersServiceTests extends TestCase
             ->createMany($users);
 
         $service = $this->app->make(UsersService::class, $this->userServiceParams([
-            'filters' =>  $filters
+            'filters' => $filters
         ]));
 
 
@@ -201,11 +200,11 @@ class UsersServiceTests extends TestCase
 
         $names = $users->pluck('first_name');
 
-        $this->assertDatabaseCount('profiles',count($profiles));
+        $this->assertDatabaseCount('profiles', count($profiles));
 
         $this->assertCount($count, $users);
 
-        $this->assertEqualsCanonicalizing( $expected, $names->toArray());
+        $this->assertEqualsCanonicalizing($expected, $names->toArray());
 
     }
 
@@ -214,7 +213,7 @@ class UsersServiceTests extends TestCase
      */
     #[Test]
     #[DataProviderExternal(UsersDataProvider::class, 'searchableUsersProvider')]
-    public function search_with_country_filter(array $searchCriteria)  :void
+    public function search_with_country_filter(array $searchCriteria): void
     {
         [
             'usersToCreate' => $users,
@@ -223,7 +222,7 @@ class UsersServiceTests extends TestCase
             'filters' => $filters,
             'expectedCount' => $count,
             'expectedUsers' => $expected
-        ] =   $searchCriteria['search_with_country_filter'];
+        ] = $searchCriteria['search_with_country_filter'];
 
 
         User::factory()
@@ -231,15 +230,15 @@ class UsersServiceTests extends TestCase
             ->createMany($users);
 
         $service = $this->app->make(UsersService::class, $this->userServiceParams([
-            'term' =>   $term,
+            'term' => $term,
             'filters' => $filters
         ]));
 
         $users = $service->search()->filterByCountry()->getQuery()->get();
 
-         $mappedUses = $users->map(function ($user) {
+        $mappedUses = $users->map(function ($user) {
             return [
-               'first_name' => $user->first_name,
+                'first_name' => $user->first_name,
                 'last_name' => $user->last_name,
                 'email' => $user->email,
                 'username' => $user->username
@@ -249,6 +248,45 @@ class UsersServiceTests extends TestCase
         $this->assertCount($count, $mappedUses->toArray());
 
         $this->assertEqualsCanonicalizing($expected, $mappedUses->toArray());
+    }
+
+    /**
+     * @throws BindingResolutionException
+     */
+    #[Test]
+    #[DataProviderExternal(UsersDataProvider::class, 'searchableUsersProvider')]
+    public function search_with_search_by_filterd_by_country(array $searchCriteria): void
+    {
+        [
+            'usersToCreate' => $users,
+            'profilesToCreate' => $profiles,
+            'searchTerm' => $term,
+            'searchBy' => $searchBy,
+            'filters' => $filters,
+            'expectedCount' => $count,
+            'expectedUsername' => $expected
+        ]
+            = $searchCriteria['search_with_search_by_filterd_by_country'];
+
+        User::factory()
+            ->has(Profile::factory()->state(new Sequence(...$profiles)))
+            ->createMany($users);
+
+        $service = $this->app->make(UsersService::class, $this->userServiceParams([
+            'term' => $term,
+            'searchBy' => $searchBy,
+            'filters' => $filters
+        ]));
+
+        $users = $service->search()->searchBy()->filterByCountry()->getQuery()->get();
+
+        $username = $users->pluck('username')->toArray();
+
+        $this->assertCount($count, $users);
+
+        $this->assertEqualsCanonicalizing($expected, $username);
+
+
     }
 
 }
