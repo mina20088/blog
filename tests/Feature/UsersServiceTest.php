@@ -2,23 +2,24 @@
 
 namespace Tests\Feature;
 
-use App\Models\Profile;
+use Tests\TestCase;
 use App\Models\User;
+use App\Models\Profile;
+use Illuminate\Support\Arr;
 use App\services\UsersService;
-use Illuminate\Contracts\Container\BindingResolutionException;
+use Tests\helpers\UsersTestsHelpers;
+use PHPUnit\Framework\Attributes\Test;
+use Tests\DataProviders\UsersDataProvider;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Foundation\Testing\WithFaker;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTruncation;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Arr;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\DataProviderExternal;
-use PHPUnit\Framework\Attributes\Test;
-use Tests\DataProviders\UsersDataProvider;
-use Tests\TestCase;
+use Illuminate\Contracts\Container\BindingResolutionException;
 
-class UsersServiceTests extends TestCase
+class UsersServiceTest extends TestCase
 {
     use DatabaseTruncation, WithFaker;
 
@@ -35,9 +36,6 @@ class UsersServiceTests extends TestCase
         ], $override);
     }
 
-    /**
-     * @throws BindingResolutionException
-     */
 
     #[DataProviderExternal(UsersDataProvider::class, 'userColumnsProvider')]
     #[Test]
@@ -45,7 +43,7 @@ class UsersServiceTests extends TestCase
     {
 
 
-        $service = $this->app->make(UsersService::class);
+        $service = UsersTestsHelpers::createUsersService();
 
         $column = $service->listUsersTableColumns(Arr::get($data, 'all'));
 
@@ -57,16 +55,12 @@ class UsersServiceTests extends TestCase
 
     }
 
-    /**
-     *
-     * @throws BindingResolutionException
-     */
 
     #[DataProviderExternal(UsersDataProvider::class, 'userColumnsProvider')]
     #[Test]
     public function lists_user_table_columns_excluding_ignored_columns(array $data, array $expected): void
     {
-        $service = $this->app->make(UsersService::class);
+        $service = UsersTestsHelpers::createUsersService();
 
         $columns = $service->listUsersTableColumnsExcept(...Arr::get($data, 'ignored'));
 
@@ -77,26 +71,22 @@ class UsersServiceTests extends TestCase
     }
 
 
-    /**
-     * @throws BindingResolutionException
-     */
     #[DataProviderExternal(UsersDataProvider::class, 'searchableUsersProvider')]
     #[Test]
     public function search_returns_expected_users(array $searchCriteria): void
     {
         [
             'usersToCreate' => $users,
-            'searchTerm' => $term, 'expectedCount' => $count,
+            'searchTerm' => $term,
+            'expectedCount' => $count,
             'expectedLastNames' => $expected
         ] = $searchCriteria['generalSearch'];
 
 
         User::factory()->createMany($users);
 
-        $service = $this->app->make(UsersService::class, $this->userServiceParams([
-            'term' => $term
-        ]));
-
+        $service = UsersTestsHelpers::createUsersService(['term' => $term]);
+        
         $users = $service->search()->getQuery()->get();
 
         $lastNames = $users->pluck('last_name')->toArray();
@@ -107,11 +97,9 @@ class UsersServiceTests extends TestCase
 
     }
 
-    /**
-     * @throws BindingResolutionException
-     */
-    #[DataProviderExternal(UsersDataProvider::class, 'searchableUsersProvider')]
+
     #[Test]
+    #[DataProviderExternal(UsersDataProvider::class, 'searchableUsersProvider')]
     public function search_by_returns_expected_users(array $searchCriteria): void
     {
         [
@@ -125,10 +113,11 @@ class UsersServiceTests extends TestCase
 
         User::factory()->createMany($users);
 
-        $service = $this->app->make(UsersService::class, $this->userServiceParams([
+        $service = UsersTestsHelpers::createUsersService([
             'term' => $term,
             'searchBy' => $searchBy
-        ]));
+        ]);
+
 
         $user = $service->search()->searchBy()->getQuery()->get();
 
@@ -286,8 +275,44 @@ class UsersServiceTests extends TestCase
 
         $this->assertEqualsCanonicalizing($expected, $username);
 
-
     }
+
+    #[Test]
+    #[DataProviderExternal(UsersDataProvider::class,'searchableUsersProvider')]
+    public function get_users_filterd_by_city(array $searchCriteria): void
+    {
+        [
+            'usersToCreate' => $users,
+            'profilesToCreate' => $profiles,
+            'filters' => $filters,
+            'expectedCount' => $count,
+            'expectedLastNames' => $expected
+        ] 
+        = $searchCriteria['filter_by_city'];
+
+        User::factory()
+        ->has(Profile::factory()->state(new Sequence(...$profiles)))
+        ->createMany($users);
+
+        $service = $this->app->make(UsersService::class, $this->userServiceParams([
+            'filters' => $filters
+        ]));
+
+        $users = $service
+            ->search()
+            ->searchBy()
+            ->filterByCity()
+            ->getQuery()
+            ->get();
+        
+        $lastNames = $users->pluck('last_name')->toArray();
+
+        $this->assertCount($count, $users);
+
+        $this->assertEqualsCanonicalizing($expected, $lastNames);
+    }
+
+
 
 }
 

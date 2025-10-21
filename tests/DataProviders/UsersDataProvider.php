@@ -2,6 +2,9 @@
 
 namespace Tests\DataProviders;
 
+use App\Enums\Countries;
+use Illuminate\Support\Arr;
+use Doctrine\Common\Lexer\AbstractLexer;
 use Illuminate\Database\Eloquent\Collection;
 
 class UsersDataProvider
@@ -9,6 +12,13 @@ class UsersDataProvider
 
     public static function searchableUsersProvider(): array
     {
+        $Egypt = Countries::getCitiesAccoc("Egypt");
+
+        $Ukraine = Countries::getCitiesAccoc("Ukraine");
+
+        $spain = Countries::getCitiesAccoc("Spain");
+
+        
         $usersToCreate = [
             ['first_name' => 'mina', 'last_name' => 'shaker', 'email' => 'minakiroollos@gmail.com', 'username' => 'mina20088'],
             ['first_name' => 'mina', 'last_name' => 'nader', 'email' => 'minanader@gmail.com', 'username' => 'mina_nader'],
@@ -16,18 +26,21 @@ class UsersDataProvider
             ['first_name' => 'mina', 'last_name' => 'adel', 'email' => 'minaadel@gmail.com', 'username' => 'mina_adel'],
             ['first_name' => 'hany', 'last_name' => 'shawky', 'email' => 'hero@gmail.com', 'username' => 're_shawky'],
             ['first_name' => 'human', 'last_name' => 'lecter', 'email' => 'hanz@gmail.com', 'username' => 'ssasd899'],
-            ['first_name' => 'samer', 'last_name' => 'ahmed', 'email' => 'samer@gmail.com', 'username' => 'sam39384']
+            ['first_name' => 'samer', 'last_name' => 'ahmed', 'email' => 'samer@gmail.com', 'username' => 'sam39384'],
+            ['first_name' => 'mina', 'last_name' => 'gamal', 'email' => 'minagamal@gmail.com', 'username' => 'mina_gamal']
         ];
 
         $profilesToCreate = [
-            ["country" => "Egypt"],
-            ["country" => "Egypt"],
-            ["country" => "Spain"],
-            ["country" => "Ukraine"],
-            ["country" => "Ukraine"],
-            ["country" => "Egypt"],
-            ["country" => "Egypt"]
-        ];
+            ["country" => "Egypt", 'city' => Arr::get($Egypt, 'Alexandria') ],
+            ["country" => "Egypt", 'city' => Arr::get($Egypt, 'Alexandria')],
+            ["country" => "Spain" , "city"=> Arr::get($spain, "Madrid")],
+            ["country" => "Ukraine" , "city"=> Arr::get($Ukraine, "Kyiv")],
+            ["country" => "Ukraine", 'city' => Arr::get($Ukraine, 'Donetsk')],
+            ["country" => "Egypt", 'city' => Arr::get($Egypt, 'Cairo')],
+            ["country" => "Egypt", "city"=> Arr::get($Egypt, "Suez")],
+            ["country" => "Egypt", 'city' => Arr::get($Egypt, 'Cairo')]
+        ];   
+    
 
         return [
             "search" => [
@@ -35,8 +48,8 @@ class UsersDataProvider
                     'generalSearch' => [
                         'usersToCreate' => $usersToCreate,
                         'searchTerm' => 'mina',
-                        'expectedCount' => 3,
-                        'expectedLastNames' => ['shaker', 'nader', 'adel'],
+                        'expectedCount' => 4,
+                        'expectedLastNames' => ['shaker', 'nader', 'adel', 'gamal'],
                     ],
 
                     'search_by _first_name_and_email' => [
@@ -82,6 +95,13 @@ class UsersDataProvider
                         'expectedCount' => 1,
                         'expectedUsername' => ['mina20088']
 
+                    ],
+                    'filter_by_city' => [
+                        'usersToCreate' => $usersToCreate,
+                        'profilesToCreate' => $profilesToCreate,
+                        'filters' => ['city' => 'Alexandria'],
+                        'expectedCount' => 2,
+                        'expectedLastNames' => ['shaker', 'nader']
                     ]
 
                 ]

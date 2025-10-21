@@ -37,7 +37,7 @@ enum Countries: string
     case South_Africa = "Cape Town,Johannesburg,Durban,Pretoria,Port Elizabeth,Bloemfontein,East London,Pietermaritzburg,Benoni,Tembisa";
     case Kenya = "Nairobi,Mombasa,Nakuru,Eldoret,Kisumu,Thika,Malindi,Kitale,Garissa,Kakamega";
     case Morocco = "Casablanca,Rabat,Fes,Marrakech,Agadir,Tangier,Meknes,Oujda,Kenitra,Tetouan";
-    case Algeria = "Algiers,Oran,Constantine,Annaba,Blida,Batna,Djelfa,Setif,Sidi Bel Abbes,Biskra";
+    case Algeria = "Algiers,Oran,Constantine,Annaba,Blida,Batna,Djelfa,Setif,Sidi Bel Abbes,Biskra"; // This line was already correct, no change needed.
     case Ethiopia = "Addis Ababa,Dire Dawa,Mekelle,Gondar,Adama,Hawassa,Bahir Dar,Dessie,Jimma,Jijiga";
     case Ghana = "Accra,Kumasi,Tamale,Sekondi-Takoradi,Ashaiman,Sunyani,Cape Coast,Obuasi,Teshie,Madina";
     case Brazil = "São Paulo,Rio de Janeiro,Brasília,Salvador,Fortaleza,Belo Horizonte,Manaus,Curitiba,Recife,Goiânia";
@@ -64,13 +64,13 @@ enum Countries: string
 
 
 
-    public static function getALlCountries():array{
+    public static function getALlCountries(): array
+    {
 
         $countries = [];
 
-        foreach (self::cases() as $country)
-        {
-            $countries [] = $country->name;
+        foreach (self::cases() as $country) {
+            $countries[] = $country->name;
         }
 
         return $countries;
@@ -80,11 +80,24 @@ enum Countries: string
     {
         $filterCountry = array_find(self::cases(), static fn($country) => $country->name === $name);
 
-        return explode(',', $filterCountry->value)    ;
+        return explode(',', $filterCountry->value);
+
+    }
+
+    public static function getCitiesAccoc(string $name)
+    {
+       
+        $cities = [];
+
+        $citiesArray = self::getCities($name);
+
+        foreach($citiesArray as $city) 
+        {
+            $cities[$city] = $city;
+        }
+
+        return $cities;
 
     }
 
 }
-
-
-

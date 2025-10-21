@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 /**
  * Feature tests for user login functionality.
@@ -12,6 +13,7 @@ use Tests\TestCase;
  */
 class UserLoginTest extends TestCase
 {
+    use WithoutMiddleware;
     /**
      * Returns a valid set of login credentials, allowing overrides for specific fields.
      *

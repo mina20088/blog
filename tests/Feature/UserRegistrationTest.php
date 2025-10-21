@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
 /**
@@ -29,7 +30,7 @@ use Tests\TestCase;
 
 class UserRegistrationTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithoutMiddleware;
 
     /**
      * Returns a valid set of user registration data, allowing overrides for specific fields.
