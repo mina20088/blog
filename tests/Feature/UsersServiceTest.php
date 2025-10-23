@@ -37,12 +37,13 @@ class UsersServiceTest extends TestCase
     }
 
 
+    /**
+     * @throws BindingResolutionException
+     */
     #[DataProviderExternal(UsersDataProvider::class, 'userColumnsProvider')]
     #[Test]
     public function returns_expected_column_names(array $data, array $expected): void
     {
-
-
         $service = UsersTestsHelpers::createUsersService();
 
         $column = $service->listUsersTableColumns(Arr::get($data, 'all'));
@@ -56,6 +57,9 @@ class UsersServiceTest extends TestCase
     }
 
 
+    /**
+     * @throws BindingResolutionException
+     */
     #[DataProviderExternal(UsersDataProvider::class, 'userColumnsProvider')]
     #[Test]
     public function lists_user_table_columns_excluding_ignored_columns(array $data, array $expected): void
@@ -71,6 +75,9 @@ class UsersServiceTest extends TestCase
     }
 
 
+    /**
+     * @throws BindingResolutionException
+     */
     #[DataProviderExternal(UsersDataProvider::class, 'searchableUsersProvider')]
     #[Test]
     public function search_returns_expected_users(array $searchCriteria): void
@@ -86,7 +93,7 @@ class UsersServiceTest extends TestCase
         User::factory()->createMany($users);
 
         $service = UsersTestsHelpers::createUsersService(['term' => $term]);
-        
+
         $users = $service->search()->getQuery()->get();
 
         $lastNames = $users->pluck('last_name')->toArray();
@@ -98,6 +105,9 @@ class UsersServiceTest extends TestCase
     }
 
 
+    /**
+     * @throws BindingResolutionException
+     */
     #[Test]
     #[DataProviderExternal(UsersDataProvider::class, 'searchableUsersProvider')]
     public function search_by_returns_expected_users(array $searchCriteria): void
@@ -147,10 +157,10 @@ class UsersServiceTest extends TestCase
 
         User::factory()->createMany($users);
 
-        $service = $this->app->make(UsersService::class, $this->userServiceParams([
-            'term' => $term,
+        $service = UsersTestsHelpers::createUsersService([
+            'term' =>  $term,
             'searchBy' => $searchBy
-        ]));
+        ]) ;
 
         $users = $service->search()->searchBy()->getQuery()->get();
 
@@ -180,9 +190,9 @@ class UsersServiceTest extends TestCase
             ->has(Profile::factory()->state(new Sequence(...$profiles)))
             ->createMany($users);
 
-        $service = $this->app->make(UsersService::class, $this->userServiceParams([
+        $service = UsersTestsHelpers::createUsersService([
             'filters' => $filters
-        ]));
+        ])  ;
 
 
         $users = $service->search()->filterByCountry()->getQuery()->get();
@@ -218,10 +228,10 @@ class UsersServiceTest extends TestCase
             ->has(Profile::factory()->state(new Sequence(...$profiles)))
             ->createMany($users);
 
-        $service = $this->app->make(UsersService::class, $this->userServiceParams([
+        $service = UsersTestsHelpers::createUsersService([
             'term' => $term,
             'filters' => $filters
-        ]));
+        ]);
 
         $users = $service->search()->filterByCountry()->getQuery()->get();
 
@@ -261,11 +271,12 @@ class UsersServiceTest extends TestCase
             ->has(Profile::factory()->state(new Sequence(...$profiles)))
             ->createMany($users);
 
-        $service = $this->app->make(UsersService::class, $this->userServiceParams([
+        $service = UsersTestsHelpers::createUsersService([
             'term' => $term,
             'searchBy' => $searchBy,
             'filters' => $filters
-        ]));
+        ]);
+
 
         $users = $service->search()->searchBy()->filterByCountry()->getQuery()->get();
 
@@ -277,6 +288,9 @@ class UsersServiceTest extends TestCase
 
     }
 
+    /**
+     * @throws BindingResolutionException
+     */
     #[Test]
     #[DataProviderExternal(UsersDataProvider::class,'searchableUsersProvider')]
     public function get_users_filterd_by_city(array $searchCriteria): void
@@ -287,16 +301,16 @@ class UsersServiceTest extends TestCase
             'filters' => $filters,
             'expectedCount' => $count,
             'expectedLastNames' => $expected
-        ] 
+        ]
         = $searchCriteria['filter_by_city'];
 
         User::factory()
         ->has(Profile::factory()->state(new Sequence(...$profiles)))
         ->createMany($users);
 
-        $service = $this->app->make(UsersService::class, $this->userServiceParams([
+        $service = UsersTestsHelpers::createUsersService([
             'filters' => $filters
-        ]));
+        ]);
 
         $users = $service
             ->search()
@@ -304,7 +318,7 @@ class UsersServiceTest extends TestCase
             ->filterByCity()
             ->getQuery()
             ->get();
-        
+
         $lastNames = $users->pluck('last_name')->toArray();
 
         $this->assertCount($count, $users);

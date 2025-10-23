@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Tests\TestCase;
 use App\Models\User;
 use App\services\UsersService;
@@ -42,19 +43,22 @@ class UsersTestsHelpersTest extends TestCase
         $this->assertEquals("desc", $params["orderDir"]);
     }
 
-    public function test_users_service_creation_without_override_value()
+    /**
+     * @throws BindingResolutionException
+     */
+    public function test_users_service_creation_without_override_value(): void
     {
-        
+
         $createService = UsersTestsHelpers::createUsersService();
 
-        
+
         $this->assertInstanceOf(UsersService::class, $createService);
         $this->assertObjectHasProperty('term', $createService);
-        $this->assertObjectHasProperty('filters', $createService);   
+        $this->assertObjectHasProperty('filters', $createService);
         $this->assertObjectHasProperty('searchBy', $createService);
         $this->assertObjectHasProperty('orderBy', $createService);
         $this->assertObjectHasProperty('orderDir', $createService);
         $this->assertObjectHasProperty('query', $createService);
-        
+
     }
 }

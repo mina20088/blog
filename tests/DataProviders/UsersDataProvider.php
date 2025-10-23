@@ -18,7 +18,7 @@ class UsersDataProvider
 
         $spain = Countries::getCitiesAccoc("Spain");
 
-        
+
         $usersToCreate = [
             ['first_name' => 'mina', 'last_name' => 'shaker', 'email' => 'minakiroollos@gmail.com', 'username' => 'mina20088'],
             ['first_name' => 'mina', 'last_name' => 'nader', 'email' => 'minanader@gmail.com', 'username' => 'mina_nader'],
@@ -39,8 +39,8 @@ class UsersDataProvider
             ["country" => "Egypt", 'city' => Arr::get($Egypt, 'Cairo')],
             ["country" => "Egypt", "city"=> Arr::get($Egypt, "Suez")],
             ["country" => "Egypt", 'city' => Arr::get($Egypt, 'Cairo')]
-        ];   
-    
+        ];
+
 
         return [
             "search" => [
@@ -51,7 +51,6 @@ class UsersDataProvider
                         'expectedCount' => 4,
                         'expectedLastNames' => ['shaker', 'nader', 'adel', 'gamal'],
                     ],
-
                     'search_by _first_name_and_email' => [
                         'usersToCreate' => $usersToCreate,
                         'searchTerm' => 'han',
@@ -59,7 +58,6 @@ class UsersDataProvider
                         'expectedCount' => 2,
                         'expectedFirstNames' => ['hany', 'human'],
                     ],
-
                     'search_by_with_no_results' => [
                         'usersToCreate' => $usersToCreate,
                         'searchTerm' => 'han',
@@ -67,7 +65,6 @@ class UsersDataProvider
                         'expectedCount' => 0,
                         'expectedUsers' => [],
                     ],
-
                     'filter_by_country' => [
                         'usersToCreate' => $usersToCreate,
                         'profilesToCreate' => $profilesToCreate,
@@ -80,10 +77,12 @@ class UsersDataProvider
                         'profilesToCreate' => $profilesToCreate,
                         'searchTerm' => 'mina',
                         'filters' => ['country' => 'Egypt'],
-                        'expectedCount' => 2 ,
+                        'expectedCount' => 3 ,
                         'expectedUsers'  => [
                             ['first_name' => 'mina', 'last_name' => 'shaker', 'email' => 'minakiroollos@gmail.com', 'username' => 'mina20088'],
                             ['first_name' => 'mina', 'last_name' => 'nader', 'email' => 'minanader@gmail.com', 'username' => 'mina_nader'],
+                            ['first_name' => 'mina', 'last_name' => 'gamal', 'email' => 'minagamal@gmail.com', 'username' => 'mina_gamal']
+
                         ]
                     ],
                     'search_with_search_by_filterd_by_country' => [
