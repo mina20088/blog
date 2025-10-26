@@ -12,7 +12,6 @@ use PHPUnit\Framework\Attributes\Test;
 use Tests\DataProviders\UsersDataProvider;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\WithFaker;
-use PHPUnit\Framework\Attributes\DataProvider;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTruncation;
@@ -22,20 +21,6 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 class UsersServiceTest extends TestCase
 {
     use DatabaseTruncation, WithFaker;
-
-
-    private function userServiceParams(array $override = []): array
-    {
-        return array_merge([
-            User::query(),
-            "term" => "",
-            "searchBy" => [],
-            "filters" => [],
-            "orderBy" => "id",
-            "orderDir" => "asc"
-        ], $override);
-    }
-
 
     /**
      * @throws BindingResolutionException
@@ -82,13 +67,8 @@ class UsersServiceTest extends TestCase
     #[Test]
     public function search_returns_expected_users(array $searchCriteria): void
     {
-        [
-            'usersToCreate' => $users,
-            'searchTerm' => $term,
-            'expectedCount' => $count,
-            'expectedLastNames' => $expected
-        ] = $searchCriteria['generalSearch'];
 
+        extract($searchCriteria['generalSearch'], EXTR_SKIP);
 
         User::factory()->createMany($users);
 
@@ -112,22 +92,12 @@ class UsersServiceTest extends TestCase
     #[DataProviderExternal(UsersDataProvider::class, 'searchableUsersProvider')]
     public function search_by_returns_expected_users(array $searchCriteria): void
     {
-        [
-            'usersToCreate' => $users,
-            'searchTerm' => $term,
-            'searchBy' => $searchBy,
-            'expectedCount' => $count,
-            'expectedFirstNames' => $expected,
-        ] = $searchCriteria['search_by _first_name_and_email'];
 
+        extract($searchCriteria['search_by _first_name_and_email'], EXTR_SKIP);
 
         User::factory()->createMany($users);
 
-        $service = UsersTestsHelpers::createUsersService([
-            'term' => $term,
-            'searchBy' => $searchBy
-        ]);
-
+        $service = UsersTestsHelpers::createUsersService(['term' => $term, 'searchBy' => $searchBy]);
 
         $user = $service->search()->searchBy()->getQuery()->get();
 
@@ -147,20 +117,12 @@ class UsersServiceTest extends TestCase
     #[Test]
     public function search_by_returns_no_users_when_none_match(array $searchCriteria): void
     {
-        [
-            'usersToCreate' => $users,
-            'searchTerm' => $term,
-            'searchBy' => $searchBy,
-            'expectedCount' => $count,
-            'expectedUsers' => $expected,
-        ] = $searchCriteria['search_by_with_no_results'];
+
+        extract($searchCriteria['search_by_with_no_results'], EXTR_SKIP);
 
         User::factory()->createMany($users);
 
-        $service = UsersTestsHelpers::createUsersService([
-            'term' =>  $term,
-            'searchBy' => $searchBy
-        ]) ;
+        $service = UsersTestsHelpers::createUsersService(['term' =>  $term, 'searchBy' => $searchBy]) ;
 
         $users = $service->search()->searchBy()->getQuery()->get();
 
@@ -177,23 +139,14 @@ class UsersServiceTest extends TestCase
     #[DataProviderExternal(UsersDataProvider::class, 'searchableUsersProvider')]
     public function get_users_filterd_by_country(array $searchCriteria): void
     {
-        [
-            'usersToCreate' => $users,
-            'profilesToCreate' => $profiles,
-            'filters' => $filters,
-            'expectedCount' => $count,
-            'expectedFirstNames' => $expected
-        ] = $searchCriteria['filter_by_country'];
 
+        extract($searchCriteria['filter_by_country'], EXTR_SKIP);
 
         User::factory()
             ->has(Profile::factory()->state(new Sequence(...$profiles)))
             ->createMany($users);
 
-        $service = UsersTestsHelpers::createUsersService([
-            'filters' => $filters
-        ])  ;
-
+        $service = UsersTestsHelpers::createUsersService(['filters' => $filters])  ;
 
         $users = $service->search()->filterByCountry()->getQuery()->get();
 
@@ -214,24 +167,14 @@ class UsersServiceTest extends TestCase
     #[DataProviderExternal(UsersDataProvider::class, 'searchableUsersProvider')]
     public function search_with_country_filter(array $searchCriteria): void
     {
-        [
-            'usersToCreate' => $users,
-            'profilesToCreate' => $profiles,
-            'searchTerm' => $term,
-            'filters' => $filters,
-            'expectedCount' => $count,
-            'expectedUsers' => $expected
-        ] = $searchCriteria['search_with_country_filter'];
 
+        extract($searchCriteria['search_with_country_filter'], EXTR_SKIP);
 
         User::factory()
             ->has(Profile::factory()->state(new Sequence(...$profiles)))
             ->createMany($users);
 
-        $service = UsersTestsHelpers::createUsersService([
-            'term' => $term,
-            'filters' => $filters
-        ]);
+        $service = UsersTestsHelpers::createUsersService(['term' => $term, 'filters' => $filters]);
 
         $users = $service->search()->filterByCountry()->getQuery()->get();
 
@@ -256,16 +199,8 @@ class UsersServiceTest extends TestCase
     #[DataProviderExternal(UsersDataProvider::class, 'searchableUsersProvider')]
     public function search_with_search_by_filterd_by_country(array $searchCriteria): void
     {
-        [
-            'usersToCreate' => $users,
-            'profilesToCreate' => $profiles,
-            'searchTerm' => $term,
-            'searchBy' => $searchBy,
-            'filters' => $filters,
-            'expectedCount' => $count,
-            'expectedUsername' => $expected
-        ]
-            = $searchCriteria['search_with_search_by_filterd_by_country'];
+
+        extract($searchCriteria['search_with_search_by_filterd_by_country'], EXTR_SKIP);
 
         User::factory()
             ->has(Profile::factory()->state(new Sequence(...$profiles)))
@@ -276,7 +211,6 @@ class UsersServiceTest extends TestCase
             'searchBy' => $searchBy,
             'filters' => $filters
         ]);
-
 
         $users = $service->search()->searchBy()->filterByCountry()->getQuery()->get();
 
@@ -295,22 +229,14 @@ class UsersServiceTest extends TestCase
     #[DataProviderExternal(UsersDataProvider::class,'searchableUsersProvider')]
     public function get_users_filterd_by_city(array $searchCriteria): void
     {
-        [
-            'usersToCreate' => $users,
-            'profilesToCreate' => $profiles,
-            'filters' => $filters,
-            'expectedCount' => $count,
-            'expectedLastNames' => $expected
-        ]
-        = $searchCriteria['filter_by_city'];
+
+        extract($searchCriteria['filter_by_city'], EXTR_SKIP);
 
         User::factory()
         ->has(Profile::factory()->state(new Sequence(...$profiles)))
         ->createMany($users);
 
-        $service = UsersTestsHelpers::createUsersService([
-            'filters' => $filters
-        ]);
+        $service = UsersTestsHelpers::createUsersService(['filters' => $filters]);
 
         $users = $service
             ->search()
@@ -324,6 +250,61 @@ class UsersServiceTest extends TestCase
         $this->assertCount($count, $users);
 
         $this->assertEqualsCanonicalizing($expected, $lastNames);
+    }
+
+    /**
+     * @throws BindingResolutionException
+     */
+    #[Test]
+    #[DataProviderExternal(UsersDataProvider::class,'searchableUsersProvider')]
+    public function get_users_filterd_by_country_and_city(array $searchCriteria):void
+    {
+        extract($searchCriteria['filter_by_country_and_city'], EXTR_SKIP);
+
+        User::factory()
+            ->has(Profile::factory()->state(new Sequence(...$profiles)))
+            ->createMany($users);
+
+        $service = UsersTestsHelpers::createUsersService(['filters' => $filters]);
+
+       $users = $service->filterByCountry()->filterByCity()->getQuery()->get();
+
+       $lastNames = $users->pluck('last_name')->toArray();
+
+       $this->assertCount($count, $users);
+
+       $this->assertEqualsCanonicalizing($expected, $lastNames);
+
+    }
+
+    /**
+     * @throws BindingResolutionException
+     */
+    #[Test]
+    #[DataProviderExternal(UsersDataProvider::class,'searchableUsersProvider')]
+    public function search_users_with_search_by_and_filter_by_country_and_city(array $searchCriteria) :void
+    {
+        extract($searchCriteria['search_with_search_by_filterd_by_country_and_city'], EXTR_SKIP);
+
+        User::factory()
+            ->has(Profile::factory()->state(new Sequence(...$profiles)))
+            ->createMany($users);
+
+        $service = UsersTestsHelpers::createUsersService([
+            'term' => $term,
+            'searchBy' => $searchBy,
+            'filters' => $filters
+        ]);
+
+        $users = $service
+            ->search()->searchBy()->filterByCountry()->filterByCity()->getQuery()->get();
+
+        $emails = $users->pluck('email')->toArray();
+
+        $this->assertCount($count, $users);
+
+        $this->assertEqualsCanonicalizing($expected, $emails);
+
     }
 
 

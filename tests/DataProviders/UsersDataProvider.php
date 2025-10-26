@@ -46,39 +46,39 @@ class UsersDataProvider
             "search" => [
                 'searchCriteria' => [
                     'generalSearch' => [
-                        'usersToCreate' => $usersToCreate,
-                        'searchTerm' => 'mina',
-                        'expectedCount' => 4,
-                        'expectedLastNames' => ['shaker', 'nader', 'adel', 'gamal'],
+                        'users' => $usersToCreate,
+                        'term' => 'mina',
+                        'count' => 4,
+                        'expected' => ['shaker', 'nader', 'adel', 'gamal'],
                     ],
                     'search_by _first_name_and_email' => [
-                        'usersToCreate' => $usersToCreate,
-                        'searchTerm' => 'han',
+                        'users' => $usersToCreate,
+                        'term' => 'han',
                         'searchBy' => ['first_name', 'email'],
-                        'expectedCount' => 2,
-                        'expectedFirstNames' => ['hany', 'human'],
+                        'count' => 2,
+                        'expected' => ['hany', 'human'],
                     ],
                     'search_by_with_no_results' => [
-                        'usersToCreate' => $usersToCreate,
-                        'searchTerm' => 'han',
+                        'users' => $usersToCreate,
+                        'term' => 'han',
                         'searchBy' => ['last_name', 'username'],
-                        'expectedCount' => 0,
-                        'expectedUsers' => [],
+                        'count' => 0,
+                        'expected' => [],
                     ],
                     'filter_by_country' => [
-                        'usersToCreate' => $usersToCreate,
-                        'profilesToCreate' => $profilesToCreate,
+                        'users' => $usersToCreate,
+                        'profiles' => $profilesToCreate,
                         'filters' => ['country' => 'Ukraine'],
-                        'expectedCount' => 2,
-                        'expectedFirstNames' => ['mina', 'hany'],
+                        'count' => 2,
+                        'expected' => ['mina', 'hany'],
                     ],
-                    'search_with_country_filter' => [
-                        'usersToCreate' => $usersToCreate,
-                        'profilesToCreate' => $profilesToCreate,
-                        'searchTerm' => 'mina',
+                        'search_with_country_filter' => [
+                        'users' => $usersToCreate,
+                        'profiles' => $profilesToCreate,
+                        'term' => 'mina',
                         'filters' => ['country' => 'Egypt'],
-                        'expectedCount' => 3 ,
-                        'expectedUsers'  => [
+                        'count' => 3 ,
+                        'expected'  => [
                             ['first_name' => 'mina', 'last_name' => 'shaker', 'email' => 'minakiroollos@gmail.com', 'username' => 'mina20088'],
                             ['first_name' => 'mina', 'last_name' => 'nader', 'email' => 'minanader@gmail.com', 'username' => 'mina_nader'],
                             ['first_name' => 'mina', 'last_name' => 'gamal', 'email' => 'minagamal@gmail.com', 'username' => 'mina_gamal']
@@ -86,21 +86,38 @@ class UsersDataProvider
                         ]
                     ],
                     'search_with_search_by_filterd_by_country' => [
-                        'usersToCreate' => $usersToCreate,
-                        'profilesToCreate' => $profilesToCreate,
-                        'searchTerm' => 's',
+                        'users' => $usersToCreate,
+                        'profiles' => $profilesToCreate,
+                        'term' => 's',
                         'searchBy' => ['last_name'],
                         'filters' => ['country' => "Egypt"],
-                        'expectedCount' => 1,
-                        'expectedUsername' => ['mina20088']
+                        'count' => 1,
+                        'expected' => ['mina20088']
 
                     ],
                     'filter_by_city' => [
-                        'usersToCreate' => $usersToCreate,
-                        'profilesToCreate' => $profilesToCreate,
+                        'users' => $usersToCreate,
+                        'profiles' => $profilesToCreate,
                         'filters' => ['city' => 'Alexandria'],
-                        'expectedCount' => 2,
-                        'expectedLastNames' => ['shaker', 'nader']
+                        'count' => 2,
+                        'expected' => ['shaker', 'nader']
+                    ] ,
+                    'filter_by_country_and_city' => [
+                        'users' => $usersToCreate,
+                        'profiles' => $profilesToCreate,
+                        'filters' => ['country' => 'Egypt', 'city' => 'Alexandria'],
+                        'count' => 2,
+                        'expected' => ['shaker', 'nader']
+
+                    ],
+                    'search_with_search_by_filterd_by_country_and_city' => [
+                        'users' => $usersToCreate,
+                        'profiles' => $profilesToCreate,
+                        'term' => 'mina',
+                        'searchBy' => ['first_name'],
+                        'filters' => ['country' => 'Ukraine' , 'city' => 'Kyiv'],
+                        'count' => 1,
+                        'expected' => ['minaadel@gmail.com']
                     ]
 
                 ]
