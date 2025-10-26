@@ -13,7 +13,6 @@
 
         
 
-
         <img
             src="<?php echo e(Vite::asset('resources/images/Aron.png')); ?>"
             height="300"
@@ -488,6 +487,26 @@
 <?php $component = $__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1; ?>
 <?php unset($__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1); ?>
 <?php endif; ?>
+            <?php if (isset($component)) { $__componentOriginal3fa50f77369b75df29651d5bd60f0643 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal3fa50f77369b75df29651d5bd60f0643 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.single-error','data' => ['fieldName' => 'date_of_birth']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('single-error'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['fieldName' => 'date_of_birth']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal3fa50f77369b75df29651d5bd60f0643)): ?>
+<?php $attributes = $__attributesOriginal3fa50f77369b75df29651d5bd60f0643; ?>
+<?php unset($__attributesOriginal3fa50f77369b75df29651d5bd60f0643); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal3fa50f77369b75df29651d5bd60f0643)): ?>
+<?php $component = $__componentOriginal3fa50f77369b75df29651d5bd60f0643; ?>
+<?php unset($__componentOriginal3fa50f77369b75df29651d5bd60f0643); ?>
+<?php endif; ?>
         </section>
         <section>
             <?php if (isset($component)) { $__componentOriginald8ba2b4c22a13c55321e34443c386276 = $component; } ?>
@@ -572,6 +591,26 @@
 <?php $component = $__componentOriginaled2cde6083938c436304f332ba96bb7c; ?>
 <?php unset($__componentOriginaled2cde6083938c436304f332ba96bb7c); ?>
 <?php endif; ?>
+            <?php if (isset($component)) { $__componentOriginal3fa50f77369b75df29651d5bd60f0643 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal3fa50f77369b75df29651d5bd60f0643 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.single-error','data' => ['fieldName' => 'gender']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('single-error'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['fieldName' => 'gender']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal3fa50f77369b75df29651d5bd60f0643)): ?>
+<?php $attributes = $__attributesOriginal3fa50f77369b75df29651d5bd60f0643; ?>
+<?php unset($__attributesOriginal3fa50f77369b75df29651d5bd60f0643); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal3fa50f77369b75df29651d5bd60f0643)): ?>
+<?php $component = $__componentOriginal3fa50f77369b75df29651d5bd60f0643; ?>
+<?php unset($__componentOriginal3fa50f77369b75df29651d5bd60f0643); ?>
+<?php endif; ?>
         </section>
 
     </section>
@@ -617,6 +656,26 @@
 <?php if (isset($__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1)): ?>
 <?php $component = $__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1; ?>
 <?php unset($__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1); ?>
+<?php endif; ?>
+            <?php if (isset($component)) { $__componentOriginal3fa50f77369b75df29651d5bd60f0643 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal3fa50f77369b75df29651d5bd60f0643 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.single-error','data' => ['fieldName' => 'phone_number']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('single-error'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['fieldName' => 'phone_number']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal3fa50f77369b75df29651d5bd60f0643)): ?>
+<?php $attributes = $__attributesOriginal3fa50f77369b75df29651d5bd60f0643; ?>
+<?php unset($__attributesOriginal3fa50f77369b75df29651d5bd60f0643); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal3fa50f77369b75df29651d5bd60f0643)): ?>
+<?php $component = $__componentOriginal3fa50f77369b75df29651d5bd60f0643; ?>
+<?php unset($__componentOriginal3fa50f77369b75df29651d5bd60f0643); ?>
 <?php endif; ?>
         </section>
 

@@ -6,6 +6,7 @@
     <section class="grid grid-cols-1">
         <x-label for="street" content="Street"/>
         <x-input type="text" id="street" name="street" placeholder="Street"/>
+        <x-single-error field-name="street"/>
     </section>
 
     <section class="grid xs:grid-cols-1 md:grid-cols-2 md:gap-3"
@@ -20,6 +21,7 @@
                     <option :value="country" x-text="country"></option>
                 </template>
             </select>
+            <x-single-error field-name="country"/>
 
         </section>
         <section>
@@ -31,8 +33,8 @@
                 <template x-for="city in cities" :key="city">
                     <option :value="city" x-text="city"></option>
                 </template>
-
             </select>
+            <x-single-error field-name="city"/>
         </section>
     </section>
 
@@ -40,10 +42,12 @@
         <section>
             <x-label for="state" content="State"/>
             <x-input type="text" id="state" name="state" placeholder="State"/>
+            <x-single-error field-name="state"/>
         </section>
         <section>
             <x-label for="zip-code" content="zipCode"/>
             <x-input type="text" id="zip-code" name="zip_code" placeholder="Zip Code"/>
+            <x-single-error field-name="zip_code"/>
         </section>
     </section>
 </x-card>

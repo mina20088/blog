@@ -7,7 +7,7 @@ use Illuminate\Support\Arr;
 use Doctrine\Common\Lexer\AbstractLexer;
 use Illuminate\Database\Eloquent\Collection;
 
-class UsersDataProvider
+class UsersServiceTestsDataProvider
 {
 
     public static function searchableUsersProvider(): array

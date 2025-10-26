@@ -9,7 +9,7 @@ use Illuminate\Support\Arr;
 use App\services\UsersService;
 use Tests\helpers\UsersTestsHelpers;
 use PHPUnit\Framework\Attributes\Test;
-use Tests\DataProviders\UsersDataProvider;
+use Tests\DataProviders\UsersServiceTestsDataProvider;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Database\Eloquent\Factories\Sequence;
@@ -25,7 +25,7 @@ class UsersServiceTest extends TestCase
     /**
      * @throws BindingResolutionException
      */
-    #[DataProviderExternal(UsersDataProvider::class, 'userColumnsProvider')]
+    #[DataProviderExternal(UsersServiceTestsDataProvider::class, 'userColumnsProvider')]
     #[Test]
     public function returns_expected_column_names(array $data, array $expected): void
     {
@@ -45,7 +45,7 @@ class UsersServiceTest extends TestCase
     /**
      * @throws BindingResolutionException
      */
-    #[DataProviderExternal(UsersDataProvider::class, 'userColumnsProvider')]
+    #[DataProviderExternal(UsersServiceTestsDataProvider::class, 'userColumnsProvider')]
     #[Test]
     public function lists_user_table_columns_excluding_ignored_columns(array $data, array $expected): void
     {
@@ -63,7 +63,7 @@ class UsersServiceTest extends TestCase
     /**
      * @throws BindingResolutionException
      */
-    #[DataProviderExternal(UsersDataProvider::class, 'searchableUsersProvider')]
+    #[DataProviderExternal(UsersServiceTestsDataProvider::class, 'searchableUsersProvider')]
     #[Test]
     public function search_returns_expected_users(array $searchCriteria): void
     {
@@ -89,7 +89,7 @@ class UsersServiceTest extends TestCase
      * @throws BindingResolutionException
      */
     #[Test]
-    #[DataProviderExternal(UsersDataProvider::class, 'searchableUsersProvider')]
+    #[DataProviderExternal(UsersServiceTestsDataProvider::class, 'searchableUsersProvider')]
     public function search_by_returns_expected_users(array $searchCriteria): void
     {
 
@@ -113,7 +113,7 @@ class UsersServiceTest extends TestCase
      * @throws BindingResolutionException
      */
 
-    #[DataProviderExternal(UsersDataProvider::class, 'searchableUsersProvider')]
+    #[DataProviderExternal(UsersServiceTestsDataProvider::class, 'searchableUsersProvider')]
     #[Test]
     public function search_by_returns_no_users_when_none_match(array $searchCriteria): void
     {
@@ -136,7 +136,7 @@ class UsersServiceTest extends TestCase
      * @throws BindingResolutionException
      */
     #[Test]
-    #[DataProviderExternal(UsersDataProvider::class, 'searchableUsersProvider')]
+    #[DataProviderExternal(UsersServiceTestsDataProvider::class, 'searchableUsersProvider')]
     public function get_users_filterd_by_country(array $searchCriteria): void
     {
 
@@ -164,7 +164,7 @@ class UsersServiceTest extends TestCase
      * @throws BindingResolutionException
      */
     #[Test]
-    #[DataProviderExternal(UsersDataProvider::class, 'searchableUsersProvider')]
+    #[DataProviderExternal(UsersServiceTestsDataProvider::class, 'searchableUsersProvider')]
     public function search_with_country_filter(array $searchCriteria): void
     {
 
@@ -196,7 +196,7 @@ class UsersServiceTest extends TestCase
      * @throws BindingResolutionException
      */
     #[Test]
-    #[DataProviderExternal(UsersDataProvider::class, 'searchableUsersProvider')]
+    #[DataProviderExternal(UsersServiceTestsDataProvider::class, 'searchableUsersProvider')]
     public function search_with_search_by_filterd_by_country(array $searchCriteria): void
     {
 
@@ -226,7 +226,7 @@ class UsersServiceTest extends TestCase
      * @throws BindingResolutionException
      */
     #[Test]
-    #[DataProviderExternal(UsersDataProvider::class,'searchableUsersProvider')]
+    #[DataProviderExternal(UsersServiceTestsDataProvider::class,'searchableUsersProvider')]
     public function get_users_filterd_by_city(array $searchCriteria): void
     {
 
@@ -256,7 +256,7 @@ class UsersServiceTest extends TestCase
      * @throws BindingResolutionException
      */
     #[Test]
-    #[DataProviderExternal(UsersDataProvider::class,'searchableUsersProvider')]
+    #[DataProviderExternal(UsersServiceTestsDataProvider::class,'searchableUsersProvider')]
     public function get_users_filterd_by_country_and_city(array $searchCriteria):void
     {
         extract($searchCriteria['filter_by_country_and_city'], EXTR_SKIP);
@@ -281,7 +281,7 @@ class UsersServiceTest extends TestCase
      * @throws BindingResolutionException
      */
     #[Test]
-    #[DataProviderExternal(UsersDataProvider::class,'searchableUsersProvider')]
+    #[DataProviderExternal(UsersServiceTestsDataProvider::class,'searchableUsersProvider')]
     public function search_users_with_search_by_and_filter_by_country_and_city(array $searchCriteria) :void
     {
         extract($searchCriteria['search_with_search_by_filterd_by_country_and_city'], EXTR_SKIP);

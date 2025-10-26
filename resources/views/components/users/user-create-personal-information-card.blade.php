@@ -4,7 +4,6 @@
 
         {{-- Profile Picture Upload --}}
 
-
         <img
             src="{{ Vite::asset('resources/images/Aron.png') }}"
             height="300"
@@ -80,6 +79,7 @@
         <section>
             <x-label for="Date_Of_Birth" content="Date Of Birth"/>
             <x-input type="date" id="Date_Of_Birth" name="date_of_birth" placeholder="DOB" />
+            <x-single-error fieldName="date_of_birth"/>
         </section>
         <section>
             <x-label for="gender" content="Gender"/>
@@ -89,6 +89,7 @@
                     <x-option :value="$gender->value" :content="$gender->name"/>
                 @endforeach
             </x-select>
+            <x-single-error fieldName="gender"/>
         </section>
 
     </section>
@@ -97,6 +98,7 @@
         <section>
             <x-label for="phone" content="Phone"/>
             <x-input type="tel" id="phone" name="phone_number" class="!w-full"/>
+            <x-single-error fieldName="phone_number"/>
         </section>
 
     </section>
