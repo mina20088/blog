@@ -82,9 +82,12 @@ class AdminCreateUserTest extends TestCase
         extract($validations['check_attributes_has_null_value_return_no_error']);
 
         $response = $this
+            ->followingRedirects()
             ->postJson('/dashboard/users', UsersTestsHelpers::adminUserCreateValidData($input));
 
-        ds($response->baseResponse->getContent())         ;
+        $response->assertStatus(200);
+        $response->assertSessionDoesntHaveErrors();
+
     }
 
 
