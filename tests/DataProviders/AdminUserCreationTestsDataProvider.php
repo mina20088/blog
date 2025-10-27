@@ -54,7 +54,6 @@ class AdminUserCreationTestsDataProvider
 
 
                         ],
-
                     'check_profile_picture_exceed_max_length_return_error' =>
                         [
                             'input' => [
@@ -98,9 +97,73 @@ class AdminUserCreationTestsDataProvider
                             'expected' => [
 
                             ]
-                        ]
-                ],
-            ]
+                        ],
+                    'check_attributes_has_string_validation_return_error' =>
+                        [
+                            'input' => [
+                                'first_name' => $faker->randomNumber(),
+                                'last_name' => $faker->randomNumber(),
+                                'password' => $faker->randomNumber(8),
+                                'street' => $faker->randomNumber(),
+                                'state' => $faker->randomNumber(),
+                                'zip_code' => $faker->randomNumber()
+                            ],
+                            'status' => 422,
+                            'expected' => [
+                                'first_name' => 'The first name field must be a string.',
+                                'last_name' => 'The last name field must be a string.',
+                                'password' => 'The password field must be a string.',
+                                'street' => 'The street field must be a string.',
+                                'state' => 'The state field must be a string.',
+                                'zip_code' => 'The zip code field must be a string.'
+                            ]
+                        ],
+                    'check_email_attribute_is_not_email_return_error' =>
+                        [
+                            'input' => [
+                                'email' => 'minaremon@'
+                            ],
+                            'status' => 422,
+                            'expected' => [
+                                'email' => 'The email field must be a valid email address.'
+
+                            ]
+                        ],
+                    'check_email_and_username_is_not_unique_return_error' =>
+                        [
+                            'user' => [
+                                'first_name' => 'mina',
+                                'last_name' => 'shaker',
+                                'email' => 'minaremonshaker@gmail.com',
+                                'username' => 'mina200888',
+                                'password' => 'Hecaro1986@',
+                                'locked' => false
+
+                            ],
+                            'input' => [
+                                'email' => 'minaremonshaker@gmail.com',
+                                'username' => 'mina200888'
+                            ],
+                            'status' => 422,
+                            'expected' => [
+                                'email' => 'The email has already been taken.',
+                                'username' => 'The username has already been taken.'
+                            ]
+                        ],
+                    'check_attribute_min_width_validation_return_error' =>
+                        [
+                            'input' => [
+                                'username' => 'min',
+                                'password' => 'Heca'
+                            ]  ,
+                            'status' => 422,
+                            'expected' => [
+                                'username' => 'The username field must be at least 5 characters.',
+                                'password' => 'The password field must be at least 8 characters.'
+                            ]
+                        ],
+                ]
+            ],
         ];
     }
 
