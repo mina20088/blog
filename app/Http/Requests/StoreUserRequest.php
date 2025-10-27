@@ -26,7 +26,7 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'profile_picture' => 'required|image|max:50000|mimes:png,jpeg',
+            'profile_picture' => 'required|image|max:50000',
             'bio' => 'max:500|nullable',
             'github_repo_url' => 'url|nullable',
             'first_name' => 'required|string',

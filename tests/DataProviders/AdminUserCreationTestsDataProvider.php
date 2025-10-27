@@ -3,28 +3,105 @@
 namespace Tests\DataProviders;
 
 use Illuminate\Http\UploadedFile;
+use Faker\Factory as FakerFactory;
 
 class AdminUserCreationTestsDataProvider
 {
-    public static function adminUserCreationProvider():array
+
+
+    public static function adminUserCreationProvider(): array
     {
+
+        $faker = FakerFactory::create();
+
         return [
             'create' => [
                 'validations' => [
-                    'check_required_validation' => [
-                        'profile_picture' => '',
-                        'first_name' => '',
-                        'last_name' => '',
-                        'email' => '',
-                        'username' => '',
-                        'password' => '',
-                        'phone_number' => '',
-                        'country' => '',
-                    ]
-                ]
+                    'check_required_validation_return_error' =>
+                        [
+                            'input' => [
+                                'profile_picture' => '',
+                                'first_name' => '',
+                                'last_name' => '',
+                                'email' => '',
+                                'username' => '',
+                                'password' => '',
+                                'phone_number' => '',
+                                'country' => '',
+                            ],
+                            'status' => 422,
+                            'excepted' => [
+                                'first_name' => 'The first name field is required.',
+                                'last_name' => 'The last name field is required.',
+                                'profile_picture' => 'The profile picture field is required.',
+                                'email' => 'The email field is mandatory.',
+                                'username' => 'The username field is required.',
+                                'password' => 'The password field is required.',
+                                'phone_number' => 'The phone number field is required.',
+                                'country' => 'The country field is required.',
+                            ]
+                        ],
+                    'check_profile_picture_is_not_image_return_error' =>
+                        [
+                            'input' => [
+                                'profile_picture' => UploadedFile::fake()
+                                    ->create('profile_photo.txt')
+                            ],
+                            'status' => 422,
+                            'excepted' => [
+                                'profile_picture' => 'The profile picture field must be an image.'
+                            ]
 
+
+                        ],
+
+                    'check_profile_picture_exceed_max_length_return_error' =>
+                        [
+                            'input' => [
+                                'profile_picture' => UploadedFile::fake()
+                                    ->create('profile_picture.jpg', 60000),
+                            ],
+                            'status' => 422,
+                            'expected' => [
+                                'profile_picture' => 'The profile picture field must not be greater than 50000 kilobytes.'
+                            ]
+                        ],
+                    'check_max_validation_error_return_error' =>
+                        [
+                            'input' => [
+                                'bio' => $faker->sentence(500),
+                                'username' => $faker->sentence(21),
+                                'phone_number' => $faker->sentence(21)
+                            ],
+                            'status' => 422,
+                            'expected' => [
+                                'bio' => 'The bio field must not be greater than 500 characters.',
+                                'username' => 'The username field must not be greater than 20 characters.',
+                                'phone_number' => 'The phone number field must not be greater than 20 characters.'
+                            ]
+                        ],
+                    'check_attributes_has_null_value_return_no_error' =>
+                        [
+                            'input' => [
+                                'bio' => null,
+                                'github_repo_url' => null,
+                                'date_of_birth' => null,
+                                'street' => null,
+                                'state' => null,
+                                'website' => null,
+                                'zip_code' => null,
+                                'x-url' => null,
+                                'instagram_url' => null
+
+                            ],
+                            'status' => 200,
+                            'expected' => [
+
+                            ]
+                        ]
+                ],
             ]
-
         ];
     }
+
 }
