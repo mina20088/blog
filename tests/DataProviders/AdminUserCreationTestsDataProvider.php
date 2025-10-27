@@ -162,6 +162,16 @@ class AdminUserCreationTestsDataProvider
                                 'password' => 'The password field must be at least 8 characters.'
                             ]
                         ],
+                    'check_attribute_has_date_validation_return_error' =>
+                        [
+                            'input' => [
+                                'date_of_birth' => '17/12/1986'
+                            ],
+                            'status' => 422,
+                            'expected' => [
+                                'date_of_birth' => 'The date of birth field must be a valid date.'
+                            ]
+                        ]
                 ]
             ],
         ];

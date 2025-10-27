@@ -159,7 +159,22 @@ class AdminCreateUserTest extends TestCase
         $this
             ->post('/dashboard/users', UsersTestsHelpers::adminUserCreateValidData($input))
             ->assertSessionHasErrors($expected);
+    }
 
+    #[Test]
+    #[DataProviderExternal(AdminUserCreationTestsDataProvider::class, 'adminUserCreationProvider')]
+    public function attributes_with_invalid_date_return_error (array $validations) :void
+    {
+           extract($validations['check_attribute_has_date_validation_return_error']);
+
+           $this->followingRedirects()
+               ->postJson('/dashboard/users', UsersTestsHelpers::adminUserCreateValidData($input))
+               ->assertStatus($status)
+               ->assertJsonValidationErrors($expected);
+
+           $this
+               ->post('/dashboard/users', UsersTestsHelpers::adminUserCreateValidData($input))
+               ->assertSessionHasErrors($expected);
 
     }
 
