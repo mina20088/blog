@@ -35,6 +35,10 @@
 
                 <x-users.user-create-address-information-card/>
 
+                {{-- User Social Information --}}
+
+                <x-users.user-create-social-information-card/>
+
 
                 <section class="grid justify-end grid-col-2">
 

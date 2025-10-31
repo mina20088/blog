@@ -171,6 +171,23 @@ class AdminUserCreationTestsDataProvider
                             'expected' => [
                                 'date_of_birth' => 'The date of birth field must be a valid date.'
                             ]
+                        ]    ,
+                    'check_attribute_url_validation_return_error' =>
+                        [
+                            'input' => [
+                                'github_repo_url' => 'localhost.com',
+                                'website' => 'localhost.com',
+                                'x-url' => 'localhost.com',
+                                'instagram_url' => 'localhost.com'
+                            ],
+                            'status' => 422,
+                            'expected' => [
+                                'github_repo_url' => 'The github repo url field must be a valid URL.',
+                                'website' => 'The website field must be a valid URL.',
+                      /*          'x-url' => 'The x url field must be a valid URL.',*/
+                                'instagram_url' => 'The instagram url field must be a valid URL.',
+                            ]
+
                         ]
                 ]
             ],

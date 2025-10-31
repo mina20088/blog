@@ -178,6 +178,18 @@ class AdminCreateUserTest extends TestCase
 
     }
 
+    #[Test]
+    #[DataProviderExternal(AdminUserCreationTestsDataProvider::class, 'adminUserCreationProvider')]
+    public function attributes_with_url_validation_return_error(array $validations):void
+    {
+        extract($validations['check_attribute_url_validation_return_error']);
+
+        $this
+            ->postJson('/dashboard/users', UsersTestsHelpers::adminUserCreateValidData($input))
+            ->assertStatus($status)
+            ->assertJsonValidationErrors($expected);
+    }
+
 
 
 

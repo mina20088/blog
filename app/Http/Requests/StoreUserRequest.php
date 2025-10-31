@@ -43,8 +43,9 @@ class StoreUserRequest extends FormRequest
             'state' => 'string|nullable',
             'website' => 'url|nullable',
             'zip_code' => 'string|nullable',
-            'x_url' => 'url|nullable',
-            'instagram_url' => 'url|nullable'
+            'x' => 'url|nullable',
+            'instagram' => 'url|nullable',
+            'facebook' => 'url|nullable'
         ];
     }
 }

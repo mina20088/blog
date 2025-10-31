@@ -67,7 +67,7 @@ class UserLoginTest extends TestCase
      *
      * @return void
      */
-    public function test_user_login_remember_me_is_checked()
+    public function test_user_login_remember_me_is_checked():void
     {
         $response = $this->post('/login', $this->validData(['remember' => true]));
         $this->assertTrue($response->baseRequest->get('remember') === true);
@@ -78,7 +78,7 @@ class UserLoginTest extends TestCase
      *
      * @return void
      */
-    public function test_user_login_remember_me_is_unchecked()
+    public function test_user_login_remember_me_is_unchecked():void
     {
         $response = $this->post('/login', $this->validData(['remember' => false]));
         $this->assertTrue($response->baseRequest->get('remember') === false);

@@ -92,6 +92,29 @@
 <?php unset($__componentOriginalb92aa2f08686aa76b47fb98a30ff2e23); ?>
 <?php endif; ?>
 
+                
+
+                <?php if (isset($component)) { $__componentOriginal46ae54570a2fff58458f603e8c1889b9 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal46ae54570a2fff58458f603e8c1889b9 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.users.user-create-social-information-card','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('users.user-create-social-information-card'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal46ae54570a2fff58458f603e8c1889b9)): ?>
+<?php $attributes = $__attributesOriginal46ae54570a2fff58458f603e8c1889b9; ?>
+<?php unset($__attributesOriginal46ae54570a2fff58458f603e8c1889b9); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal46ae54570a2fff58458f603e8c1889b9)): ?>
+<?php $component = $__componentOriginal46ae54570a2fff58458f603e8c1889b9; ?>
+<?php unset($__componentOriginal46ae54570a2fff58458f603e8c1889b9); ?>
+<?php endif; ?>
+
 
                 <section class="grid justify-end grid-col-2">
 
