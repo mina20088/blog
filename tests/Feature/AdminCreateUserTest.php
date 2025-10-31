@@ -188,7 +188,46 @@ class AdminCreateUserTest extends TestCase
             ->postJson('/dashboard/users', UsersTestsHelpers::adminUserCreateValidData($input))
             ->assertStatus($status)
             ->assertJsonValidationErrors($expected);
+
+        $this
+            ->post('/dashboard/users', UsersTestsHelpers::adminUserCreateValidData($input))
+            ->assertSessionHasErrors($expected);
     }
+
+
+    #[Test]
+    #[DataProviderExternal(AdminUserCreationTestsDataProvider::class, 'adminUserCreationProvider')]
+    public function gender_attribute_is_not_inger_return_error(array $validations):void
+    {
+        extract($validations['check_gender_attribute_is_not_integer_return_error']);
+
+        $this
+            ->postJson('/dashboard/users', UsersTestsHelpers::adminUserCreateValidData($input))
+            ->assertStatus($status)
+            ->assertJsonValidationErrors($expected);
+
+        $this
+            ->post('/dashboard/users', UsersTestsHelpers::adminUserCreateValidData($input))
+            ->assertSessionHasErrors($expected);
+    }
+
+    #[Test]
+    #[DataProviderExternal(AdminUserCreationTestsDataProvider::class, 'adminUserCreationProvider')]
+    public function create_user_form_dose_not_return_validation_error(array $validations) :void
+    {
+         $this
+             ->followingRedirects()
+             ->postJson('/dashboard/users', UsersTestsHelpers::adminUserCreateValidData())
+             ->assertStatus(200);
+
+         $this
+             ->post('/dashboard/users', UsersTestsHelpers::adminUserCreateValidData())
+             ->assertSessionDoesntHaveErrors();
+
+
+    }
+
+
 
 
 

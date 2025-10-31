@@ -19,7 +19,7 @@ trait HandlesUserOperations
     protected UsersService $usersService;
 
 
-    public function initialize(Request $request, UsersService $service): self
+    public function initialize(UsersService $service , Request $request): self
     {
         $this->request = $request;
 
@@ -27,6 +27,12 @@ trait HandlesUserOperations
 
         return $this;
 
+    }
+
+    public function init(UsersService $service): self
+    {
+        $this->usersService = $service;
+        return $this;
     }
 
     public function search(): \Illuminate\Pagination\LengthAwarePaginator|AbstractPaginator
@@ -54,5 +60,33 @@ trait HandlesUserOperations
         });
 
     }
+
+    public function createUser(array $validated)
+    {
+        return $this->usersService->create([
+            'first_name' => $validated['first_name'],
+            'last_name' => $validated['last_name'],
+            'username' => $validated['username'],
+            'email' => $validated['email'],
+            'password' => $validated['password'],
+        ], [
+            'profile-picture' => $validated['profile_picture'],
+            'bio' => $validated['bio'],
+            'github_repo_url' => $validated['github_repo_url'],
+            'date_of_birth' => $validated['date_of_birth'],
+            'gender' => $validated['gender'],
+            'phone_number' => $validated['phone_number'],
+            'country' => $validated['country'],
+            'city' => $validated['city'],
+            'street' => $validated['street'],
+            'state' => $validated['state'],
+            'website' => $validated['website'],
+            'zip_code' => $validated['zip_code'],
+            'x' => $validated['x'],
+            'instagram' => $validated['instagram'],
+            'facebook' => $validated['facebook'],
+        ]);
+    }
+
 }
 

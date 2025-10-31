@@ -3,12 +3,15 @@
 namespace Tests\DataProviders;
 
 use App\Enums\Countries;
+use App\Models\Profile;
+use App\Models\User;
 use Illuminate\Support\Arr;
-use Doctrine\Common\Lexer\AbstractLexer;
-use Illuminate\Database\Eloquent\Collection;
+use Faker\Factory as FakerFactory;
 
 class UsersServiceTestsDataProvider
 {
+
+
 
     public static function searchableUsersProvider(): array
     {
@@ -17,6 +20,7 @@ class UsersServiceTestsDataProvider
         $Ukraine = Countries::getCitiesAccoc("Ukraine");
 
         $spain = Countries::getCitiesAccoc("Spain");
+
 
 
         $usersToCreate = [
@@ -121,8 +125,36 @@ class UsersServiceTestsDataProvider
                     ]
 
                 ]
-
             ]
+        ]   ;
+    }
+
+    public static function createNewUserProvider() :array
+    {
+        $faker = FakerFactory::create();
+        $country = $faker->randomElement(Countries::getAllCountries());
+        $city = collect(Countries::getCities($country))->random();
+        return [
+             'create' => [
+                 'passedCreation' => [
+                     'user' => [
+                         'first_name' => $faker->firstName,
+                         'last_name' => $faker->lastName,
+                         'username' => $faker->userName,
+                         'email' => $faker->email,
+                         'password' => $faker->password,
+                         'locked' => $faker->randomElement([1, 0]),
+                     ]   ,
+                     'profile' =>  [
+                         'date_of_birth' => $faker->dateTime(),
+                         'gender' => $faker->randomElement([0, 1]),
+                         'phone_number' => $faker->phoneNumber,
+                         'country' => $country,
+                         'city' => $city
+
+                     ]
+                 ]
+             ]
         ]   ;
     }
 

@@ -2,8 +2,10 @@
 
 namespace App\services;
 
+use App\Models\Profile;
 use Exception;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Builder;
@@ -22,6 +24,7 @@ class UsersService
     protected string $orderBy;
 
     protected string $orderDir;
+
 
 
     public function __construct(Builder $query, string $term , array|string $searchBy = []  , array $filters = [], string $orderBy = 'id', string $orderDir = 'asc')
@@ -145,6 +148,12 @@ class UsersService
         $this->query->with('profile');
         return $this;
     }
+
+    public function create(array $user , array $profile)
+    {
+        return User::create($user)->profile()->create($profile);
+    }
+
 
     public function getQuery(): Builder
     {

@@ -177,18 +177,29 @@ class AdminUserCreationTestsDataProvider
                             'input' => [
                                 'github_repo_url' => 'localhost.com',
                                 'website' => 'localhost.com',
-                                'x-url' => 'localhost.com',
-                                'instagram_url' => 'localhost.com'
+                                'x' => 'localhost.com',
+                                'instagram' => 'localhost.com',
+                                'facebook' => 'localhost.com'
                             ],
                             'status' => 422,
                             'expected' => [
                                 'github_repo_url' => 'The github repo url field must be a valid URL.',
                                 'website' => 'The website field must be a valid URL.',
-                      /*          'x-url' => 'The x url field must be a valid URL.',*/
-                                'instagram_url' => 'The instagram url field must be a valid URL.',
+                                'x' => 'The x field must be a valid URL.',
+                                'instagram' => 'The instagram field must be a valid URL.',
+                                'facebook' => 'The facebook field must be a valid URL.'
                             ]
 
+                        ],
+                    'check_gender_attribute_is_not_integer_return_error' => [
+                        'input' => [
+                            'gender' => 'male'
+                        ],
+                        'status' => 422,
+                        'expected' => [
+                            'gender' => 'The gender field must be an integer.'
                         ]
+                    ],
                 ]
             ],
         ];

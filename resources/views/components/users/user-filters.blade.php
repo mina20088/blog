@@ -43,10 +43,8 @@
                 <option value="" @selected(request("filters.gender") === "")>Choose a Filter</option>
                 @foreach (Gender::cases() as $gender)
                     <option
-                        value='{{ $gender->value }}' @selected((request('filters.gender', "") === (string) $gender->value) )>{{ $gender->name }}</option>
+                        value='{{ $gender->value }}' @selected(((integer)request('filters.gender', "") === $gender->value) )>{{ $gender->name }}</option>
                 @endforeach
-                <option value="NULL" @selected((request('filters.gender', "") === (string) $gender->value) )>N/A
-                </option>
             </select>
         </div>
 

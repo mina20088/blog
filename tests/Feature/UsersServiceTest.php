@@ -6,14 +6,11 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Profile;
 use Illuminate\Support\Arr;
-use App\services\UsersService;
 use Tests\helpers\UsersTestsHelpers;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\DataProviders\UsersServiceTestsDataProvider;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Database\Eloquent\Factories\Sequence;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTruncation;
 use PHPUnit\Framework\Attributes\DataProviderExternal;
 use Illuminate\Contracts\Container\BindingResolutionException;
@@ -304,6 +301,31 @@ class UsersServiceTest extends TestCase
         $this->assertCount($count, $users);
 
         $this->assertEqualsCanonicalizing($expected, $emails);
+
+    }
+
+    /**
+     * @throws BindingResolutionException
+     */
+    #[Test]
+    #[DataProviderExternal(UsersServiceTestsDataProvider::class,'createNewUserProvider')]
+    public function admin_create_new_user_add_record_to_database(array $passedCreation):void
+    {
+         extract($passedCreation);
+
+         $service = UsersTestsHelpers::createUsersService();
+
+         $user =  $service->create($user, $profile);
+
+         $this
+             ->assertDatabaseCount('users', 1)
+             ->assertDatabaseCount('profiles', 1)
+             ->assertModelExists($user)
+             ->assertModelExists($user->profile);
+
+
+
+
 
     }
 

@@ -3,20 +3,12 @@
 /** @noinspection PhpVoidFunctionResultUsedInspection */
 
 namespace App\Http\Controllers\Dashboard;
-
-use App\Models\User;
-use App\Models\Profile;
-use Clockwork\Clockwork;
 use App\services\UsersService;
-use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SearchRequest;
 use App\Traits\HandlesUserOperations;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreUserRequest;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
-use Clockwork\Support\Doctrine\Legacy\Logger;
+use Illuminate\Http\Request;
 
 
 class UserController extends Controller
@@ -24,11 +16,11 @@ class UserController extends Controller
     use HandlesUserOperations;
 
 
-    public function index(SearchRequest $request, UsersService $userService)
+    public function index(Request $request, UsersService $userService)
     {
 
         $users = $this
-            ->initialize($request, $userService)
+            ->initialize($userService, $request)
             ->search();
 
         $columns = $this->getUsersTableColumnNameList($userService);
@@ -40,20 +32,23 @@ class UserController extends Controller
     }
 
 
-    public function resetFilters(): RedirectResponse
+    public function reset(): RedirectResponse
     {
         return redirect()->route('dashboard.users');
     }
 
     public function create()
     {
-
         return view('dashboard.users.create');
     }
 
-    public function store(StoreUserRequest $request): RedirectResponse
+    public function store(StoreUserRequest $request, UsersService $service): RedirectResponse
     {
-        return redirect()->back();
+        $user = $this->init($service)->createUser($request->validated());
+
+        return redirect()
+            ->route('dashboard.users')
+            ->with(['success' => ''])    ;
     }
 
 }

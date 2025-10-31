@@ -29,7 +29,7 @@ Route::controller(LoginController::class)->middleware('rate.limiter:login')->gro
 Route::prefix('dashboard')->middleware(['sanitize_query','clear.query.no.users'])->name('dashboard.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/users', [UserController::class, 'index'])->name('users');
-    Route::get('/users/reset-filters', [UserController::class, 'resetFilters'])->name('users.reset-filters');
+    Route::get('/users/reset-filters', [UserController::class, 'reset'])->name('users.reset-filters');
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
 });

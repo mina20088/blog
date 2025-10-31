@@ -35,7 +35,7 @@ class StoreUserRequest extends FormRequest
             'username' => "required|min:5|max:20|unique:users,username",
             'password' => 'required|string|min:8',
             'date_of_birth' => 'date|nullable',
-            'gender' => ['integer','nullable', Rule::in(Gender::cases())],
+            'gender' => ['integer','nullable'],
             'phone_number' => 'required|max:20',
             'country' => 'required',
             'city' => 'required_with:country',

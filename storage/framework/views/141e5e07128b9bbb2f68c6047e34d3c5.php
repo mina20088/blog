@@ -100,7 +100,7 @@
 <?php endif; ?>
             <select
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700"
-                x-model="country" @change="cities = window.CountryCityUtils.getCities(country)">
+                x-model="country" @change="cities = window.CountryCityUtils.getCities(country)" name="country">
                 <option value="">Please Choose Country</option>
                 <template x-for="country in countries" :key="country">
                     <option :value="country" x-text="country"></option>
@@ -149,7 +149,7 @@
 <?php $component = $__componentOriginald8ba2b4c22a13c55321e34443c386276; ?>
 <?php unset($__componentOriginald8ba2b4c22a13c55321e34443c386276); ?>
 <?php endif; ?>
-            <select
+            <select  name="city"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700">
 
                 <option value="">Please Select A City</option>

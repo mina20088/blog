@@ -43,10 +43,8 @@
                 <option value="" <?php if(request("filters.gender") === ""): echo 'selected'; endif; ?>>Choose a Filter</option>
                 <?php $__currentLoopData = Gender::cases(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $gender): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <option
-                        value='<?php echo e($gender->value); ?>' <?php if((request('filters.gender', "") === (string) $gender->value) ): echo 'selected'; endif; ?>><?php echo e($gender->name); ?></option>
+                        value='<?php echo e($gender->value); ?>' <?php if(((integer)request('filters.gender', "") === $gender->value) ): echo 'selected'; endif; ?>><?php echo e($gender->name); ?></option>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                <option value="NULL" <?php if((request('filters.gender', "") === (string) $gender->value) ): echo 'selected'; endif; ?>>N/A
-                </option>
             </select>
         </div>
 

@@ -50,7 +50,7 @@ class UsersTestsHelpers
      */
     public static function createUsersService(array $override = [])
     {
-        return App::make(UsersService::class, self::usersServiceParams($override));
+        return App::make(UsersService::class, self::usersServiceParams($override) ?? []);
     }
 
 

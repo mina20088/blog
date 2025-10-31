@@ -39,7 +39,7 @@ class Profile extends Model
     protected function gender(): Attribute
     {
         return Attribute::make(
-            get: static fn (int $value) => $value === 1 ? "male" : "female",
+            get: static fn (int $value) => $value === 0 ? "male" : "female",
         );
     }
 
