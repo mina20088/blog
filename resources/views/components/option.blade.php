@@ -1,4 +1,4 @@
 
-<option {{$attributes}} value="{{$value ?? ''}}">
+<option {{$attributes}} value="{{ $value }}" @selected($selected)>
     {{ $content ?? '' }}
 </option>

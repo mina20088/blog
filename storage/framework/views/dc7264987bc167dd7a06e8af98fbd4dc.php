@@ -16,6 +16,7 @@
         <?php echo e($content); ?>
 
     <?php else: ?>
+       
     <?php endif; ?>
 
 </textarea>

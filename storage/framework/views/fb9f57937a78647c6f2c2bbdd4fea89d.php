@@ -154,14 +154,14 @@
 <?php endif; ?>
                     <?php if (isset($component)) { $__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['type' => 'text','id' => 'first_name','name' => 'first_name','placeholder' => 'First Name']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['type' => 'text','id' => 'first_name','name' => 'first_name','placeholder' => 'First Name','value' => old('first_name')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('input'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['type' => 'text','id' => 'first_name','name' => 'first_name','placeholder' => 'First Name']); ?>
+<?php $component->withAttributes(['type' => 'text','id' => 'first_name','name' => 'first_name','placeholder' => 'First Name','value' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(old('first_name'))]); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1)): ?>
@@ -216,14 +216,14 @@
 <?php endif; ?>
                     <?php if (isset($component)) { $__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['type' => 'last_name','id' => 'last_name','name' => 'last_name','placeholder' => 'Last Name']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['type' => 'last_name','id' => 'last_name','name' => 'last_name','placeholder' => 'Last Name','value' => old('last_name')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('input'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['type' => 'last_name','id' => 'last_name','name' => 'last_name','placeholder' => 'Last Name']); ?>
+<?php $component->withAttributes(['type' => 'last_name','id' => 'last_name','name' => 'last_name','placeholder' => 'Last Name','value' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(old('last_name'))]); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1)): ?>
@@ -279,14 +279,14 @@
 <?php endif; ?>
             <?php if (isset($component)) { $__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['type' => 'file','id' => 'profile_image','class' => '!p-0','name' => 'profile_picture']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['type' => 'file','id' => 'profile_image','class' => '!p-0','name' => 'profile_picture','value' => old('profile_picture')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('input'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['type' => 'file','id' => 'profile_image','class' => '!p-0','name' => 'profile_picture']); ?>
+<?php $component->withAttributes(['type' => 'file','id' => 'profile_image','class' => '!p-0','name' => 'profile_picture','value' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(old('profile_picture'))]); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1)): ?>
@@ -340,14 +340,14 @@
 <?php endif; ?>
             <?php if (isset($component)) { $__componentOriginala08ba7d4cb893cb3e98fc4983a127328 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginala08ba7d4cb893cb3e98fc4983a127328 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.text-area','data' => ['id' => 'bio','rows' => 9,'name' => 'bio','placeholder' => 'Add Bio...']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.text-area','data' => ['id' => 'bio','rows' => 9,'name' => 'bio','placeholder' => 'Add Bio...','value' => old('bio')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('text-area'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['id' => 'bio','rows' => 9,'name' => 'bio','placeholder' => 'Add Bio...']); ?>
+<?php $component->withAttributes(['id' => 'bio','rows' => 9,'name' => 'bio','placeholder' => 'Add Bio...','value' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(old('bio'))]); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginala08ba7d4cb893cb3e98fc4983a127328)): ?>
@@ -405,14 +405,14 @@
 <?php endif; ?>
         <?php if (isset($component)) { $__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['id' => 'git_hub_link','type' => 'text','name' => 'github_repo_url','placeholder' => 'add github link']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['id' => 'git_hub_link','type' => 'text','name' => 'github_repo_url','placeholder' => 'add github link','value' => old('github_repo_url')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('input'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['id' => 'git_hub_link','type' => 'text','name' => 'github_repo_url','placeholder' => 'add github link']); ?>
+<?php $component->withAttributes(['id' => 'git_hub_link','type' => 'text','name' => 'github_repo_url','placeholder' => 'add github link','value' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(old('github_repo_url'))]); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1)): ?>
@@ -469,14 +469,14 @@
 <?php endif; ?>
             <?php if (isset($component)) { $__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['type' => 'date','id' => 'Date_Of_Birth','name' => 'date_of_birth','placeholder' => 'DOB']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['type' => 'date','id' => 'Date_Of_Birth','name' => 'date_of_birth','placeholder' => 'DOB','value' => old('date_of_birth')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('input'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['type' => 'date','id' => 'Date_Of_Birth','name' => 'date_of_birth','placeholder' => 'DOB']); ?>
+<?php $component->withAttributes(['type' => 'date','id' => 'Date_Of_Birth','name' => 'date_of_birth','placeholder' => 'DOB','value' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(old('date_of_birth'))]); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1)): ?>
@@ -541,14 +541,14 @@
 <?php $component->withAttributes(['id' => 'gender','name' => 'gender']); ?>
                 <?php if (isset($component)) { $__componentOriginal0b955b160e71b527d724d3a9da304a03 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal0b955b160e71b527d724d3a9da304a03 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.option','data' => ['value' => '','content' => 'Choose Gender']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.option','data' => ['value' => '','content' => 'Choose Gender','selected' => old('gender') === '']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('option'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['value' => '','content' => 'Choose Gender']); ?>
+<?php $component->withAttributes(['value' => '','content' => 'Choose Gender','selected' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(old('gender') === '')]); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal0b955b160e71b527d724d3a9da304a03)): ?>
@@ -562,14 +562,14 @@
                 <?php $__currentLoopData = \App\Enums\Gender::cases(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $gender): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <?php if (isset($component)) { $__componentOriginal0b955b160e71b527d724d3a9da304a03 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal0b955b160e71b527d724d3a9da304a03 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.option','data' => ['value' => $gender->value,'content' => $gender->name]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.option','data' => ['value' => $gender->value,'content' => $gender->name,'selected' => old('gender') === (string)$gender->value]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('option'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['value' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($gender->value),'content' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($gender->name)]); ?>
+<?php $component->withAttributes(['value' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($gender->value),'content' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($gender->name),'selected' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(old('gender') === (string)$gender->value)]); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal0b955b160e71b527d724d3a9da304a03)): ?>
@@ -639,14 +639,14 @@
 <?php endif; ?>
             <?php if (isset($component)) { $__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['type' => 'tel','id' => 'phone','name' => 'phone_number','class' => '!w-full']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['type' => 'text','id' => 'phone','name' => 'phone_number','class' => '!w-full','value' => old('phone_number')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('input'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['type' => 'tel','id' => 'phone','name' => 'phone_number','class' => '!w-full']); ?>
+<?php $component->withAttributes(['type' => 'text','id' => 'phone','name' => 'phone_number','class' => '!w-full','value' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(old('phone_number'))]); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1)): ?>
@@ -657,6 +657,7 @@
 <?php $component = $__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1; ?>
 <?php unset($__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1); ?>
 <?php endif; ?>
+            <?php dsBlade(old('phone_number')); ?>
             <?php if (isset($component)) { $__componentOriginal3fa50f77369b75df29651d5bd60f0643 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal3fa50f77369b75df29651d5bd60f0643 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.single-error','data' => ['fieldName' => 'phone_number']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>

@@ -1,5 +1,5 @@
 
-<option <?php echo e($attributes); ?> value="<?php echo e($value ?? ''); ?>">
+<option <?php echo e($attributes); ?> value="<?php echo e($value); ?>" <?php if($selected): echo 'selected'; endif; ?>>
     <?php echo e($content ?? ''); ?>
 
 </option>
