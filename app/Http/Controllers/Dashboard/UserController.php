@@ -44,7 +44,7 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request, UsersService $service): RedirectResponse
     {
-        $user = $this->init($service)->createUser($request->validated());
+        $user = $this->initialize($service,$request)->createUser($request->validated());
 
         return redirect()
             ->route('dashboard.users')

@@ -63,6 +63,7 @@ trait HandlesUserOperations
 
     public function createUser(mixed $validated)
     {
+        @ds($this->request);
         return $this->usersService->create([
             'first_name' => $validated['first_name'],
             'last_name' => $validated['last_name'],
