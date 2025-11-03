@@ -35,14 +35,14 @@
 <?php endif; ?>
         <?php if (isset($component)) { $__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['type' => 'text','id' => 'street','name' => 'street','placeholder' => 'Street']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['type' => 'text','id' => 'street','name' => 'street','placeholder' => 'Street','value' => old('street')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('input'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['type' => 'text','id' => 'street','name' => 'street','placeholder' => 'Street']); ?>
+<?php $component->withAttributes(['type' => 'text','id' => 'street','name' => 'street','placeholder' => 'Street','value' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(old('street'))]); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1)): ?>
@@ -75,8 +75,15 @@
 <?php endif; ?>
     </section>
 
-    <section class="grid xs:grid-cols-1 md:grid-cols-2 md:gap-3"
-             x-data="{ countries: CountryCityUtils.getAllCountries(),cities:[],country:'' }">
+    <section class="grid xs:grid-cols-1 md:grid-cols-2 md:gap-3" x-data="{
+        countries: CountryCityUtils.getAllCountries(),
+        cities: $persist([]),
+        country:'',
+        city:$persist('')
+
+    }"
+
+    >
         <section>
             <?php if (isset($component)) { $__componentOriginald8ba2b4c22a13c55321e34443c386276 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginald8ba2b4c22a13c55321e34443c386276 = $attributes; } ?>
@@ -103,7 +110,8 @@
                 x-model="country" @change="cities = window.CountryCityUtils.getCities(country)" name="country">
                 <option value="">Please Choose Country</option>
                 <template x-for="country in countries" :key="country">
-                    <option :value="country" x-text="country"></option>
+                    <option :value="country" x-text="country"
+                            :selected='<?php echo json_encode(old('country'), JSON_THROW_ON_ERROR, 512) ?> === country'></option>
                 </template>
             </select>
             <?php if (isset($component)) { $__componentOriginal3fa50f77369b75df29651d5bd60f0643 = $component; } ?>
@@ -149,12 +157,12 @@
 <?php $component = $__componentOriginald8ba2b4c22a13c55321e34443c386276; ?>
 <?php unset($__componentOriginald8ba2b4c22a13c55321e34443c386276); ?>
 <?php endif; ?>
-            <select  name="city"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700">
+            <select name="city"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700">
 
                 <option value="">Please Select A City</option>
-                <template x-for="city in cities" :key="city">
-                    <option :value="city" x-text="city"></option>
+                <template x-for="city in cities" :key="city" x-model="city">
+                    <option :value="city" x-text="city" :selected='<?php echo json_encode(old('city'), JSON_THROW_ON_ERROR, 512) ?> === city'></option>
                 </template>
             </select>
             <?php if (isset($component)) { $__componentOriginal3fa50f77369b75df29651d5bd60f0643 = $component; } ?>
@@ -204,14 +212,14 @@
 <?php endif; ?>
             <?php if (isset($component)) { $__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['type' => 'text','id' => 'state','name' => 'state','placeholder' => 'State']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['type' => 'text','id' => 'state','name' => 'state','placeholder' => 'State','value' => old('state')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('input'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['type' => 'text','id' => 'state','name' => 'state','placeholder' => 'State']); ?>
+<?php $component->withAttributes(['type' => 'text','id' => 'state','name' => 'state','placeholder' => 'State','value' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(old('state'))]); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1)): ?>
@@ -266,14 +274,14 @@
 <?php endif; ?>
             <?php if (isset($component)) { $__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['type' => 'text','id' => 'zip-code','name' => 'zip_code','placeholder' => 'Zip Code']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['type' => 'text','id' => 'zip-code','name' => 'zip_code','placeholder' => 'Zip Code','value' => old('zip_code')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('input'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['type' => 'text','id' => 'zip-code','name' => 'zip_code','placeholder' => 'Zip Code']); ?>
+<?php $component->withAttributes(['type' => 'text','id' => 'zip-code','name' => 'zip_code','placeholder' => 'Zip Code','value' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(old('zip_code'))]); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1)): ?>

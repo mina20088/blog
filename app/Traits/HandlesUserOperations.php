@@ -61,10 +61,9 @@ trait HandlesUserOperations
 
     }
 
-    public function createUser()
+    public function createUser(mixed $validated)
     {
-        ds($this->request);
-/*        return $this->usersService->create([
+        return $this->usersService->create([
             'first_name' => $validated['first_name'],
             'last_name' => $validated['last_name'],
             'username' => $validated['username'],
@@ -86,7 +85,7 @@ trait HandlesUserOperations
             'x' => $validated['x'],
             'instagram' => $validated['instagram'],
             'facebook' => $validated['facebook'],
-        ]);*/
+        ]);
     }
 
 }

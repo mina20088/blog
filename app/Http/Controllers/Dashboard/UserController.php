@@ -31,6 +31,12 @@ class UserController extends Controller
         ]);
     }
 
+    public function __call(string $name, array $arguments)
+    {
+        // TODO: Implement __call() method.
+    }
+
+
 
     public function reset(): RedirectResponse
     {
@@ -44,7 +50,8 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request, UsersService $service): RedirectResponse
     {
-        $user = $this->initialize($service , $request)->createUser();
+        $user = $this->init($service)->createUser( $request->validated());
+
 
         return redirect()
             ->route('dashboard.users')
