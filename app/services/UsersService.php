@@ -25,6 +25,10 @@ class UsersService
 
     protected string $orderDir;
 
+    protected User $user;
+
+    protected Profile $profile;
+
 
 
     public function __construct(Builder $query, string $term , array|string $searchBy = []  , array $filters = [], string $orderBy = 'id', string $orderDir = 'asc')
@@ -149,9 +153,39 @@ class UsersService
         return $this;
     }
 
-    public function create(array $user , array $profile)
+    public function createUser(array $user , array $profile, array $image = []): static
     {
-        return User::create($user)->profile()->create($profile);
+        $this->user = User::create($user);
+
+        return $this;
+/*
+        if($createdUser){
+            $createdUser->profile()->create($profile);
+
+        }
+        if($image !== []){
+            $createdUser->upload()->create($image);
+        }
+
+        return $createdUser;*/
+    }
+
+    public function createProfile(array $profile): static
+    {
+        if(isset($this->user)){
+            $this->user->profile()->create($profile);
+        }
+
+        return $this;
+    }
+
+    public function uploadProfileImage(array $image): static
+    {
+          if(isset($this->user->profile, $this->user)){
+              $this->user->upload()->create($image);
+          }
+
+          return $this;
     }
 
 

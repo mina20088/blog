@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('uploads', static function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('path');
+            $table->string('name')->nullable();
+            $table->string('path')->nullable();
             $table->morphs('uploadable');
-            $table->string('mime_type');
-            $table->integer('size');
+            $table->string('mime_type')->nullable();
+            $table->integer('size')->nullable();
             $table->timestamps();
         });
     }

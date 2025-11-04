@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Upload;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Profile;
@@ -321,7 +322,8 @@ class UsersServiceTest extends TestCase
              ->assertDatabaseCount('users', 1)
              ->assertDatabaseCount('profiles', 1)
              ->assertModelExists($user)
-             ->assertModelExists($user->profile);
+             ->assertModelExists($user->profile)
+             ->assertModelMissing(Upload::class);
 
 
 

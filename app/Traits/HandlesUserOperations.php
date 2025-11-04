@@ -3,12 +3,12 @@
 namespace App\Traits;
 
 
-
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\services\UsersService;
 use Illuminate\Pagination\AbstractPaginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 
 
 trait HandlesUserOperations
@@ -19,7 +19,7 @@ trait HandlesUserOperations
     protected UsersService $usersService;
 
 
-    public function initialize(UsersService $service , Request $request): self
+    public function initialize(UsersService $service, Request $request): self
     {
         $this->request = $request;
 
@@ -35,9 +35,8 @@ trait HandlesUserOperations
         return $this;
     }
 
-    public function search(): \Illuminate\Pagination\LengthAwarePaginator|AbstractPaginator
+    public function search(): LengthAwarePaginator|AbstractPaginator
     {
-
         return $this->usersService
             ->selectColumnsFromUsers(['id', 'first_name', 'last_name', 'email', 'username', 'locked'])
             ->search()
@@ -53,6 +52,7 @@ trait HandlesUserOperations
             ->withQueryString();
 
     }
+
     public function getUsersTableColumnNameList(UsersService $userService)
     {
         return Cache::remember('users_table_columns_list', now()->addDays(10), static function () use ($userService) {
@@ -61,9 +61,18 @@ trait HandlesUserOperations
 
     }
 
-    public function createUser(mixed $validated)
+    public function createUser(mixed $validated): User
     {
-        @ds($this->request);
+        $profileImage = $this->request->file('profile_picture');
+
+        $path = $profileImage->storeAs('profile',$profileImage->hashName(), 'public' );
+
+        $mimiType = $profileImage->getMimeType();
+
+        $originalFilename = $profileImage->getClientOriginalName()      ;
+
+        ds($originalFilename);
+
         return $this->usersService->create([
             'first_name' => $validated['first_name'],
             'last_name' => $validated['last_name'],
@@ -71,7 +80,6 @@ trait HandlesUserOperations
             'email' => $validated['email'],
             'password' => $validated['password'],
         ], [
-            'profile-picture' => $validated['profile_picture'],
             'bio' => $validated['bio'],
             'github_repo_url' => $validated['github_repo_url'],
             'date_of_birth' => $validated['date_of_birth'],
