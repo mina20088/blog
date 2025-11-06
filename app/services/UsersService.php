@@ -3,6 +3,7 @@
 namespace App\services;
 
 use App\Models\Profile;
+use App\Models\Upload;
 use Exception;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
@@ -24,6 +25,11 @@ class UsersService
     protected string $orderBy;
 
     protected string $orderDir;
+
+    protected User $user;
+
+    protected Profile $profile;
+    protected Upload $upload;
 
 
 
@@ -149,9 +155,29 @@ class UsersService
         return $this;
     }
 
-    public function create(array $user , array $profile)
+    public function createUser(array $user): User
     {
-        return User::create($user)->profile()->create($profile);
+        $this->user = User::create($user);
+
+        return $this->user;
+    }
+
+    public function createProfile(array $profile):Profile
+    {
+        if(isset($this->user)){
+           $this->profile = $this->user->profile()->create($profile);
+        }
+
+        return $this->profile;
+    }
+
+    public function uploadProfileImage(array $image): Upload
+    {
+          if(isset($this->profile, $this->user)){
+             $this->upload = $this->user->upload()->create($image);
+          }
+
+          return $this->upload;
     }
 
 

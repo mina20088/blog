@@ -52,7 +52,6 @@ class UserController extends Controller
     {
         $user = $this->init($service)->createUser( $request->validated());
 
-
         return redirect()
             ->route('dashboard.users')
             ->with(['success' => ''])    ;
