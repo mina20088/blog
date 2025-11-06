@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Upload;
+use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Profile;
@@ -316,19 +317,72 @@ class UsersServiceTest extends TestCase
 
          $service = UsersTestsHelpers::createUsersService();
 
-         $user =  $service->create($user, $profile);
+         $user =  $service->createUser($user);
 
          $this
              ->assertDatabaseCount('users', 1)
-             ->assertDatabaseCount('profiles', 1)
              ->assertModelExists($user)
-             ->assertModelExists($user->profile)
+             ->assertModelMissing(Profile::class)
              ->assertModelMissing(Upload::class);
 
+    }
 
+    /**
+     * @throws BindingResolutionException
+     */
+    #[Test]
+    #[DataProviderExternal(UsersServiceTestsDataProvider::class,'createNewUserProvider')]
+    public function admin_create_new_user_and_profile_add_record_to_database(array $passedCreation):void
+    {
+        extract($passedCreation);
 
+        $service = UsersTestsHelpers::createUsersService();
 
+        $user = $service->createUser($user);
 
+        $profile = $service->createProfile($profile);
+
+        $this->assertDatabaseCount('users', 1);
+
+        $this->assertModelExists($user);
+
+        $this->assertDatabaseCount('profiles', 1);
+
+        $this->assertModelExists($profile);
+
+        $this->assertModelMissing(Upload::class);
+    }
+
+    /**
+     * @throws BindingResolutionException
+     */
+    #[Test]
+    #[DataProviderExternal(UsersServiceTestsDataProvider::class,'createNewUserProvider')]
+    public function admin_create_new_user_and_profile_upload_profile_image_add_record_to_database(array $passedCreation): void
+    {
+        extract($passedCreation);
+
+        $service = UsersTestsHelpers::createUsersService();
+
+        $user = $service->createUser($user);
+
+        $profile = $service->createProfile($profile);
+
+        $upload = $service->uploadProfileImage($profile_picture);
+
+        ds($upload);
+
+        $this->assertDatabaseCount('users', 1);
+
+        $this->assertModelExists($user);
+
+        $this->assertDatabaseCount('profiles', 1);
+
+        $this->assertModelExists($profile);
+
+        $this->assertDatabaseCount('uploads', 1);
+
+        $this->assertModelExists($upload);
     }
 
 
