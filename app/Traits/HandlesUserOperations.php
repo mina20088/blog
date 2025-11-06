@@ -61,17 +61,26 @@ trait HandlesUserOperations
 
     }
 
-    public function createUser()
+    public function createUser(): UsersService
     {
-        ds($this->request);
-/*        return $this->usersService->create([
+        $profileImage = $this->request->file('profile_picture');
+
+        $path = $profileImage->storeAs('profile',$profileImage->hashName(), 'public' );
+
+
+        $mimiType = $profileImage->getMimeType();
+
+        $originalFilename = $profileImage->getClientOriginalName()      ;
+
+        $user = $this->usersService->createUser([
             'first_name' => $validated['first_name'],
             'last_name' => $validated['last_name'],
             'username' => $validated['username'],
             'email' => $validated['email'],
             'password' => $validated['password'],
-        ], [
-            'profile-picture' => $validated['profile_picture'],
+        ]);
+
+        $profile = $this->usersService->createProfile([
             'bio' => $validated['bio'],
             'github_repo_url' => $validated['github_repo_url'],
             'date_of_birth' => $validated['date_of_birth'],
@@ -86,7 +95,16 @@ trait HandlesUserOperations
             'x' => $validated['x'],
             'instagram' => $validated['instagram'],
             'facebook' => $validated['facebook'],
-        ]);*/
+        ])  ;
+
+        $upload = $this->usersService->uploadProfileImage([
+            'name' => $originalFilename,
+            'path' => $path,
+            'mime_type' => $profileImage->getMimeType(),
+            'size' => $profileImage->getSize(),
+        ])  ;
+
+        return $user;
     }
 
 }

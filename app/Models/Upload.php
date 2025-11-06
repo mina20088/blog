@@ -8,12 +8,6 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 class Upload extends Model
 {
 
-    protected $fillable = [
-        'name',
-        'path',
-        'mime_type',
-        'size'
-    ];
 
     public function uploadable():MorphTo
     {
