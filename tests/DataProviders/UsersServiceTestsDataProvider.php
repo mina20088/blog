@@ -3,10 +3,10 @@
 namespace Tests\DataProviders;
 
 use App\Enums\Countries;
-use Illuminate\Http\UploadedFile;
+use App\Models\Profile;
+use App\Models\User;
 use Illuminate\Support\Arr;
 use Faker\Factory as FakerFactory;
-use Illuminate\Support\Facades\Storage;
 
 class UsersServiceTestsDataProvider
 {
@@ -134,9 +134,6 @@ class UsersServiceTestsDataProvider
         $faker = FakerFactory::create();
         $country = $faker->randomElement(Countries::getAllCountries());
         $city = collect(Countries::getCities($country))->random();
-        $profile_picture = UploadedFile::fake()->create('avatar.png', 20000,'image/png');
-
-
         return [
              'create' => [
                  'passedCreation' => [
@@ -155,12 +152,6 @@ class UsersServiceTestsDataProvider
                          'country' => $country,
                          'city' => $city
 
-                     ],
-                     'profile_picture' => [
-                         'name' => $profile_picture->getClientOriginalName(),
-                         'path' => $profile_picture->path(),
-                         'mime_type' => $profile_picture->getMimeType(),
-                         'size' => $profile_picture->getSize(),
                      ]
                  ]
              ]
