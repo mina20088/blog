@@ -68,10 +68,6 @@ trait HandlesUserOperations
         $path = $profileImage->storeAs('profile',$profileImage->hashName(), 'public' );
 
 
-        $mimiType = $profileImage->getMimeType();
-
-        $originalFilename = $profileImage->getClientOriginalName()      ;
-
         $user = $this->usersService->createUser([
             'first_name' => $validated['first_name'],
             'last_name' => $validated['last_name'],
@@ -98,7 +94,7 @@ trait HandlesUserOperations
         ])  ;
 
         $upload = $this->usersService->uploadProfileImage([
-            'name' => $originalFilename,
+            'name' => $profileImage->getClientOriginalName(),
             'path' => $path,
             'mime_type' => $profileImage->getMimeType(),
             'size' => $profileImage->getSize(),
