@@ -10,8 +10,31 @@
 
 <?php $__env->startSection('content'); ?>
 
-    <div class="xs:mt-16" x-data="{ show: $persist(false) }">
+    <div class="xs:mt-16" x-data="{ show: $persist(false)}">
         <?php if($users->count() > 0 || DashboardUsersViewHelpers::requestHasActiveFilters()): ?>
+
+           <?php if(Session::has('success')): ?>
+               <?php if (isset($component)) { $__componentOriginal5194778a3a7b899dcee5619d0610f5cf = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal5194778a3a7b899dcee5619d0610f5cf = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.alert','data' => ['type' => 'success','message' => Session::get('success')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('alert'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['type' => 'success','message' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(Session::get('success'))]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal5194778a3a7b899dcee5619d0610f5cf)): ?>
+<?php $attributes = $__attributesOriginal5194778a3a7b899dcee5619d0610f5cf; ?>
+<?php unset($__attributesOriginal5194778a3a7b899dcee5619d0610f5cf); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal5194778a3a7b899dcee5619d0610f5cf)): ?>
+<?php $component = $__componentOriginal5194778a3a7b899dcee5619d0610f5cf; ?>
+<?php unset($__componentOriginal5194778a3a7b899dcee5619d0610f5cf); ?>
+<?php endif; ?>
+           <?php endif; ?>
 
             <div class="flex xs:flex-col  md:flex-col sm:justify-between xs:my-4 sm:mt-24 sm:mb-4 xs:gap-3">
                 <div class='flex xs:flex-col xs:gap-3 sm:flex-row  sm:justify-between sm:basis-full sm:items-center'>

@@ -10,8 +10,12 @@
 
 @section('content')
 
-    <div class="xs:mt-16" x-data="{ show: $persist(false) }">
+    <div class="xs:mt-16" x-data="{ show: $persist(false)}">
         @if ($users->count() > 0 || DashboardUsersViewHelpers::requestHasActiveFilters())
+
+           @if(Session::has('success'))
+               <x-alert type="success" :message="Session::get('success')"/>
+           @endif
 
             <div class="flex xs:flex-col  md:flex-col sm:justify-between xs:my-4 sm:mt-24 sm:mb-4 xs:gap-3">
                 <div class='flex xs:flex-col xs:gap-3 sm:flex-row  sm:justify-between sm:basis-full sm:items-center'>

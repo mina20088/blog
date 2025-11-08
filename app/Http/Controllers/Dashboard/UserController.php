@@ -54,7 +54,7 @@ class UserController extends Controller
 
         return redirect()
             ->route('dashboard.users')
-            ->with(['success' => ''])    ;
+            ->with(['success' => 'the user with id :' . $user->id . 'was created successfully'])    ;
     }
 
 }
