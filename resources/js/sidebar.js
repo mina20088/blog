@@ -1,4 +1,3 @@
-
 import { Drawer } from 'flowbite'
 export default function sidebar() {
     const sideBar = document.getElementById('sidebar');
@@ -16,7 +15,7 @@ export default function sidebar() {
         backdropClasses:
             'md:hidden bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-30',
         onHide: () => {
-           sideBar.setAttribute('aria-hidden', 'false');
+            sideBar.setAttribute('aria-hidden', 'false');
         }
     }
     const instanceOptions = {
@@ -28,7 +27,7 @@ export default function sidebar() {
     const drawer = new Drawer(sideBar, options, instanceOptions);
 
 
-    sidebarButton.addEventListener('click', function(){
+    sidebarButton.addEventListener('click', function () {
         drawer.toggle()
     });
 

@@ -4,12 +4,14 @@
 
         {{-- Profile Picture Upload --}}
 
+        @if(!request()->routeIs('dashboard.users.create'))
         <img
             src="{{ Vite::asset('resources/images/Aron.png') }}"
             height="300"
             class="sm:hidden md:grid rounded-lg xs:w-80 sm:w-48 md:w-72 h-auto"
             alt="Profile Preview"
         />
+        @endif
 
         <section class="xs:hidden sm:grid sm:grid-cols-3  sm:gap-3 md:hidden">
             <section class="w-full">
