@@ -12,6 +12,7 @@ class Upload extends Model
         'name',
         'path',
         'mime_type',
+        'type',
         'size'
     ];
 

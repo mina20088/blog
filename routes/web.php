@@ -31,5 +31,6 @@ Route::prefix('dashboard')->middleware(['sanitize_query','clear.query.no.users']
     Route::get('/users', [UserController::class, 'index'])->name('users');
     Route::get('/users/reset-filters', [UserController::class, 'reset'])->name('users.reset-filters');
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+    Route::get('/user/{user:username}', [UserController::class, 'show'])->name('users.show');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
 });

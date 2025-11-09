@@ -3,6 +3,7 @@
 /** @noinspection PhpVoidFunctionResultUsedInspection */
 
 namespace App\Http\Controllers\Dashboard;
+use App\Models\User;
 use App\services\UsersService;
 use App\Http\Controllers\Controller;
 use App\Traits\HandlesUserOperations;
@@ -19,9 +20,7 @@ class UserController extends Controller
     public function index(Request $request, UsersService $userService)
     {
 
-        $users = $this
-            ->initialize($userService, $request)
-            ->search();
+        $users = $this->initialize($userService, $request)->search();
 
         $columns = $this->getUsersTableColumnNameList($userService);
 
@@ -30,12 +29,6 @@ class UserController extends Controller
             'columns' => $columns
         ]);
     }
-
-    public function __call(string $name, array $arguments)
-    {
-        // TODO: Implement __call() method.
-    }
-
 
 
     public function reset(): RedirectResponse
@@ -52,9 +45,12 @@ class UserController extends Controller
     {
         $user = $this->initialize($service,$request)->createUser( $request->validated());
 
-        return redirect()
-            ->route('dashboard.users')
-            ->with(['success' => 'the user with id :' . $user->id . 'was created successfully'])    ;
+        return redirect()->route('dashboard.users')->with('success', __('messages.user.success', ['id' =>  $user->id ]))    ;
+    }
+
+    public function show(User $user) {
+
+        return view('dashboard.users.show' ,['user' => $user]);
     }
 
 }

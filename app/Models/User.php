@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\UploadTypes;
 use App\Models\Profile;
 use App\Enums\UserAccountStatus;
 use Illuminate\Database\Eloquent\Model;
@@ -59,9 +60,11 @@ class User extends Model
 
     }
 
-    public function upload():MorphOne
+    public function profile_Picture():MorphOne
     {
-        return $this->morphOne(Upload::class, 'uploadable');
+        return $this
+            ->morphOne(Upload::class, 'uploadable')
+            ->where('type', UploadTypes::Profile) ;
     }
 
 

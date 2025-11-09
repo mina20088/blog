@@ -140,7 +140,7 @@
 
                     <td class="px-6 py-4">
                         <div class="flex justify-center gap-2">
-                            <a href="#"><i class="fa-regular fa-eye fa-xl hover:text-blue-500 py-[0.1rem]"></i></a>
+                            <a href="{{route('dashboard.users.show', ['user' => $user])}}"><i class="fa-regular fa-eye fa-xl hover:text-blue-500 py-[0.1rem]"></i></a>
                             <a href="#"><i class="fa-regular fa-pen-to-square fa-xl text-amber-300 hover:text-blue-500"></i></a>
                             <a href="#"><i class="fa-regular fa-trash-can fa-xl text-red-500 hover:text-blue-500 "></i></a>
                         </div>

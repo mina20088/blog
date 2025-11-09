@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 
+use App\Enums\UploadTypes;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\services\UsersService;
@@ -96,6 +97,7 @@ trait HandlesUserOperations
         $upload = $this->usersService->uploadProfileImage([
             'name' => $profileImage->getClientOriginalName(),
             'path' => $path,
+            'type' => UploadTypes::Profile,
             'mime_type' => $profileImage->getMimeType(),
             'size' => $profileImage->getSize(),
         ])  ;

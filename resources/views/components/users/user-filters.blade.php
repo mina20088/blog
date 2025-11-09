@@ -40,10 +40,10 @@
             <label for="gender" class="block mb-2 text-sm font-medium text-gray-900">Gender</label>
             <select id="gender" name="filters[gender]"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full xs:p-1 md:p-2.5">
-                <option value="" @selected(request("filters.gender") === "")>Choose a Filter</option>
+                <option value="" @selected(request("filters.gender") === " ")>Choose a Filter</option>
                 @foreach (Gender::cases() as $gender)
                     <option
-                        value='{{ $gender->value }}' @selected(((integer)request('filters.gender', "") === $gender->value) )>{{ $gender->name }}</option>
+                        value='{{ $gender->value }}' @selected(request('filters.gender') === (string)$gender->value )>{{ $gender->name }}</option>
                 @endforeach
             </select>
         </div>
