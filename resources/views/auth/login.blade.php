@@ -88,13 +88,13 @@
                     </div>
 
                     <div class="mb-6 flex gap-3">
-                        <x-buttons.button
+                        <x-button
                             type="submit"
                             class="bg-green-600 hover:bg-green-200
                                    xs:w-full xs:py-2 xs:basis-1/2"
                             :rounded_lg="true"
                             content="login"/>
-                        <x-buttons.link-button
+                        <x-link-button
                             class="bg-red-600 xs:basis-1/2"
                             content="back"
                             :text_white="true"

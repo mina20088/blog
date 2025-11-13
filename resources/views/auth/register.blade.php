@@ -83,9 +83,9 @@
                     </div>
 
                     <div class="xs:py-3 flex gap-3">
-                        <x-buttons.button type="submit" class="bg-blue-700 hover:bg-blue-800 xs:basis-48"
+                        <x-button type="submit" class="bg-blue-700 hover:bg-blue-800 xs:basis-48"
                             content="Register" :rounded_lg="true" />
-                        <x-buttons.link-button type="submit" class="bg-red-600 hover:bg-red-800 xs:basis-48"
+                        <x-link-button type="submit" class="bg-red-600 hover:bg-red-800 xs:basis-48"
                             href="{{ route('home') }}" content="Back" :rounded_lg="true" />
                     </div>
                 </form>

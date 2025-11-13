@@ -1,1 +1,0 @@
-components.users.users_table_with_pagination<?php /**PATH C:\Users\minar\projects\blog\storage\framework\views/a95a4c12466c5645f6468355ca138e65.blade.php ENDPATH**/ ?>

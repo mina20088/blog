@@ -25,7 +25,7 @@
 
             <section class="xs:hidden sm:grid sm:grid-rows-[auto_36fr_1fr]  sm:col-span-2 sm:gap-4">
                 <section class="font-bold text-xl w-full">
-                    <h1>Personal Information</h1>
+                    <h1>Personal information</h1>
                 </section>
 
                 <section class="grid grid-flow-row">

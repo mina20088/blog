@@ -60,11 +60,10 @@ class User extends Model
 
     }
 
-    public function profile_Picture():MorphOne
+    public function upload():MorphOne
     {
         return $this
-            ->morphOne(Upload::class, 'uploadable')
-            ->where('type', UploadTypes::Profile) ;
+            ->morphOne(Upload::class, 'uploadable');
     }
 
 

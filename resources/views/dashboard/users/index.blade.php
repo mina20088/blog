@@ -17,11 +17,11 @@
                <x-alert type="success" :message="Session::get('success')"/>
            @endif
 
-            <div class="flex xs:flex-col  md:flex-col sm:justify-between xs:my-4 sm:mt-24 sm:mb-4 xs:gap-3">
+            <div class="flex xs:flex-col md:flex-col sm:justify-between xs:my-4 sm:mt-24 sm:mb-4 xs:gap-3">
                 <div class='flex xs:flex-col xs:gap-3 sm:flex-row  sm:justify-between sm:basis-full sm:items-center'>
-                    <h1 class="font-bold text-2xl">Users</h1>
+                    <h1 class="font-bold text-2xl sm:basis-40">Users</h1>
 
-                    <div class="flex gap-3 xs:justify-between sm:items-center">
+                    <div class="flex gap-3 xs:justify-between sm:items-center sm:basis-80">
 
                         <button x-on:click.prevent="show =! show"
                                 class="flex gap-1 border border-1 xs:px-4 xs:py-1 xs:basis-1/2 rounded-lg items-center justify-center ">

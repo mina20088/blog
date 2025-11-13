@@ -1,5 +1,3 @@
-@use (App\Enums\Gender);
-@use (App\Enums\CountryCity);
 @extends('layouts.dashboard')
 
 
