@@ -12,7 +12,6 @@ class UsersServiceTestsDataProvider
 {
 
 
-
     public static function searchableUsersProvider(): array
     {
         $Egypt = Countries::getCitiesAccoc("Egypt");
@@ -135,6 +134,20 @@ class UsersServiceTestsDataProvider
         $country = $faker->randomElement(Countries::getAllCountries());
         $city = collect(Countries::getCities($country))->random();
         $profile_picture = UploadedFile::fake()->create('avatar.png', 20000,'image/png');
+        $Ukraine = Countries::getCitiesAccoc("Ukraine");
+        $usersToCreate = [
+            ['first_name' => 'mina', 'last_name' => 'shaker', 'email' => 'minakiroollos@gmail.com', 'username' => 'mina20088'],
+            ['first_name' => 'mina', 'last_name' => 'nader', 'email' => 'minanader@gmail.com', 'username' => 'mina_nader'],
+        ];
+        $profilesToCreate =  [
+            ["country" => "Ukraine" , "city"=> Arr::get($Ukraine, "Kyiv")],
+            ["country" => "Ukraine", 'city' => Arr::get($Ukraine, 'Donetsk')],
+        ];
+
+        $uploadsToCreate = [
+            ['name' => 'modi.pdf', 'path' => 'fake/path/modi.pdf' , 'type' => 2 , 'mime_type' => 'application/pdf' , 'size' => 30000  ],
+            ['name' => 'avatar.png', 'path' => 'fake/path/avatar.png' , 'type' => 1 , 'mime_type' => 'image/png' , 'size' => 20000  ],
+        ];
 
 
         return [
@@ -158,12 +171,22 @@ class UsersServiceTestsDataProvider
                      ],
                      'profile_picture' => [
                          'name' => $profile_picture->getClientOriginalName(),
+                         'type' => 1,
                          'path' => $profile_picture->path(),
                          'mime_type' => $profile_picture->getMimeType(),
                          'size' => $profile_picture->getSize(),
+                     ],
+
+                     'bulkCreation' => [
+                         'users' => $usersToCreate,
+                         'profiles' => $profilesToCreate,
+                         'uploads' => $uploadsToCreate,
                      ]
-                 ]
-             ]
+                 ],
+             ],
+
+
+
         ]   ;
     }
 

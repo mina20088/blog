@@ -1,8 +1,8 @@
 import './bootstrap';
 import  Alpine from 'alpinejs'
 import 'flowbite'
-import Sidebar from './sidebar.js'
-import domContentLoaded from "./dom-content-loaded.js";
+import Sidebar from './modules/sidebar.js'
+import domContentLoaded from "./modules/dom-content-loaded.js";
 
 domContentLoaded();
 Sidebar();

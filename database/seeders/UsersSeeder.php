@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Upload;
 use App\Models\User;
 use App\Models\Profile;
 use Illuminate\Database\Seeder;
@@ -20,7 +21,7 @@ class UsersSeeder extends Seeder
 
         DB::disableQueryLog();
 
-        User::factory(200)->has(Profile::factory())->create();
+        User::factory(5)->hasProfile(5)->has(Upload::factory())->create();
 
         DB::enableQueryLog();
     }

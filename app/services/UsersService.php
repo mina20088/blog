@@ -2,14 +2,19 @@
 
 namespace App\services;
 
+use App\Enums\UploadTypes;
 use App\Models\Profile;
 use App\Models\Upload;
 use Exception;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Builder;
+use LaravelIdea\Helper\App\Models\_IH_Upload_QB;
 use function PHPUnit\Framework\isNull;
 
 class UsersService
@@ -32,8 +37,7 @@ class UsersService
     protected Upload $upload;
 
 
-
-    public function __construct(Builder $query, string $term , array|string $searchBy = []  , array $filters = [], string $orderBy = 'id', string $orderDir = 'asc')
+    public function __construct(Builder $query, string $term, array|string $searchBy = [], array $filters = [], string $orderBy = 'id', string $orderDir = 'asc')
     {
         $this->query = $query;
 
@@ -46,13 +50,15 @@ class UsersService
         $this->orderBy = $orderBy;
 
         $this->orderDir = $orderDir;
+
+
     }
 
     public function listUsersTableColumns(...$values): array
     {
         $usersTableColumns = Schema::getColumnListing('users');
 
-        if(!empty($values)){
+        if (!empty($values)) {
             return collect($usersTableColumns)
                 ->except($values)
                 ->toArray();
@@ -73,7 +79,7 @@ class UsersService
     public function search(): self
     {
 
-        $this->query->when(  $this->term  !== "" && empty($this->searchBy)  , function(Builder $query){
+        $this->query->when($this->term !== "" && empty($this->searchBy), function (Builder $query) {
             $query->whereFullText(['first_name', 'last_name', 'email', 'username'], "{$this->term}*", ['mode' => 'boolean']);
         });
 
@@ -82,8 +88,8 @@ class UsersService
 
     public function searchBy(): self
     {
-        $this->query->when($this->term !== ""  && !empty($this->searchBy), function (Builder $query)  {
-            $query->where(function (builder $query)  {
+        $this->query->when($this->term !== "" && !empty($this->searchBy), function (Builder $query) {
+            $query->where(function (builder $query) {
                 $query->whereFullText($this->searchBy, "{$this->term}*", ['mode' => 'boolean'], 'or');
             });
         });
@@ -116,17 +122,17 @@ class UsersService
     public function filterByCountry(): self
     {
         $this->query->when(array_key_exists('country', $this->filters) && $this->filters['country'] !== "",
-            function(Builder $query){
-               $query->whereRelation('profile', 'country' , $this->filters['country'] );
+            function (Builder $query) {
+                $query->whereRelation('profile', 'country', $this->filters['country']);
             });
         return $this;
     }
 
-    public function filterByCity():self
+    public function filterByCity(): self
     {
-        $this->query->when(array_key_exists('city' , $this->filters) && $this->filters['city'] !== "" ,
-            function (Builder $query){
-                    $query->whereRelation('profile', 'city', $this->filters['city']);
+        $this->query->when(array_key_exists('city', $this->filters) && $this->filters['city'] !== "",
+            function (Builder $query) {
+                $query->whereRelation('profile', 'city', $this->filters['city']);
             });
         return $this;
     }
@@ -162,10 +168,10 @@ class UsersService
         return $this->user;
     }
 
-    public function createProfile(array $profile):Profile
+    public function createProfile(array $profile): Profile
     {
-        if(isset($this->user)){
-           $this->profile = $this->user->profile()->create($profile);
+        if (isset($this->user)) {
+            $this->profile = $this->user->profile()->create($profile);
         }
 
         return $this->profile;
@@ -173,11 +179,15 @@ class UsersService
 
     public function uploadProfileImage(array $image): Upload
     {
-          if(isset($this->profile, $this->user)){
-             $this->upload = $this->user->upload()->create($image);
-          }
+        if (isset($this->profile, $this->user)) {
+            $this->upload = $this->user->upload()->create($image);
+        }
+        return $this->upload;
+    }
 
-          return $this->upload;
+    public function profileImage(User $user)
+    {
+        return $user->upload;
     }
 
 

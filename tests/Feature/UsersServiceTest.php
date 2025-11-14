@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Upload;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 use App\Models\User;
@@ -370,8 +371,6 @@ class UsersServiceTest extends TestCase
 
         $upload = $service->uploadProfileImage($profile_picture);
 
-        ds($upload);
-
         $this->assertDatabaseCount('users', 1);
 
         $this->assertModelExists($user);
@@ -385,6 +384,33 @@ class UsersServiceTest extends TestCase
         $this->assertModelExists($upload);
     }
 
+
+    /**
+     * @throws BindingResolutionException
+     */
+    #[Test]
+    #[DataProviderExternal(UsersServiceTestsDataProvider::class,'createNewUserProvider')]
+    public function profile_image_returned (array $passedCreation):void
+    {
+        extract($passedCreation['bulkCreation']);
+
+        $users = User::factory(2, new Sequence(...$users))
+            ->has(Profile::factory(new Sequence(...$profiles)))
+            ->has(Upload::factory(new Sequence(...$uploads)))
+            ->create();
+
+        $service = UsersTestsHelpers::createUsersService();
+
+        $user = User::find(1);
+
+        $profile_picture = $service->profileImage($user);
+
+        $this->assertInstanceOf(Upload::class, $profile_picture);
+
+        $this->assertEquals($user->id, $profile_picture->uploadable_id);
+
+
+    }
 
 
 }
