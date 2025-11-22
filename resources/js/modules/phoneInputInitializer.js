@@ -6,7 +6,7 @@ export default function phoneInputInitializer(){
         if (phoneInput) {
             // Store instance globally for form validation
             window.itiInstance = window.intlTelInput(phoneInput, {
-                loadUtils: () => import("intl-tel-input/utils"),
+                loadUtils: () => import("intl-tel-input/build/js/utils.js"),
                 initialCountry: "eg", // Egypt by default
                 separateDialCode: false,
                 hiddenInput: (telInputName) => ({

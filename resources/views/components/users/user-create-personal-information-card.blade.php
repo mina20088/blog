@@ -61,13 +61,12 @@
             <x-single-error fieldName="gender"/>
         </section>
 
-    </section>
+    </section
 
     <section class="grid grid-flow-row md:gap-3">
         <section>
             <x-label for="phone" content="Phone"/>
-            <x-input type="text" id="phone" name="phone_number" class="!w-full" :value="old('phone_number')"/>
-            @ds(old('phone_number'))
+            <x-input type="text" id="phone" name="phone_number" class="!w-full !block" :value="old('phone_number')"/>
             <x-single-error fieldName="phone_number"/>
         </section>
 

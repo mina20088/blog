@@ -14,7 +14,6 @@
         cities: $persist([]),
         country:'',
         city:$persist('')
-
     }"
 
     >
