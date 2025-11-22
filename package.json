@@ -1,0 +1,30 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite"
+    },
+    "devDependencies": {
+        "@tailwindcss/vite": "^4.1.13",
+        "autoprefixer": "^10.4.21",
+        "axios": "^1.8.2",
+        "concurrently": "^9.0.1",
+        "laravel-vite-plugin": "^2.0.1",
+        "postcss": "^8.5.4",
+        "prettier": "^3.6.2",
+        "prettier-plugin-tailwindcss": "^0.6.14",
+        "tailwindcss": "^4.1.17",
+        "vite": "7.1.11"
+    },
+    "dependencies": {
+        "@alpinejs/persist": "^3.14.9",
+        "@fortawesome/fontawesome-free": "^7.1.0",
+        "alpinejs": "^3.14.9",
+        "animate.css": "^4.1.1",
+        "datatables.net-dt": "^2.3.2",
+        "datatables.net-searchbuilder-dt": "^1.8.3",
+        "flowbite": "^3.1.2",
+        "intl-tel-input": "^25.11.2"
+    }
+}
