@@ -27,7 +27,9 @@ class UsernameController extends Controller
 
         $user = $this->initialize($this->service, $request)->editUsername($user);
 
-        return redirect()->route('dashboard.users.show', ['user' => $user])->with('success', __('messages.user.update', ['id' =>  $user->id ]));
+        return redirect()
+            ->route('dashboard.users.show', ['user' => $user])
+            ->with('success', __('messages.user.update', ['id' =>  $user->id ]));
 
     }
 }

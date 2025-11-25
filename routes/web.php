@@ -33,5 +33,5 @@ Route::prefix('dashboard')->middleware(['sanitize_query','clear.query.no.users']
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
     Route::get('/user/{user:username}', [UserController::class, 'show'])->name('users.show');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
-    Route::patch('/users/{user:username}', UsernameController::class)->name('users.username.update');
+    Route::patch('/users/{user:username}/partial-update', UsernameController::class)->name('users.username.update');
 });

@@ -1,4 +1,5 @@
 import './bootstrap';
+import 'tailwindcss'
 import Alpine from 'alpinejs'
 import persist from '@alpinejs/persist'
 import 'flowbite'
@@ -17,9 +18,12 @@ const add  = new AddToWindow({
     intlTelInput,
     Alpine
 })
+
+
 add.add()
 domContentLoaded();
 phoneInputInitializer()
 Alpine.plugin(persist)
 Alpine.start();
+
 

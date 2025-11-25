@@ -1,15 +1,12 @@
-<html lang="en">
+<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title')</title>
-
     @vite(['resources/js/dashboard.js', 'resources/css/app.css'])
     @stack('scripts')
-
-
 </head>
-<body class="bg-slate-100" @class(['xl:overflow-hidden' => request()->routeIs('dashboard.users.show')])>
+<body @class(['bg-slate-100','xl:overflow-hidden' => request()->routeIs('dashboard.users.show')])>
 
 
 <!-- Navigation -->
