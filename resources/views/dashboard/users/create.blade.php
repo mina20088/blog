@@ -16,8 +16,7 @@
         {{-- Main Form Content --}}
         <section >
 
-            <form
-                class="flex flex-col gap-3" method="post" action="{{ route('dashboard.users.store') }}"  enctype="multipart/form-data">
+            <form class="flex flex-col gap-3" method="post" action="{{ route('dashboard.users.store') }}"  enctype="multipart/form-data">
 
                 @csrf
 

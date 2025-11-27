@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Enums\Countries;
 use App\Enums\CountryCity;
-use App\Enums\gender;
+use App\Enums\Gender;
 use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -30,7 +30,7 @@ class ProfileFactory extends Factory
         return [
             'user_id' => User::factory(),
             'date_of_birth' =>  $this->faker->date,
-            'gender' => $this->faker->randomElement(gender::values()),
+            'gender' => $this->faker->randomElement(Gender::values()),
             'phone_number' => $this->faker->phoneNumber(),
             'street' => $this->faker->streetAddress,
             'city' => $city,
