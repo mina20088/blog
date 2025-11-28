@@ -43,7 +43,7 @@
 
 }
 
-
+[x-cloak] { display: none !important; }
 
 .iti{
     display: block;

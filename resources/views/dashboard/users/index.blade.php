@@ -10,7 +10,7 @@
 
 @section('content')
 
-    <div class="xs:mt-16" x-data="{ show: $persist(false)}">
+    <div class="xs:mt-16"   x-data="{ show: $persist(false)}">
         @if ($users->count() > 0 || DashboardUsersViewHelpers::requestHasActiveFilters())
 
            @if(Session::has('success'))
@@ -24,7 +24,7 @@
                     <div class="flex gap-3 xs:justify-between sm:items-center sm:basis-80">
 
                         <button x-on:click.prevent="show =! show"
-                                class="flex gap-1 border border-1 xs:px-4 xs:py-1 xs:basis-1/2 rounded-lg items-center justify-center ">
+                                class="flex gap-1 border-1 xs:px-4 xs:py-1 xs:basis-1/2 rounded-lg items-center justify-center ">
 
                             <span class="xs:basis-3 text-center">
                                 <x-svgs.filter class="xs:w-3 xs:text-center"/>
@@ -53,7 +53,7 @@
 
         @endif
 
-        <x-users.user-filters-box :users="$users">
+        <x-users.user-filters-box :users="$users" >
 
             <x-users.user-search-controls :columns="$columns">
                 <x-users.user-sort-controls :columns="$columns" />
