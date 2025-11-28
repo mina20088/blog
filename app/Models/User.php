@@ -30,10 +30,10 @@ class User extends Model
         'updated_at',
         'deleted_at',
     ];
-
+/*
     protected $attributes = [
-        'locked' => false,
-    ];
+        'locked' => 0,
+    ];*/
 
     protected $hidden = [
         'password',

@@ -51,13 +51,10 @@
         <!-- Status filter: filters users by account status (locked/unlocked/etc) -->
         <div class="w-full">
             <label for="status" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">status</label>
-            <select id="status" name="filters[locked]"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full xs:p-1 md:p-2.5">
+            <select id="status" name="filters[locked]" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full xs:p-1 md:p-2.5">
                 <option value="" @selected(request('filters.locked') === '')>Choose a Filter</option>
-                @foreach (UserAccountStatus::cases() as $status)
-                    <option
-                        value='{{ $status->value }}' @selected(request('filters.locked' , "") === (string)$status->value)>{{ $status->name }}</option>
-                @endforeach
+                <option value="1" @selected(request('filters.locked' , "") ===  1)>Locked</option>
+                <option value="0" @selected(request('filters.locked' , "") ===  0)>Unlocked</option>
             </select>
         </div>
     </div>

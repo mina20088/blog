@@ -37,7 +37,7 @@ class UserController extends Controller
             ->when($request->has('search') || $request->has('searchBy'), function (Builder $query) use ($request) {
                 $query->whereFullText( $request->input('searchBy') ?? ['first_name', 'last_name', 'email', 'username'], "{$request->input('search')}*", ['mode' => 'boolean']);
             })
-            ->when($request->has('filters') && $request->input('filters.locked') , function (Builder $query) use ($request) {
+            ->when($request->has('filters') && $request->input('filters.locked') !== null , function (Builder $query) use ($request) {
                 $query->where('locked', (int)$request->input('filters.locked'));
             })
             ->with('profile:user_id,gender')
