@@ -4,16 +4,15 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Requests\SearchRequest;
 use App\Models\User;
 use App\services\UsersService;
 use App\Http\Controllers\Controller;
 use App\Traits\HandlesUserOperations;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreUserRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\Rule;
+
 
 
 class UserController extends Controller
@@ -29,23 +28,12 @@ class UserController extends Controller
     }
 
 
-    public function index(Request $request)
+    public function index(SearchRequest $request)
     {
-
-        $user = User::query()
-            ->select('users.first_name', 'users.last_name' , 'users.email', 'users.username', 'users.id', 'users.locked')
-            ->when($request->has('search') || $request->has('searchBy'), function (Builder $query) use ($request) {
-                $query->whereFullText( $request->input('searchBy') ?? ['first_name', 'last_name', 'email', 'username'], "{$request->input('search')}*", ['mode' => 'boolean']);
-            })
-            ->when($request->has('filters') && $request->input('filters.locked') !== null , function (Builder $query) use ($request) {
-                $query->where('locked', (int)$request->input('filters.locked'));
-            })
-            ->with('profile:user_id,gender')
-            ->paginate($request->per_page ?? 10);
-
+        $users = UsersService::listUsers($request->validated());
 
         return view('dashboard.users.index', [
-            'users' => $user,
+            'users' => $users ,
             'columns' => $this->getUsersTableColumnNameList($this->service)
         ]);
     }

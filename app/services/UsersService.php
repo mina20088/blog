@@ -10,8 +10,11 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Builder;
+use LaravelIdea\Helper\App\Models\_IH_User_C;
 
 
 class UsersService
@@ -57,8 +60,6 @@ class UsersService
         $this->orderBy = $orderBy;
 
         $this->orderDir = $orderDir;
-
-
     }
 
     /**
@@ -93,140 +94,28 @@ class UsersService
     }
 
 
+    public static function listUsers(array $validatedData): array|LengthAwarePaginator|_IH_User_C
+    {
+        return User::query()
+            ->select('users.first_name', 'users.last_name' , 'users.email', 'users.username', 'users.id', 'users.locked')
+            ->when(Arr::hasAny($validatedData, ['search', 'searchBy']), function (Builder $query) use ($validatedData) {
+                $query->whereFullText( $validatedData['searchBy'] ?? ['first_name', 'last_name', 'email', 'username'], "{$validatedData['search']}*", ['mode' => 'boolean']);
+            })
+            ->when(Arr::has($validatedData, 'filters') && Arr::has($validatedData, 'filters.locked') , function (Builder $query) use ($validatedData) {
+                $query->where('locked', (int)Arr::get($validatedData, 'filters.locked'));
+            })->with('profile:user_id,gender')
+            ->paginate(10);
+
+        //TODO:continue the filtering of users list update
+    }
+
+
     /**
      * Search for users by a search term.
-     * @return $this
-     */
-    public function search(): self
-    {
-
-        $this->query->when($this->term !== "" && empty($this->searchBy), function (Builder $query) {
-            $query->whereFullText(['first_name', 'last_name', 'email', 'username'], "{$this->term}*", ['mode' => 'boolean']);
-        });
-
-        return $this;
-    }
-
-    /**
-     * Search for users by a search term in specific columns.
-     * @return $this
-     */
-    public function searchBy(): self
-    {
-        $this->query->when($this->term !== "" && !empty($this->searchBy), function (Builder $query) {
-            $query->where(function (builder $query) {
-                $query->whereFullText($this->searchBy, "{$this->term}*", ['mode' => 'boolean'], 'or');
-            });
-        });
-
-
-        return $this;
-    }
-
-
-    /**
-     * Filter users by account status.
-     * @return $this
-     */
-    public function filterByAccountStatus(): self
-    {
-        $this->query->when(
-            array_key_exists('locked', $this->filters) && $this->filters['locked'] !== "", function (Builder $query) {
-            $query->where('locked', $this->filters['locked']);
-        });
-
-        return $this;
-    }
-
-    /**
-     * Filter users by gender.
-     * @return $this
-     */
-    public function filterByGender(): self
-    {
-        $this->query->when(array_key_exists('gender', $this->filters) && $this->filters['gender'] !== "",
-            function (Builder $query) {
-                $query->WhereRelation('profile', 'gender', $this->filters['gender']);
-            });
-
-        return $this;
-    }
-
-    /**
-     * Filter users by country.
-     * @return $this
-     */
-    public function filterByCountry(): self
-    {
-        $this->query->when(array_key_exists('country', $this->filters) && $this->filters['country'] !== "",
-            function (Builder $query) {
-                $query->whereRelation('profile', 'country', $this->filters['country']);
-            });
-        return $this;
-    }
-
-    /**
-     * Filter users by city.
-     * @return $this
-     */
-    public function filterByCity(): self
-    {
-        $this->query->when(array_key_exists('city', $this->filters) && $this->filters['city'] !== "",
-            function (Builder $query) {
-                $query->whereRelation('profile', 'city', $this->filters['city']);
-            });
-        return $this;
-    }
-
-    /**
-     * Order the users by a specific column.
-     * @return $this
-     */
-    public function orderBy(): static
-    {
-
-        $this->query->when($this->orderBy !== '' && $this->orderDir !== '', function (Builder $query) {
-            $query->orderBy($this->orderBy, $this->orderDir);
-        });
-
-        return $this;
-    }
-
-
-    /**
-     * Select specific columns from the users table.
-     * @param array $columns
-     * @return $this
-     */
-    public function selectColumnsFromUsers(array $columns): static
-    {
-        $this->query->select(...$columns);
-
-        return $this;
-    }
-
-    /**
-     * Eager load the user's profile.
-     * @return $this
-     */
-    public function profile(): static
-    {
-        $this->query->with('profile');
-        return $this;
-    }
-
-    public function gender(): static
-    {
-        $this->query->with('profile:user_id,gender');
-
-        return $this;
-    }
-
-    /**
-     * Create a new user.
      * @param array $user
      * @return User
      */
+
     public function createUser(array $user): User
     {
         $this->user = User::create($user);
@@ -274,16 +163,6 @@ class UsersService
          $user->save();
 
          return $user;
-    }
-
-    /**
-     * Get the user's profile image.
-     * @param User $user
-     * @return Model|MorphOne|null
-     */
-    public function profileImage(User $user): Model|MorphOne|null
-    {
-        return $user->upload;
     }
 
 

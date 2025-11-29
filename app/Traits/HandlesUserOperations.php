@@ -37,22 +37,10 @@ trait HandlesUserOperations
         return $this;
     }
 
-    public function search(): LengthAwarePaginator|AbstractPaginator
+    public function listUsers(): LengthAwarePaginator|AbstractPaginator
     {
         return  Cache::remember('users',Carbon::now()->addMinutes(10), function(){
-            return $this->usersService
-                ->selectColumnsFromUsers(['id', 'first_name', 'last_name', 'email', 'username', 'locked'])
-                ->search()
-                ->searchBy()
-                ->filterByAccountStatus()
-                ->filterByGender()
-                ->filterByCountry()
-                ->filterByCity()
-                ->orderBy()
-                ->gender()
-                ->getQuery()
-                ->paginate($this->request->per_page ?? 10)
-                ->withQueryString();
+            return $this->usersService->listUsers();
         });
     }
 

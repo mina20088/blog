@@ -3,6 +3,7 @@
 namespace App\Models;
 
 
+use App\Enums\Gender;
 use Database\Factories\ProfileFactory as ProfileFactoryAlias;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -38,7 +39,16 @@ class Profile extends Model
     protected function gender(): Attribute
     {
         return Attribute::make(
-            get: static fn (int $value) => $value === 0 ? "male" : "female",
+            get: static function ($value) {
+                if($value ===  Gender::male->value){
+                    return "Male";
+                }elseif ($value ===  Gender::female->value){
+                    return "Female";
+                }else {
+                    return "N/A";
+                }
+
+            },
         );
     }
 
