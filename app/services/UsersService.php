@@ -67,7 +67,7 @@ class UsersService
      * @param mixed ...$values
      * @return array
      */
-    public function listUsersTableColumns(...$values): array
+    public static function listUsersTableColumns(...$values): array
     {
         $usersTableColumns = Schema::getColumnListing('users');
 
@@ -86,9 +86,9 @@ class UsersService
      * @param mixed ...$values
      * @return array
      */
-    public function listUsersTableColumnsExcept(...$values): array
+    public static function listUsersTableColumnsExcept(...$values): array
     {
-        return collect($this->listUsersTableColumns())
+        return collect(self::listUsersTableColumns())
             ->except($values)
             ->toArray();
     }
@@ -125,11 +125,9 @@ class UsersService
      * @return User
      */
 
-    public function createUser(array $user): User
+    public static function create(array $user): User
     {
-        $this->user = User::create($user);
-
-        return $this->user;
+        return User::create($user);
     }
 
     /**

@@ -30,7 +30,7 @@ class UserController extends Controller
 
     public function index(SearchRequest $request)
     {
-        $users = UsersService::listUsers($request->validated());
+        $users = $this->listUsers($request);
 
         return view('dashboard.users.index', [
             'users' => $users ,
@@ -46,14 +46,17 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request, UsersService $service): RedirectResponse
     {
-        $user = $this->initialize($service, $request)->createUser($request->validated());
+       /* $user = $this->initialize($service, $request)->createUser($request->validated());*/
 
-        return redirect()->route('dashboard.users')->with('success', __('messages.user.success', ['id' => $user->id]));
+        $user = $this->createUser($request->validated());
+
+        return redirect()
+            ->route('dashboard.users')
+            ->with('success', __('messages.user.success', ['id' => $user->id]));
     }
 
     public function show(User $user)
     {
-
         return view('dashboard.users.show', ['user' => $user]);
     }
 

@@ -3,20 +3,21 @@
 namespace App\Traits;
 
 
+
 use App\Enums\UploadTypes;
+use App\Http\Requests\SearchRequest;
 use App\Models\User;
+use App\services\ProfileService;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use App\services\UsersService;
 use Illuminate\Pagination\AbstractPaginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Request;
 
 
 trait HandlesUserOperations
 {
-
-    protected Request $request;
 
     protected UsersService $usersService;
 
@@ -37,29 +38,27 @@ trait HandlesUserOperations
         return $this;
     }
 
-    public function listUsers(): LengthAwarePaginator|AbstractPaginator
+    public function listUsers(SearchRequest $request): LengthAwarePaginator|AbstractPaginator
     {
-        return  Cache::remember('users',Carbon::now()->addMinutes(10), function(){
-            return $this->usersService->listUsers();
-        });
+        return UsersService::listUsers($request->validated());
     }
 
     public function getUsersTableColumnNameList(UsersService $userService)
     {
         return Cache::remember('users_table_columns_list', Carbon::now()->addMinutes(10), static function () use ($userService) {
-            return $userService->listUsersTableColumnsExcept('id', 'password', 'locked', 'remember_token', 'created_at', 'updated_at', 'deleted_at');
+            return UsersService::listUsersTableColumnsExcept('id', 'password', 'locked', 'remember_token', 'created_at', 'updated_at', 'deleted_at');
         });
 
     }
 
     public function createUser(mixed $validated): User
     {
-        $profileImage = $this->request->file('profile_picture');
+
+        $profileImage = Request::file('profile_picture');
 
         $path = $profileImage->storeAs('profile',$profileImage->hashName(), 'public' );
 
-
-        $user = $this->usersService->createUser([
+        $user = UsersService::create([
             'first_name' => $validated['first_name'],
             'last_name' => $validated['last_name'],
             'username' => $validated['username'],
@@ -67,7 +66,7 @@ trait HandlesUserOperations
             'password' => $validated['password'],
         ]);
 
-        $profile = $this->usersService->createProfile([
+        ProfileService::create([
             'bio' => $validated['bio'],
             'github_repo_url' => $validated['github_repo_url'],
             'date_of_birth' => $validated['date_of_birth'],
@@ -82,7 +81,7 @@ trait HandlesUserOperations
             'x' => $validated['x'],
             'instagram' => $validated['instagram'],
             'facebook' => $validated['facebook'],
-        ])  ;
+        ],$user)  ;
 
         $upload = $this->usersService->uploadProfileImage([
             'name' => $profileImage->getClientOriginalName(),
@@ -92,7 +91,6 @@ trait HandlesUserOperations
             'size' => $profileImage->getSize(),
         ])  ;
 
-        Cache::forget('users');
 
         return $user;
     }
