@@ -1,4 +1,4 @@
-<x-card>
+<x-card class="bg-white">
 
     <section class="flex xs:flex-col md:flex-row gap-3 items-center w-full">
         <section class="w-full grid items-start gap-2">

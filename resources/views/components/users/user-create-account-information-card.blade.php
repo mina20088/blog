@@ -1,5 +1,5 @@
 
-<x-card>
+<x-card class="bg-white">
     <section class="font-bold text-xl">
         <h1>User Account Information</h1>
     </section>

@@ -96,9 +96,7 @@
 
     <div class="flex flex-col">
 
-       {{-- TODO:  will be uncomminted when the finish users filters new updat in the UsersService --}}
-
-       {{-- {{ $users->links() }}--}}
+        {{ $users->links() }}
 
     </div>
 

@@ -20,6 +20,7 @@
 
                 @csrf
 
+
                 {{-- Personal Information Card --}}
 
                 <x-users.user-create-personal-information-card/>
@@ -40,8 +41,8 @@
                 <section class="grid justify-end grid-col-2">
 
                     <section class="col-span-1">
-                        <x-button type="submit" class="!bg-blue-600 text-white font-bold" :rounded_lg="true" content="Submit" />
-                        <x-link-button :link="route('dashboard.users')" class="font-bold !bg-red-600 " :rounded_lg="true" :text_white="true" content="Cancel" />
+                        <x-button type="submit" class="inline-flex !bg-blue-600 text-white font-bold" :rounded_lg="true" content="Submit" />
+                        <x-link-button :link="route('dashboard.users')" class="inline-flex font-bold !bg-red-600 " :rounded_lg="true" :text_white="true" content="Cancel" />
                     </section>
 
                 </section>

@@ -97,16 +97,25 @@ class UsersService
     public static function listUsers(array $validatedData): array|LengthAwarePaginator|_IH_User_C
     {
         return User::query()
-            ->select('users.first_name', 'users.last_name' , 'users.email', 'users.username', 'users.id', 'users.locked')
+            ->select('users.first_name', 'users.last_name', 'users.email', 'users.username', 'users.id', 'users.locked')
             ->when(Arr::hasAny($validatedData, ['search', 'searchBy']), function (Builder $query) use ($validatedData) {
-                $query->whereFullText( $validatedData['searchBy'] ?? ['first_name', 'last_name', 'email', 'username'], "{$validatedData['search']}*", ['mode' => 'boolean']);
+                $query->whereFullText($validatedData['searchBy'] ?? ['first_name', 'last_name', 'email', 'username'], "{$validatedData['search']}*", ['mode' => 'boolean']);
             })
-            ->when(Arr::has($validatedData, 'filters') && Arr::has($validatedData, 'filters.locked') , function (Builder $query) use ($validatedData) {
+            ->when(Arr::has($validatedData, 'filters') && Arr::has($validatedData, 'filters.locked'), function (Builder $query) use ($validatedData) {
                 $query->where('locked', (int)Arr::get($validatedData, 'filters.locked'));
-            })->with('profile:user_id,gender')
-            ->paginate(10);
-
-        //TODO:continue the filtering of users list update
+            })
+            ->when(Arr::has($validatedData, 'filters') && Arr::hasAny($validatedData, ['filters.gender', 'filters.country', 'filters.city']), function (Builder $query) use ($validatedData) {
+                 $query->whereHas('profile', function ($query) use ($validatedData) {
+                     $query
+                         ->whereCountry(Arr::get($validatedData, 'filters.country'))
+                         ->orWhere('city', Arr::get($validatedData, 'filters.city'))
+                         ->orwhere('gender', Arr::get($validatedData, 'filters.gender'));
+                 });
+            })
+            ->with('profile:user_id,gender')
+            ->orderBy($validatedData['orderBy'] ?? 'id', $validatedData['dir'] ?? 'asc')
+            ->paginate($validatedData['per_page'] ?? 10)
+            ->withQueryString();
     }
 
 
@@ -158,11 +167,11 @@ class UsersService
      */
     public function editUsername(User $user, string $value): User
     {
-         $user->username = $value;
+        $user->username = $value;
 
-         $user->save();
+        $user->save();
 
-         return $user;
+        return $user;
     }
 
 
