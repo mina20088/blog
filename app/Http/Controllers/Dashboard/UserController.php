@@ -8,33 +8,20 @@ use App\Http\Requests\SearchRequest;
 use App\Models\User;
 use App\services\UsersService;
 use App\Http\Controllers\Controller;
-use App\Traits\HandlesUserOperations;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreUserRequest;
-use Illuminate\Http\Request;
-
 
 
 class UserController extends Controller
 {
-    use HandlesUserOperations;
-
-    protected UsersService $service;
-
-
-    public function __construct(UsersService $service)
-    {
-        $this->service = $service;
-    }
-
 
     public function index(SearchRequest $request)
     {
-        $users = $this->listUsers($request);
+        $users = UsersService::listUsers($request->validated());
 
         return view('dashboard.users.index', [
             'users' => $users ,
-            'columns' => $this->getUsersTableColumnNameList($this->service)
+            'columns' => UsersService::listUsersTableColumnsExcept('id', 'password', 'locked', 'remember_token', 'created_at', 'updated_at', 'deleted_at')
         ]);
     }
 
@@ -44,11 +31,9 @@ class UserController extends Controller
         return view('dashboard.users.create');
     }
 
-    public function store(StoreUserRequest $request, UsersService $service): RedirectResponse
+    public function store(StoreUserRequest $request): RedirectResponse
     {
-       /* $user = $this->initialize($service, $request)->createUser($request->validated());*/
-
-        $user = $this->createUser($request->validated());
+        $user = UsersService::create(user:$request->userData(), profile: $request->profileData(), uploadImage: $request->imageData());
 
         return redirect()
             ->route('dashboard.users')

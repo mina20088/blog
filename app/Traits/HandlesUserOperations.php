@@ -83,13 +83,13 @@ trait HandlesUserOperations
             'facebook' => $validated['facebook'],
         ],$user)  ;
 
-        $upload = $this->usersService->uploadProfileImage([
+/*        $upload = $this->usersService->uploadProfileImage([
             'name' => $profileImage->getClientOriginalName(),
             'path' => $path,
             'type' => UploadTypes::Profile,
             'mime_type' => $profileImage->getMimeType(),
             'size' => $profileImage->getSize(),
-        ])  ;
+        ]) ;*/
 
 
         return $user;

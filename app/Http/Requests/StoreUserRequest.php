@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Enums\Gender;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Foundation\Http\FormRequest;
@@ -47,5 +48,37 @@ class StoreUserRequest extends FormRequest
             'instagram' => 'url|nullable',
             'facebook' => 'url|nullable'
         ];
+    }
+
+    public function userData() :array
+    {
+         return $this->safe(['first_name', 'last_name', 'email', 'username', 'password']);
+    }
+
+
+    public function profileData() :array
+    {
+        return $this->safe([
+            'date_of_birth',
+            'gender',
+            'phone_number',
+            'street',
+            'country',
+            'city',
+            'state',
+            'website',
+            'zip_code',
+            'x',
+            'instagram',
+            'facebook',
+            'bio',
+            'github_repo_url',
+
+        ]);
+    }
+
+    public function imageData(): array|UploadedFile|null
+    {
+        return $this->file('profile_picture');
     }
 }

@@ -3,13 +3,10 @@
 namespace App\services;
 
 
-use App\Models\Profile;
-use App\Models\Upload;
-use App\Models\User;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
 
+use App\Jobs\ProcessUploadProfilePicture;
+use App\Models\User;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
@@ -19,48 +16,6 @@ use LaravelIdea\Helper\App\Models\_IH_User_C;
 
 class UsersService
 {
-    protected Builder $query;
-
-    protected string $term;
-
-    protected array $filters;
-
-    protected array|string $searchBy;
-
-    protected string $orderBy;
-
-    protected string $orderDir;
-
-    protected User $user;
-
-    protected Profile $profile;
-
-    protected Upload $upload;
-
-
-    /**
-     * UsersService constructor.
-     * @param Builder $query
-     * @param string $term
-     * @param array|string $searchBy
-     * @param array $filters
-     * @param string $orderBy
-     * @param string $orderDir
-     */
-    public function __construct(Builder $query, string $term, array|string $searchBy = [], array $filters = [], string $orderBy = 'id', string $orderDir = 'asc')
-    {
-        $this->query = $query;
-
-        $this->term = $term;
-
-        $this->filters = $filters;
-
-        $this->searchBy = $searchBy;
-
-        $this->orderBy = $orderBy;
-
-        $this->orderDir = $orderDir;
-    }
 
     /**
      * Get the columns of the users table.
@@ -119,42 +74,18 @@ class UsersService
     }
 
 
-    /**
-     * Search for users by a search term.
-     * @param array $user
-     * @return User
-     */
 
-    public static function create(array $user): User
+    public static function create(array $user, array $profile = [], ?UploadedFile $uploadImage = null): User
     {
-        return User::create($user);
-    }
+        $user = User::create($user);
+        if($user)
+        {
+            $profile = ProfileService::create($profile, $user);
 
-    /**
-     * Create a new profile for a user.
-     * @param array $profile
-     * @return Profile
-     */
-    public function createProfile(array $profile): Profile
-    {
-        if (isset($this->user)) {
-            $this->profile = $this->user->profile()->create($profile);
+            //TODO:cant serialize the UploadableFile class , will solve this problem
+            ProcessUploadProfilePicture::dispatchIf($profile, $user, $uploadImage);
         }
-
-        return $this->profile;
-    }
-
-    /**
-     * Upload a profile image for a user.
-     * @param array $image
-     * @return Upload
-     */
-    public function uploadProfileImage(array $image): Upload
-    {
-        if (isset($this->profile, $this->user)) {
-            $this->upload = $this->user->upload()->create($image);
-        }
-        return $this->upload;
+        return $user;
     }
 
     /**
